@@ -1,0 +1,173 @@
+*{
+	margin:0;
+	padding: 0;
+	font-family:'Montserrat', sans-serif;
+}
+
+header{
+	width:100%;
+	height: 70px;
+	background-color: #1169a3;
+	position: fixed;
+	top:0;
+	left:0;
+	z-index: 1038;
+}
+
+nav{
+	padding: 0 20px;
+	width: 100%;
+	height: 100%;
+	display: flex !important;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-content: center;
+	align-items: center;
+	justify-content: space-between;
+	box-sizing: border-box;
+}
+
+nav > ul{
+	list-style: none;
+	margin: 0;
+	height: 100%;
+	width: 40%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+}
+
+
+nav > ul > li{
+	display: block;
+	height: 100%;
+}
+
+nav > ul > li > a , nav > ul > li > a:hover{
+	text-decoration: none;
+	color:#F1F1F5;
+	font-size: 1.2em;
+}
+
+nav > ul > li:hover{
+	background-color: #0C4870;
+}
+
+nav > ul > li > a > p{
+	color: #F1F1F5;
+	display: flex;
+	align-items: center;
+	margin: 0;
+	height: 100%;
+	padding: 0 10px;
+	text-align: center;
+}
+
+.logos{
+	width: 20%;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+}
+
+.logo_escom, .logo_ipn{
+	width: 50%;
+	box-sizing: border-box;
+	height: 30px;
+	text-align: center;
+}
+
+.logo_escom{
+	border-right: 2px solid #F1F1F5;
+}
+
+.logo_escom img, .logo_ipn img{
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.contenedor{
+
+	width: 100%;
+
+}
+
+.content{
+	
+	width: 50%;
+	margin: 0 auto;
+
+}
+
+.inicio, .compartir, .contacto, .registro{
+
+	width: 100%;	
+	text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: center;
+	align-items: center;
+
+}
+
+.inicio{
+	height: 100vh;	
+}
+
+.compartir{
+	max-height: 720px;
+}
+
+.titulo, .texto, .botones_inicio{
+	width: 100%;
+	text-align: center;
+}
+
+.btn_orange{
+	color: #fff;
+	background-color: #E04727;
+	border-color: #E04727;
+}
+
+.btn_green{
+	color: #fff;
+	background-color: #03A08A;
+	border-color: #03A08A;
+}
+
+.btn_red{
+	color: #fff;
+	background-color: #E31434;
+	border-color: #E31434;
+}
+
+.no_link, .no_link:hover{
+
+	color:inherit;
+	text-decoration: none;
+
+}
+a.btn:hover{
+	color:#FFF;
+	text-decoration: none;
+}
+
+.formulario{
+	width: 100%;
+	padding: 4rem 2rem;
+	box-sizing: border-box;
+	text-align: left;
+}
+
+img{
+	margin: 4 px;
+}
+
+footer{
+	color: #fff;
+	background-color: #000;
+	border-color: #E04727;
+	padding: 2rem 1rem
+}
