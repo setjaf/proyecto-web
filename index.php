@@ -5,6 +5,8 @@
 
 	$usuario=null;
 
+	$mensaje=null;
+
 	/*print_r($_POST);
 	echo '<br>';
 	print_r($_FILES);*/
@@ -16,7 +18,8 @@
 		$id_usuario=$id_usuario[0][0];
 
 		if($id_usuario){
-			echo "<script>alert(Se agregó usuario correctamente)</script>";
+
+			$mensaje='Se agregó usuario correctamente';
 
 			if ( isset($_FILES['foto']) && $_FILES['foto']['error']=='0' ) {
 
@@ -27,20 +30,36 @@
 
 				$target = 'images/'.$newname;
 				if( move_uploaded_file( $_FILES['foto']['tmp_name'], $target) && $procedimientos->insertar_foto_usuario($target,$_POST['correo_usuario']) ){
-					echo ' -Se agregó foto correctamente';
+					$mensaje = $mensaje.' -Se agregó foto correctamente';
 				}
-			}
-
-			
+			}			
 
 		}else{
-			echo '<br>';
-			echo "No se agregó usuario correctamente";
+
+			$mensaje="No se agregó usuario correctamente";
 		}
 		
 	}else if (isset($_POST['login']) && isset($_POST['usuario']) && isset($_POST['contrasena'])) {
-		if ($procedimientos->validar_usuario($_POST['usuario'],$_POST['contrasena'])) {
-			header("Location: http://localhost:81/proyecto-web/alumno.html");
+		$procedimientos->validar_usuario($_POST['usuario'],$_POST['contrasena']);
+		$rol=$procedimientos->validar_usuario($_POST['usuario'],$_POST['contrasena']);
+		$mensaje = $rol[0][0];
+		if ($rol) {
+
+			switch ($rol[0][0]) {
+				case 1:
+					header("Location: http://localhost:81/proyecto-web/administrador.html");
+					break;
+
+				case 2:
+					header("Location: http://localhost:81/proyecto-web/profesor.html");
+					break;
+				case 3:
+					header("Location: http://localhost:81/proyecto-web/alumno.html");
+					break;
+			}
+			
+		}else {
+			$mensaje='Revisa nuevamente tu información';
 		}
 	}
 ?>
@@ -397,6 +416,27 @@
 	  </div>
 	</div>
 
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="false">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLongTitle">Mensaje</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <?php echo $mensaje; ?>
+	      </div>
+	      <div class="modal-footer">
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+
 	<script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -405,6 +445,11 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	<!--<script src="http://localhost:81/bootstrap-4.1.1/js/bootstrap.min.js"></script>-->
 	<script src="assets/js/index.js"></script>
+	<?php echo (isset($mensaje)?'<script>	
+		$(window).on("load",function(){
+	        $("#exampleModalCenter").modal("show");
+	    });
+	</script>':''); ?>
 
 		<section class="contenedor">
 			<footer>
