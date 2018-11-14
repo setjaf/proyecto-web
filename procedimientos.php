@@ -19,7 +19,7 @@
 	    }
 
 	    private function conexion_mysql(){
-	    	$mysqli = new mysqli("127.0.0.1", "root", "", "escompartiendo", 3306);
+	    	$mysqli = new mysqli("127.0.0.1", "root", "root", "escompartiendo", 3306);
 
 			if ($mysqli->connect_errno) {
 			    echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
@@ -149,7 +149,7 @@
 						
 					}
 
-					echo mysqli_error($con);
+					return mysqli_error($con);
 
 					$con->close();
 
@@ -518,12 +518,13 @@
 
 			$con=$this->conexion_mysql();
 			if ($con!=null) {
+					$return = false;
 				
-					if($result=mysqli_query($con,"SELECT * FROM usuario WHERE correo='$usuario' and contrasena='$contrasena';")){
+					if($result=mysqli_query($con,"SELECT correo, nombre, paterno, rol FROM usuario WHERE correo='$usuario' and contrasena='$contrasena';")){
 						
 						$i=0;
-						
-						while ($fila = $result->fetch_row()) {
+
+						while ($fila = $result->fetch_array(MYSQLI_ASSOC)) {
 						    $return[$i]=$fila;
 						    $i++;
 						}

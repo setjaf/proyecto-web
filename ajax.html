@@ -73,22 +73,24 @@
 			console.log(event);
 
 			var formElement = document.getElementById("form_alumno");
+			data = new Object();
 			formData = new FormData(formElement);
 
-			/*for (var i = 0; i < event.delegateTarget.length; i++) {
+			for (var i = 0; i < event.delegateTarget.length; i++) {
 				
 
 				if (event.delegateTarget[i].name=='foto') {
-					data.append(event.delegateTarget[i].name,event.delegateTarget[i].files);
+					data[event.delegateTarget[i].name]=event.delegateTarget[i].files;
 					console.log(event.delegateTarget[i].name);
 				}else{
-					data.append(event.delegateTarget[i].name,event.delegateTarget[i].value);
+					data[event.delegateTarget[i].name]=event.delegateTarget[i].value;
 					console.log(event.delegateTarget[i].name);
 				}
 
-			}*/
+			}
 
 			console.log(formData);
+			console.log(data);
 
 			$.ajax({
 				url: 'http://localhost:81/proyecto-web/prueba-ajax.php',
@@ -104,9 +106,6 @@
 			}).fail(function(e) {
 				console.log(e);
 				alert( "error" );
-			}).always(function() {
-				console.log(e);
-				alert( "complete" );
 			});
 		  
 		});
