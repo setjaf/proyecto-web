@@ -13,7 +13,6 @@
 	    public function __construct(){
 	        $con=$this->conexion_mysql();
 	        if ($con!=null) {
-				echo "<h1>Conectado</h1><br>";
 	        }
 	        $con->close();
 
@@ -126,12 +125,12 @@
 
 		}
 
-		public function insertar_usuario($correo,$contraseña,$nombre,$paterno,$materno,$fecha_nacimiento,$boleta,$curp,$status,$rol){
+		public function insertar_usuario($correo,$contraseña,$nombre,$paterno,$materno,$fecha_nacimiento,$boleta="",$curp,$status,$rol){
 
 			$con=$this->conexion_mysql();
 			if ($con!=null) {
 					
-					$result=mysqli_query($con,"INSERT INTO usuario(correo,contrasena,fecha_alta,nombre,paterno,materno,fecha_nacimiento,boleta,CURP,status,rol,foto) values ('$correo','$contraseña',CURDATE(),'$nombre','$paterno','$materno','$fecha_nacimiento','$boleta','$curp',$status,$rol,'')");
+					$result=mysqli_query($con,"INSERT INTO usuario(correo,contrasena,fecha_alta,nombre,paterno,materno,fecha_nacimiento,boleta,CURP,status,rol,foto) values ('$correo','$contraseña',CURDATE(),'$nombre','$paterno','$materno','$fecha_nacimiento',".($boleta==''?'NULL':"'".$boleta."'").",'$curp',$status,$rol,'')");
 					
 					if ($result) {
 						$result=mysqli_query($con,"SELECT * FROM usuario WHERE correo='$correo'");
@@ -520,16 +519,26 @@
 			$con=$this->conexion_mysql();
 			if ($con!=null) {
 				
+					if($result=mysqli_query($con,"SELECT * FROM usuario WHERE correo='$usuario' and contrasena='$contrasena';")){
+						
+						$i=0;
+						
+						while ($fila = $result->fetch_row()) {
+						    $return[$i]=$fila;
+						    $i++;
+						}
 
-					$result=mysqli_query($con,"SELECT * FROM usuario WHERE correo='$usuario' and contrasena='$contrasena';");
+						$result->close();
+					}else {
+						echo mysqli_error($con);
+						$return = $result;
+						
+					}
 
-					$return = isset($result);
+					$con->close();
 
-					echo mysqli_error($con);
+					return $return;
 
-					$con->close();				
-
-					return $return;				
 
 				
 				
