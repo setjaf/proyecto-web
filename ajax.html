@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+
+	<form class="form-row justify-content-end" method="POST" enctype="multipart/form-data" id="form_alumno">
+
+		<div class="form-group col-12">
+			<label for="">Correo electrónico:</label>
+			<input type="email" class="form-control" name="correo_usuario" placeholder="ejemplo@correo.com" pattern="[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}" autocomplete="email" required>
+		</div>
+		<div class="form-group col-12">
+			<label for="">Contraseña:</label>
+			<input type="password" class="form-control" name="contrasena_nueva" id="contrasena_nueva1" placeholder="Escribe tu nueva contraseña" required>
+		</div>
+		<div class="form-group col-12">
+			<label for="">Confirmar Contraseña:</label>
+			<input type="password" class="form-control" placeholder="Escribe tu nueva contraseña" name="confirmar_contrasena_nueva" id="confirmar_contrasena_nueva1" required>
+		</div>
+		<div class="form-group col-12">
+			<label for="">Nombre(s):</label>
+			<input type="text" class="form-control" name="nombre" autocomplete="give-name" placeholder="Juan" required>
+		</div>
+		<div class="form-group col-12">
+			<label for="">Apellido Paterno:</label>
+			<input type="text" class="form-control" name="paterno" autocomplete="family-name" placeholder="Pérez" required>
+		</div>
+		<div class="form-group col-12">
+			<label for="">Apellido Materno:</label>
+			<input type="text" class="form-control" name="materno" autocomplete="family-name" placeholder="Rodíguez" required>
+		</div>
+		<div class="form-group col-12">
+			<label for="">Fecha de nacimiento:</label>
+			<input type="date" class="form-control" name="nacimiento" autocomplete="bday" placeholder="00/00/0000" required>
+		</div>
+		<div class="form-group col-12">
+			<label for="">No. Boleta:</label>
+			<input type="text" class="form-control" name="boleta" pattern="[0-9]{10}" placeholder="0000000000"  required>
+		</div>
+		<div class="form-group col-12">
+			<label for="">CURP:</label>
+			<input type="text" class="form-control" name="curp" pattern="^[A-Z]{4}\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z]{6}(\d|[A-Z])\d$" placeholder="AAAA000101BBBBBB00" required>
+			<a href="https://www.gob.mx/curp/" target="_blank">Consultar CURP</a>
+		</div>
+		<div class="form-group col-12">
+			<label for="">Foto:</label>
+			<input type="file" class="form-control" name="foto" accept="image/*">
+		</div>
+
+		<div>
+			<input type="text" hidden name="rol" value="3">
+		</div>
+		<div class="form-group">
+			<input type="submit" value="Agregar Usuarrio" class="btn btn_red" name="agregar_usuario">
+		</div>						
+	</form>
+
+	
+
+	<script>
+		$( "#form_alumno" ).submit(function( event ) {
+			event.preventDefault();
+
+			console.log(event);
+
+			var formElement = document.getElementById("form_alumno");
+			formData = new FormData(formElement);
+
+			/*for (var i = 0; i < event.delegateTarget.length; i++) {
+				
+
+				if (event.delegateTarget[i].name=='foto') {
+					data.append(event.delegateTarget[i].name,event.delegateTarget[i].files);
+					console.log(event.delegateTarget[i].name);
+				}else{
+					data.append(event.delegateTarget[i].name,event.delegateTarget[i].value);
+					console.log(event.delegateTarget[i].name);
+				}
+
+			}*/
+
+			console.log(formData);
+
+			$.ajax({
+				url: 'http://localhost:81/proyecto-web/prueba-ajax.php',
+				contentType: false,
+				processData: false,
+				cache: false,
+				type: 'POST',
+				dataType: 'html',
+				data: formData,
+			}).done(function(e) {
+				console.log(e);
+				alert("Hecho enviado");
+			}).fail(function(e) {
+				console.log(e);
+				alert( "error" );
+			}).always(function() {
+				console.log(e);
+				alert( "complete" );
+			});
+		  
+		});
+
+		/*$.ajax({
+			url: 'http://localhost:81/proyecto-web/prueba-ajax.php',
+			type: 'POST',
+			dataType: 'html',
+			data: {prueba: 'value1'},
+		})
+		.done(function(e) {
+			console.log(e);
+			console.log("success");
+		})
+		.fail(function(e) {
+			console.log(e);
+			console.log("error");
+		})
+		.always(function(e) {
+			console.log(e);
+			console.log("complete");
+		});*/
+		
+	</script>
+
+	
+</body>
+</html>
