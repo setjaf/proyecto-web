@@ -136,11 +136,20 @@
 						$result=mysqli_query($con,"SELECT * FROM usuario WHERE correo='$correo'");
 
 						$i=0;
+
+						$fila = $result->fetch_row();
+
+						mysqli_query($con,"INSERT INTO confirmacion_correo(usuario_nuevo,codigo) VALUES ($fila[0],UUID());");
 						
+						$result=mysqli_query($con,"SELECT * FROM usuario WHERE correo='$correo'");
+
 						while ($fila = $result->fetch_row()) {
+							
 						    $return[$i]=$fila;
 						    $i++;
 						}
+
+						print_r($return);
 
 						$result->close();
 					}else {
@@ -149,11 +158,10 @@
 						
 					}
 
-					return mysqli_error($con);
-
+					
 					$con->close();
 
-					return $return;									
+					return (mysqli_error($con)!=''?$return:mysqli_error($con));								
 				
 			}else {
 
@@ -520,7 +528,7 @@
 			if ($con!=null) {
 					$return = false;
 				
-					if($result=mysqli_query($con,"SELECT correo, nombre, paterno, rol FROM usuario WHERE correo='$usuario' and contrasena='$contrasena';")){
+					if($result=mysqli_query($con,"SELECT correo, nombre, paterno, rol FROM usuario WHERE correo='$usuario' and contrasena='$contrasena' and status=1;")){
 						
 						$i=0;
 

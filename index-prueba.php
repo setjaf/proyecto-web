@@ -14,9 +14,15 @@
 	switch ($_POST['accion']) {
 		case "nuevo_usuario":
 
-			$id_usuario=$procedimientos->insertar_usuario($_POST['correo_usuario'],$_POST['contrasena_nueva'],$_POST['nombre'],$_POST['paterno'],$_POST['materno'],$_POST['nacimiento'],(isset($_POST['boleta'])?$_POST['boleta']:NULL),$_POST['curp'],1,$_POST['rol']);
+			$id_usuario=$procedimientos->insertar_usuario($_POST['correo_usuario'],$_POST['contrasena_nueva'],$_POST['nombre'],$_POST['paterno'],$_POST['materno'],$_POST['nacimiento'],(isset($_POST['boleta'])?$_POST['boleta']:NULL),$_POST['curp'],0,$_POST['rol']);
+
+			echo $id_usuario;
+			print_r($id_usuario);
+
 
 			$id_usuario=$id_usuario[0][0];
+
+			echo $id_usuario;
 
 			if(is_int($id_usuario)){
 				$return['error'] = 0;
