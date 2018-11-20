@@ -33,13 +33,13 @@ class Usuario {
 	llenarPermisos(rol){
 		var permisos={};
 		$.ajax({
-			url: 'http://localhost/proyecto-web/index-prueba.php',
+			url: 'http://localhost:81/proyecto-web/index-prueba.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {'accion':'getPermisos','rol': rol},
 		})
 		.done(function(e) {
-
+			console.log(e);
 			if (e.error==0) {
 				for(var permiso in e){
 
@@ -58,7 +58,10 @@ class Usuario {
 			
 		})
 		.fail(function(e) {
-			alert(e);
+			console.log(e);
+			$('#mensaje-resp-ajax').html(e.responseText);
+			$('#exampleModal').modal('hide');
+			$('#exampleModalCenter').modal("toggle");
 		});
 
 		return permisos;
@@ -78,7 +81,7 @@ class Usuario {
 	cargarSolicitudes(){
 		var self = this;
 		$.ajax({
-			url: 'http://localhost/proyecto-web/index-prueba.php',
+			url: 'http://localhost:81/proyecto-web/index-prueba.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {accion: 'getSolicitudes'},
@@ -121,7 +124,9 @@ class Usuario {
 			}
 		})
 		.fail(function(e) {
-			console.log(e);
+			$('#mensaje-resp-ajax').html(e.responseText);
+			$('#exampleModal').modal('hide');
+			$('#exampleModalCenter').modal("toggle");
 		});
 		
 	}
@@ -140,7 +145,7 @@ class Usuario {
 					
 					console.log(datos.keys());
 					$.ajax({
-						url: 'http://localhost/proyecto-web/index-prueba.php',
+						url: 'http://localhost:81/proyecto-web/index-prueba.php',
 						contentType: false,
 						processData: false,
 						cache: false,
@@ -157,7 +162,7 @@ class Usuario {
 						self.cargarSolicitudes();
 
 					}).fail(function(e) {
-						$('#mensaje-resp-ajax').html(e.mensaje);
+						$('#mensaje-resp-ajax').html(e.responseText);
 						$('#exampleModal').modal('hide');
 						$('#exampleModalCenter').modal("toggle");
 					});
@@ -166,13 +171,51 @@ class Usuario {
 
 	}
 
+	cargarProfesores(){
 
+		var self = this;
+		$.ajax({
+			url: 'http://localhost:81/proyecto-web/index-prueba.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {accion: 'getProfesores'},
+		})
+		.done(function(e) {
+			if (e.error==0) {
+				console.log(e);
+
+				for(var profesor in e){
+
+					if ( Number.isInteger(parseInt(profesor)) ) {
+						$('#profesor_prof_ua').append(`
+							<option value="${e[profesor][0]}">${e[profesor][1]} ${e[profesor][2]} ${e[profesor][3]}</option>
+							`);
+					}
+					
+				}
+
+			}else{
+
+				$('#mensaje-resp-ajax').html(e.mensaje);
+				$('#exampleModal').modal('hide');
+				$('#exampleModalCenter').modal("toggle");
+
+			}
+		})
+		.fail(function(e) {
+			$('#mensaje-resp-ajax').html(e.responseText);
+			$('#exampleModal').modal('hide');
+			$('#exampleModalCenter').modal("toggle");
+		});
+
+	}
 
 }
 
 $(document).ready(function() {
 	usuario = new Usuario(getCookie('correo'),getCookie('nombre'),getCookie('paterno'),getCookie('rol'),getCookie('foto'));
 	usuario.cargarSolicitudes();
+	usuario.cargarProfesores();
 });
 
 

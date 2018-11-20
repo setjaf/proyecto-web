@@ -109,17 +109,17 @@
 
 		case 'getSolicitudes':
 			
-			$permisos = $procedimientos->getSolicitudes();
+			$solicitudes = $procedimientos->getSolicitudes();
 
-			if (is_array($permisos)) {
+			if (is_array($solicitudes)) {
 
-				$return = array_merge($return,$permisos);
+				$return = array_merge($return,$solicitudes);
 				$return['error'] = 0;
 
 			}else{
 
 				$return['error'] = 1;
-				$return['mensaje'] .= 'No se lograron cargar las solicitudes. </br>'.$permisos;
+				$return['mensaje'] .= 'No se lograron cargar las solicitudes. </br>'.$solicitudes;
 
 			}
 
@@ -136,6 +136,42 @@
 				$return['mensaje'].='No se logró cambiar el status del usuario </br>'.$usuarioAceptado;
 			}
 
+			break;
+
+		case 'getProfesores':
+
+			$profesores = $procedimientos->getProfesores();
+
+			if (is_array($profesores)) {
+
+				$return = array_merge($return,$profesores);
+				$return['error'] = 0;
+
+			}else{
+
+				$return['error'] = 1;
+				$return['mensaje'] .= 'No se lograron cargar los profesores. </br>'.$profesores;
+
+			}
+			
+			break;
+
+		case 'getUAs':
+
+			$UAs = $procedimientos->getUAs();
+
+			if (is_array($UAs)) {
+
+				$return = array_merge($return,$UAs);
+				$return['error'] = 0;
+
+			}else{
+
+				$return['error'] = 1;
+				$return['mensaje'] .= 'No se lograron cargar las UAs. </br>'.$UAs;
+
+			}
+			
 			break;
 
 		default:

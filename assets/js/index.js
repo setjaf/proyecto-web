@@ -10,11 +10,9 @@ $( "form" ).submit(function( event ) {
 	var formElement = event.currentTarget;
 
 	var datos = new FormData(formElement);
-	
-	console.log(datos.keys());
 
 	$.ajax({
-		url: 'http://localhost/proyecto-web/index-prueba.php',
+		url: 'index-prueba.php',
 		contentType: false,
 		processData: false,
 		cache: false,
@@ -33,13 +31,13 @@ $( "form" ).submit(function( event ) {
 			document.cookie="foto="+e.foto;
 			switch(e.rol){
 				case '1':
-					window.location.replace("http://localhost/proyecto-web/administrador.html");
+					window.location.replace("http://localhost:81/proyecto-web/administrador.html");
 				break;
 				case '2':
-					window.location.replace("http://localhost/proyecto-web/profesor.html");
+					window.location.replace("http://localhost:81/proyecto-web/profesor.html");
 				break;
 				case '3':
-					window.location.replace("http://localhost/proyecto-web/alumno.html");
+					window.location.replace("http://localhost:81/proyecto-web/alumno.html");
 				break;
 			}
 		}else{
@@ -49,7 +47,7 @@ $( "form" ).submit(function( event ) {
 		}				
 		console.log(document.cookie);
 	}).fail(function(e) {
-		$('#mensaje-resp-ajax').html(e.mensaje);
+		$('#mensaje-resp-ajax').html(e.responseText);
 		$('#exampleModal').modal('hide');
 		$('#exampleModalCenter').modal("toggle");
 	});

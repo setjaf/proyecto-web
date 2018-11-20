@@ -10,9 +10,9 @@
 	<link href="https://fonts.googleapis.com/css?family=Rajdhani" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-	<!--<link rel="stylesheet" href="http://localhost:81/bootstrap-4.1.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="http://localhost:81/iconfont/css/all.css">-->
+	<!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<link rel="stylesheet" href="http://localhost:81/bootstrap-4.1.1/css/bootstrap.min.css">-->
+	<link rel="stylesheet" href="http://localhost:81/iconfont/css/all.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 </head>
@@ -162,11 +162,11 @@
 								</div>
 								<div class="form-group col-12">
 									<label for="">Contraseña:</label>
-									<input type="password" class="form-control" name="contrasena_nueva" id="contrasena_nueva1" placeholder="Escribe tu nueva contraseña" pattern="[0-9a-zA-Z_-/*-+]{3,8}" required>
+									<input type="password" class="form-control" name="contrasena_nueva" id="contrasena_nueva1" placeholder="Escribe tu nueva contraseña" pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +" required>
 								</div>
 								<div class="form-group col-12">
 									<label for="">Confirmar Contraseña:</label>
-									<input type="password" class="form-control" placeholder="Escribe tu nueva contraseña" name="confirmar_contrasena_nueva" id="confirmar_contrasena_nueva1" pattern="[0-9a-zA-Z_-/*-+]{3,8}" required>
+									<input type="password" class="form-control" placeholder="Escribe tu nueva contraseña" name="confirmar_contrasena_nueva" id="confirmar_contrasena_nueva1" pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +" required>
 								</div>
 								<div class="form-group col-12">
 									<label for="">Nombre(s):</label>
@@ -217,11 +217,11 @@
 								</div>
 								<div class="form-group col-12">
 									<label for="">Contraseña:</label>
-									<input type="password" class="form-control" name="contrasena_nueva" id="contrasena_nueva2" placeholder="Escribe tu nueva contraseña" required>
+									<input type="password" class="form-control" name="contrasena_nueva" id="contrasena_nueva2" placeholder="Escribe tu nueva contraseña" required pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +">
 								</div>
 								<div class="form-group col-12">
 									<label for="">Confirmar Contraseña:</label>
-									<input type="password" class="form-control" placeholder="Escribe tu nueva contraseña" name="confirmar_contrasena_nueva" id="confirmar_contrasena_nueva2" required>
+									<input type="password" class="form-control" placeholder="Escribe tu nueva contraseña" name="confirmar_contrasena_nueva" id="confirmar_contrasena_nueva2" required pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +">
 								</div>
 								<div class="form-group col-12">
 									<label for="">Nombre(s):</label>
@@ -268,11 +268,11 @@
 								</div>
 								<div class="form-group col-12">
 									<label for="">Contraseña:</label>
-									<input type="password" class="form-control" name="contrasena_nueva" id="contrasena_nueva3" placeholder="Escribe tu nueva contraseña" required>
+									<input type="password" class="form-control" name="contrasena_nueva" id="contrasena_nueva3" placeholder="Escribe tu nueva contraseña" required pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +">
 								</div>
 								<div class="form-group col-12">
 									<label for="">Confirmar Contraseña:</label>
-									<input type="password" class="form-control" placeholder="Escribe tu nueva contraseña" name="confirmar_contrasena_nueva" id="confirmar_contrasena_nueva3" required>
+									<input type="password" class="form-control" placeholder="Escribe tu nueva contraseña" name="confirmar_contrasena_nueva" id="confirmar_contrasena_nueva3" required pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +">
 								</div>
 								<div class="form-group col-12">
 									<label for="">Nombre(s):</label>
@@ -342,7 +342,7 @@
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="exampleInputPassword1">Contraseña</label>
-			    	<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="contrasena" pattern="[0-9a-zA-Z_-/*-+]{3,8}" required>
+			    	<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña" name="contrasena" pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +" required>
 					<br>
 					<a href="#">Olvidé mi contraseña</a>
 					<input type="text" hidden name="accion" value="login">
