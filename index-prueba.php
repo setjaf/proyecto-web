@@ -15,14 +15,11 @@
 		case "nuevo_usuario":
 
 			$id_usuario=$procedimientos->insertar_usuario($_POST['correo_usuario'],$_POST['contrasena_nueva'],$_POST['nombre'],$_POST['paterno'],$_POST['materno'],$_POST['nacimiento'],(isset($_POST['boleta'])?$_POST['boleta']:NULL),$_POST['curp'],0,$_POST['rol']);
-
-			echo $id_usuario;
-			print_r($id_usuario);
-
-
-			$id_usuario=$id_usuario[0][0];
-
-			echo $id_usuario;
+			try {
+				$id_usuario=(int)$id_usuario[0][0];
+			} catch (Exception $e) {
+				$return['mensaje'] .=  'No se agregó usuario correctamente </br>'.$id_usuario;
+			}			
 
 			if(is_int($id_usuario)){
 				$return['error'] = 0;
@@ -41,12 +38,10 @@
 					}else{
 						$return['mensaje'] .=  'No se logró agregar la foto';
 					}
-				}
-
-				
+				}			
 
 			}else{
-				$return['mensaje'] .= "No se agregó usuario correctamente";
+				$return['mensaje'] .= "No se agregó usuario correctamente <br>";
 			}
 
 			break;
@@ -55,7 +50,7 @@
 
 			$rol=$procedimientos->validar_usuario($_POST['usuario'],$_POST['contrasena']);
 
-			if ($rol) {
+			if (is_array($rol)) {
 
 				$return = array_merge($return,$rol[0]);
 				$return['error'] = 0;
@@ -76,10 +71,11 @@
 				
 			}else {
 				$return['error'] = 1;
-				$return['mensaje'] .= 'Correo y/o contraseña incorrectos, revísalos nuevamente';
+				$return['mensaje'] .= 'Correo y/o contraseña incorrectos, revísalos nuevamente. </br>'.$rol;
 			}
 			
 			break;
+
 		case "contacto":
 
 			$to      = $_POST['correo_contacto'];
@@ -93,12 +89,66 @@
 
 			break;
 
+		case 'getPermisos':
+			
+			$permisos = $procedimientos->getPermisos($_POST['rol']);
+
+			if (is_array($permisos)) {
+
+				$return = array_merge($return,$permisos);
+				$return['error'] = 0;
+
+			}else{
+
+				$return['error'] = 1;
+				$return['mensaje'] .= 'No se lograron cargar tus permisos. </br>'.$permisos;
+
+			}
+
+			break;
+
+		case 'getSolicitudes':
+			
+			$permisos = $procedimientos->getSolicitudes();
+
+			if (is_array($permisos)) {
+
+				$return = array_merge($return,$permisos);
+				$return['error'] = 0;
+
+			}else{
+
+				$return['error'] = 1;
+				$return['mensaje'] .= 'No se lograron cargar las solicitudes. </br>'.$permisos;
+
+			}
+
+			break;
+
+		case 'aceptarUsuario':
+			$usuarioAceptado = $procedimientos->aceptarUsuario($_POST['correo_solicitud']);
+
+			if ($usuarioAceptado==True) {
+				$return['error']=0;
+				$return['mensaje'].='Se ha cambiado el status del usuario';
+			}else {
+				$return['error']=1;
+				$return['mensaje'].='No se logró cambiar el status del usuario </br>'.$usuarioAceptado;
+			}
+
+			break;
+
 		default:
 			// code...
 			break;
 	}
 
 	echo json_encode($return);
+
+	function correoConfirmacion($correo='')
+	{
+		
+	}
 
 	/*print_r($_POST);
 	echo '<br>';

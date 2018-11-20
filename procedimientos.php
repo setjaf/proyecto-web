@@ -19,7 +19,7 @@
 	    }
 
 	    private function conexion_mysql(){
-	    	$mysqli = new mysqli("127.0.0.1", "root", "root", "escompartiendo", 3306);
+	    	$mysqli = new mysqli("127.0.0.1", "root", "", "escompartiendo", 3306);
 
 			if ($mysqli->connect_errno) {
 			    echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
@@ -139,7 +139,7 @@
 
 						$fila = $result->fetch_row();
 
-						mysqli_query($con,"INSERT INTO confirmacion_correo(usuario_nuevo,codigo) VALUES ($fila[0],UUID());");
+						mysqli_query($con,"INSERT INTO solicitud_usuario_nuevo(usuario_nuevo) VALUES ($fila[0]);");
 						
 						$result=mysqli_query($con,"SELECT * FROM usuario WHERE correo='$correo'");
 
@@ -149,8 +149,6 @@
 						    $i++;
 						}
 
-						print_r($return);
-
 						$result->close();
 					}else {
 						
@@ -158,10 +156,11 @@
 						
 					}
 
+					$ERROR_MYSQL=mysqli_error($con);
 					
 					$con->close();
 
-					return (mysqli_error($con)!=''?$return:mysqli_error($con));								
+					return ($return);								
 				
 			}else {
 
@@ -528,7 +527,7 @@
 			if ($con!=null) {
 					$return = false;
 				
-					if($result=mysqli_query($con,"SELECT correo, nombre, paterno, rol FROM usuario WHERE correo='$usuario' and contrasena='$contrasena' and status=1;")){
+					if($result=mysqli_query($con,"SELECT correo, nombre, paterno, rol, foto FROM usuario WHERE correo='$usuario' and contrasena='$contrasena' and status=1;")){
 						
 						$i=0;
 
@@ -539,8 +538,8 @@
 
 						$result->close();
 					}else {
-						echo mysqli_error($con);
-						$return = $result;
+
+						$return = mysqli_error($con);
 						
 					}
 
@@ -559,6 +558,107 @@
 
 			}
 
+		}
+		public function getPermisos($rol)
+		{
+
+			$con= $this->conexion_mysql();
+			if ($con!=null) {
+					$return = false;
+					if($result=mysqli_query($con,"SELECT b.id, b.descripcion FROM rol_permiso a INNER JOIN permiso b ON a.permiso = b.id WHERE a.rol = $rol")){
+						
+						$i=0;
+						
+						while ($fila = $result->fetch_row()) {
+						    $return[$i]=$fila;
+						    $i++;
+						}
+
+						$result->close();
+					}else {
+
+						$return = mysqli_error($con);
+						
+					}
+
+					$con->close();
+
+					return $return;
+					
+				
+			}
+			else{
+				return mysqli_error($con);
+
+			}
+			
+		}
+
+		public function getSolicitudes()
+		{
+
+			$con= $this->conexion_mysql();
+			if ($con!=null) {
+					$return = false;
+
+					$result=mysqli_query($con,"SELECT correo, nombre, paterno, rol, foto FROM usuario WHERE status = 0");
+
+					if(isset($result->num_rows) && (int)$result->num_rows>=0){
+						
+						$i=0;
+
+						$return = array();
+						
+						while ($fila = $result->fetch_row()) {
+						    $return[$i]=$fila;
+						    $i++;
+						}
+
+						$result->close();
+					}else {
+
+						$return = mysqli_error($con);
+						
+					}
+
+					$con->close();
+
+					return $return;
+					
+				
+			}
+			else{
+				return mysqli_error($con);
+
+			}
+			
+		}
+
+		public function aceptarUsuario($correo)
+		{
+
+			$con= $this->conexion_mysql();
+			if ($con!=null) {
+					$return = false;
+					$result = mysqli_query($con,"UPDATE usuario SET status = 1 WHERE correo = '$correo'");
+										
+					$return = mysqli_error($con);
+					
+					if ($return=='') {
+						$return = $result;
+					}
+
+					$con->close();
+
+					return $return;
+					
+				
+			}
+			else{
+				return mysqli_error($con);
+
+			}
+			
 		}
 	}	
 

@@ -4,7 +4,6 @@
 	<meta charset="utf-8">
 	<title>Administrador</title>
 	<script>
-		
 		function getCookie(cname) {
 		    var name = cname + "=";
 		    var decodedCookie = decodeURIComponent(document.cookie);
@@ -20,28 +19,35 @@
 		    }
 		    return "";
 		}
-		
 		if (getCookie('rol')!=1) {
-			window.location.replace("http://localhost:81/proyecto-web/index.html");
+			window.location.replace("http://localhost/proyecto-web/index.html");
 		}
 
 	</script>
-	<link rel="stylesheet" href="index.css">
+	<link rel="stylesheet" href="assets/css/index.css">
 	<link href="https://fonts.googleapis.com/css?family=Rajdhani" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
 </head>
 <body>
 	<header>
 		<nav>
 			<div class="logos">
-				<p style="margin: 0; color:#F9F9F9;"><span style="font-family: 'Rajdhani', sans-serif; font-size: 1.5em;"><img src="admin.png" width="40"> ESCOM</span>partiendo</p>
+				<p style="margin: 0; color:#F9F9F9;"><span style="font-family: 'Rajdhani', sans-serif; font-size: 1.5em;"> ESCOM</span>partiendo</p>
 			</div>
 			<ul>
-				<li><a href="index.html" ><p><img src="inicio.svg" width="40"></p></a></li>
-				<li><a href="#" ><p><img src="imagen2.svg" width="40"> </p></a></li>
-				<li><a href="#"><p><img src="archivo.svg" width="40"></p></a></li>
+				<li><a href="index.html"><p><i class="fas fa-home" style="font-size: 30px; color: white"></i></p></a></li>
+				<li><a href="#"><p><i class="fas fa-comment" style="font-size: 30px; color: white"></i></p></a></li>
+				<li id="info_usuario">
+					<!--<a href="#" class="usuario_info">
+						<img src="images/user_1.jpg" alt="Imagen usuario" width="40">
+						<p id="nombre_usuario">Nombre Usuario</p>
+						<p><i class="fas fa-edit" style="font-size: 30px; color: white"></i></p>
+					</a>-->
+				</li>
 				
 			</ul>
 			
@@ -68,18 +74,18 @@
 				<br>
 
 				<div class="botones_inicio row justify-content-around">
-					<div class="col-sm-3">
-						<a href="#alumno" class="btn btn_red btn-lg">Solicitudes</a>
+					<div class="col-sm-6">
+						<a href="#solicitudes_usuarios" class="btn btn_red btn-lg">Solicitudes Nuevos Usuarios</a>
 					</div>
 	
 				</div>
 
 				<div class="position-absolute" style="bottom: 20px;">
 					<div class="col-12 mt-5 ">
-						<a href="#profesor" class="no_link" >Bajar</a>
+						<a href="#solicitudes_usuarios" class="no_link" >Ir a solicitudes</a>
 					</div>
 					<div class="col-12">
-						<a href="#compartir" class="no_link"><i class="fas fa-chevron-down"></i></a>
+						<a href="#compartir" class="no_link"><i class="fas fa-chevron-down" style="color: red;"></i></a>
 					</div>
 				</div>
 				
@@ -87,18 +93,84 @@
 				
 			</div>
 
-			<div id="alumno" class="compartir">
+			<div id="solicitudes_usuarios" class="solicitud mt-5">
 
 				<div class="jumbotron jumbotron-fluid w-100">
-				  <div class="container justify-content-center">
-				    <h2 class="display-4">Solicitudes</h2>
-				    <br>
-				    <br>
-				    <p class="lead"><img src="profe.png" width="50" > Ing. Juan Sanchez Hernandez           <a href="#"><img src="add.png" width="40"></a></p>
-				    <p class="lead"><img src="profe.png" width="50" > Ing. Alfaro Miranda Eduardo           <a href="#"><img src="add.png" width="40"></a></p>
-				    <p class="lead"><img src="profe.png" width="50" > Ing. Arzate Gardiño Jaqueline         <a href="#"><img src="add.png" width="40"></a></p>
-				    <p class="lead"><img src="profe.png" width="50" > Ing. Gema Iridian alejo Peralta       <a href="#"><img src="add.png" width="40"></a></p>
-				    <p class="lead"><img src="profe.png" width="50" > Ing. Noe Rodriguez Rosales            <a href="#"><img src="add.png" width="40"></a></p>
+					<h2 class="display-4">Solicitudes</h2>
+				  <div class="container justify-content-center" id="solicitudes_body">
+				    
+
+
+					
+
+				
+			    <!-- 
+
+			    	<div class="media border p-3">
+				    	<img class="align-self-center mr-3" src="images/user_1.jpg" alt="Generic placeholder image" width="64">
+					    <div class="media-body align-self-center mr-3">
+					    	<h5 class="mt-0">Ing. Juan Sanchez Hernandez</h5>
+					        <p class="lead mb-0">Alumno</p>
+					  	</div>
+					  	<form class="align-self-center mr-3">
+					  		<div style="display: none;">
+					  			<input type="text" value="" name="correo_solicitud">
+					  			<input type="text" value="aceptarUsuario" name="accion">
+					  		</div>
+					  		<button type="submit" class="align-self-center mr-3 btn btn-link"><i class="fas fa-plus-circle" style="font-size: 40px; color: black;"></i></button>					  		
+					  	</form>
+					   	
+					</div>
+
+			    	<div class="media border p-3">
+					    <div class="media-body">
+					        <p class="lead">Ing. Eduardo Alfaro Miranda</p>
+					  	</div>
+					   <a href=""><i class="fas fa-plus-circle" style="font-size: 40px; color: black;"></i></a>
+					</div>
+
+				
+			    
+
+			    	<div class="media border p-3">
+					    <div class="media-body">
+					        <p class="lead">Ing. Jaqueline Arzate Gardiño</p>
+					  	</div>
+					   <a href=""><i class="fas fa-plus-circle" style="font-size: 40px; color: black;"></i></a>
+					</div>
+
+				
+			    
+
+			    	<div class="media border p-3">
+					    <div class="media-body">
+					        <p class="lead">Ing. Gema Iridian Alejo Peralta</p>
+					  	</div>
+					   <a href=""><i class="fas fa-plus-circle" style="font-size: 40px; color: black;"></i></a>
+					</div>
+
+				
+			    
+
+			    	<div class="media border p-3">
+					    <div class="media-body">
+					        <p class="lead">Lic. Maria Elena Rodriguez Aquiles</p>
+					  	</div>
+					   <a href=""><i class="fas fa-plus-circle" style="font-size: 40px; color: black;"></i></a>
+					</div>
+
+				
+			    
+
+			    	<div class="media border p-3">
+					    <div class="media-body">
+					        <p class="lead">Ing. Noe Rodriguez Rosales</p>
+					  	</div>
+					   <a href=""><i class="fas fa-plus-circle" style="font-size: 40px; color: black;"></i></a>
+					</div>
+
+				
+			    --> 
 				    
 				    <div class="w-100 mt-2"></div>
 				    
@@ -107,34 +179,76 @@
 				
 			</div>
 
-			<div id="profesor" class="compartir">
+			<div id="Permisos" class="compartir">
 
 				<div class="jumbotron jumbotron-fluid">
 				  <div class="container justify-content-center">
-				    <h2 class="display-4">Profesor</h2>
-				    <p class="lead">Comparte toda la información que quieras con tus alumnos y también con toda la comunida de ESCOM, que no haya limites para compartir el conocimiento con tus alumnos.</p>
-				    <img src="book.png" alt="" width="256" height="256">
-				    <div class="w-100 mt-2"></div>
-				    <a class="btn btn_red btn-lg" href="#" role="button">Registrarme</a>
+				    <h2 class="display-4">Permisos </h2>
+				    <p class="lead">Verifica los archivos que los profesores suben para compartir con los alumnos</p>
 				  </div>
+
+				  <div class="row">
+
+				  	<div class="col-sm-3">
+
+				  		<div class="btn-group">
+					  		<button type="button" class="btn btn-primary">Profesor</button>
+					  		<button type="button" class="btn btn-primary">Alumno</button>
+						  	<div class="btn-group">
+							    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+							       Permisos
+							    </button>
+							</div>    	
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="">Archivos</a>
+								<a class="dropdown-item" href="">Agregar</a>
+								<a class="dropdown-item" href="">Eliminar</a>
+							</div>
+						    
+						</div>
+				  		
+				  	</div>
+				  	
+				  </div>
+
+				  
 				</div>
-				
+							
 			</div>
 		
 	</section>
 
 	
-		<section class="contenedor">
-			<footer>
-				<img src="twitter.SVG" width="40">
-				<img src="facebook.SVG" width="40">
+	<section class="pie">
+		<footer>
+			<a href="https://twitter.com/?lang=es"><img src="twitter.svg" width="40"></a>
+			<a href="https://www.facebook.com/FacebookMexico/?ref=br_rs"><img src="facebook.svg" width="40"></a>
 
-				<p>ESCOMpartir ©2018 | Acerca de... | Trabajos | Centro de Noticias | Constactanos | Profesores | Comunidad | Blog | Privacidad | Terminos de Servicios | Idioma</p>
-			</footer>
-		</section>
+			<p>ESCOMpartir ©2018 | <a href="acercade.html"> Acerca de...</a> | <a href="">Trabajos</a> | <a href="">Centro de Noticias</a> | <a href="">Constactanos</a> | <a href="">Profesores</a> | <a href="">Comunidad</a> | <a href="">Blog</a> | <a href="">Privacidad</a> | <a href="">Terminos de Servicios</a> | <a href="">Idioma</a></p>
+		</footer>
+	</section>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  	<div class="modal-dialog modal-dialog-centered" role="document">
+	    	<div class="modal-content">
+	     		<div class="modal-header">
+	        		<h5 class="modal-title" id="exampleModalLongTitle">Mensaje</h5>
+	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          			<span aria-hidden="true">&times;</span>
+	        		</button>
+	      		</div>
+		      	<div class="modal-body" id="mensaje-resp-ajax">
+		      	</div>
+	      		<div class="modal-footer">
+      			</div>
+	    	</div>
+	  	</div>
+	</div>
 		
-	
-	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script src="assets/js/administrador.js"></script>
 
 </body>
 </html>

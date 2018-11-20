@@ -20,26 +20,33 @@
 		    return "";
 		}
 		if (getCookie('rol')!=2) {
-			window.location.replace("http://localhost:81/proyecto-web/index.html");
+			window.location.replace("http://localhost/proyecto-web/index.html");
 		}
 
 	</script>
-	<link rel="stylesheet" href="index.css">
+	<link rel="stylesheet" href="assets/css/index.css">
 	<link href="https://fonts.googleapis.com/css?family=Rajdhani" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </head>
 <body>
 	<header>
 		<nav>
 			<div class="logos">
-				<p style="margin: 0; color:#F9F9F9;"><span style="font-family: 'Rajdhani', sans-serif; font-size: 1.5em;"><img src="admin.png" width="40"> ESCOM</span>partiendo</p>
+				<p style="margin: 0; color:#F9F9F9;"><span style="font-family: 'Rajdhani', sans-serif; font-size: 1.5em;"> ESCOM</span>partiendo</p>
 			</div>
 			<ul>
-				<li><a href="index.html" ><p><img src="inicio.svg" width="40"></p></a></li>
-				<li><a href="#" ><p><img src="imagen2.svg" width="40"> </p></a></li>
-				<li><a href="#" ><p><img src="archivo.svg" width="40"></p></a></li>
+				<li><a href="index.html"><p><i class="fas fa-home" style="font-size: 30px; color: white"></i></p></a></li>
+				<li><a href="#"><p><i class="fas fa-comment" style="font-size: 30px; color: white"></i></p></a></li>
+				<li id="info_usuario">
+					<!--<a href="#" class="usuario_info">
+						<img src="images/user_1.jpg" alt="Imagen usuario" width="40">
+						<p id="nombre_usuario">Nombre Usuario</p>
+						<p><i class="fas fa-edit" style="font-size: 30px; color: white"></i></p>
+					</a>-->
+				</li>
 				
 			</ul>
 			
@@ -61,22 +68,139 @@
 					<br>
 				</div>
 
+				<form>
+					<div class="form-group row">
+						<div class="col-xs-2">
+						    <label for="ex1">Ingresar grupo</label>
+						    <input class="form-control" id="ex1" type="text">
+						</div>
+					</div>
+				</form>
+
 				<div class="botones_inicio row justify-content-around">
 					<div class="col-sm-3">
-						<a href="#alumno" class="btn btn_red btn-lg">Crear grupo</a>
+						<!--modal crear grupo-->
+						<a href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn_red btn-lg" id="Crear"> Crear grupo</a>
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  						<div class="modal-dialog" role="document">
+	    						<div class="modal-content">
+		      						<div class="modal-header">
+		        						<h5 class="modal-title" id="exampleModalLabel"> Crear grupo</h5>
+		        						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          						<span aria-hidden="true">&times;</span>
+		        						</button>
+		      						</div>
+
+		      						<div class="modal-body">
+
+		        						<form>
+				  						<div class="form-group">
+				  							<label for="exampleModalLabel">Nombre de materia</label>
+				  							<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">			    						
+				  						</div>
+				  						<div class="form-group">
+				    						<label for="exampleInputPassword1">Nombre del Profesor</label>
+				    						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Juan Perez León">
+				
+
+				  						</div>
+				  						<button type="submit" class="btn btn-primary">Crear</button>
+										</form>
+
+		     						</div>
+		      						<div class="modal-footer">
+		        						<span>Me equivoque <a href="#registro" id="btnregistro">Editar grupo</a></span>
+		      						</div>
+
+	    						</div>
+	  						</div>
+						</div>
 					</div>
+
 					<div class="col-sm-3">
-						<a href="#alumno" class="btn btn_red btn-lg">Eliminar grupo</a>
+						<a href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn_red btn-lg" id="Eliminar">Eliminar grupo</a>
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  						<div class="modal-dialog" role="document">
+	    						<div class="modal-content">
+	      						<div class="modal-header">
+	        						<h5 class="modal-title" id="exampleModalLabel">Eliminar Grupo</h5>
+	        						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          						<span aria-hidden="true">&times;</span>
+	        						</button>
+	      						</div>
+
+	      						<div class="modal-body">
+
+	        						<form>
+			  						<div class="form-group">
+			  							<label for="exampleModalLabel">Nombre de materia</label>
+			  							<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">			    						
+			  						</div>
+			  						<div class="form-group">
+			    						<label for="exampleInputPassword1">Nombre del Profesor</label>
+			    						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Juan Perez León">			
+			  						</div>
+			  						<button type="submit" class="btn btn-primary">Eliminar</button>
+									</form>
+
+	     						</div>
+	      						<div class="modal-footer">
+	        						<span>Me equivoque <a href="#registro" id="btnregistro">Deshacer</a></span>
+	      						</div>
+
+	    						</div>
+	  						</div>
+						</div>
 					</div>
+
 					<div class="col-sm-3">
-						<a href="#alumno" class="btn btn_red btn-lg">Subir archivo</a>
+						<a href="subir.html" class="btn btn_red btn-lg" id="Subir">Subir archivo</a>
 					</div>
+
 					<div class="col-sm-3">
-						<a href="#alumno" class="btn btn_red btn-lg">Eliminar archivo</a>
+						<a href="#" data-toggle="moda1" data-target="#exampleModa1" class="btn btn_red btn-lg" id="Eliminar1">Eliminar archivo</a>
+						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  						<div class="modal-dialog" role="document">
+	    						<div class="modal-content">
+		      						<div class="modal-header">
+		        						<h5 class="modal-title" id="exampleModalLabel">Eliminar archivo</h5>
+		        						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          						<span aria-hidden="true">&times;</span>
+		        						</button>
+		      						</div>
+
+		      						<div class="modal-body">
+
+		        						<form>
+				  						<div class="form-group">
+				  							<label for="exampleModalLabel">Nombre del Archivo</label>
+				  							<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">			    						
+				  						</div>
+				  						<div class="form-group">
+				    						<label for="exampleInputPassword1">Tipo de archivo</label>
+				    						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="">
+				
+
+				  						</div>
+				  						<button type="submit" class="btn btn-primary">Borrar</button>
+										</form>
+
+		     						</div>
+		      						<div class="modal-footer">
+		        						<span>Me equivoque <a href="#registro" id="btnregistro">Deshacer</a></span>
+		      						</div>
+
+	    						</div>
+	  						</div>
+						</div>
+
 					</div>
-					<div>
+
+					<div id="fecha" class="fecha">
+						<br>
+						<br>
 						<h3 background="F9F9F9">Fecha de entrega</h3>
-						<input type="date" name="birthday" required="or" />
+						<input type="date" name="fecha" required="or" />
 					</div>
 				</div>	
 
@@ -85,74 +209,120 @@
 						<a href="#profesor" class="no_link" >Bajar</a>
 					</div>
 					<div class="col-12">
-						<a href="#compartir" class="no_link"><i class="fas fa-chevron-down"></i></a>
+						<a href="#check1" class="no_link"><i class="fas fa-chevron-down"></i></a>
 					</div>
 				</div>
-			</div>	
-				
-			<div id="alumno" class="compartir">
-				<div class="jumbotron jumbotron-fluid w-100">
-				  <div class="container justify-content-center">
-				    <br>
-				    <br>
-				    <p class="lead"><img src="profe.png" width="50" > CSS </p>
-				    <div class="w-100 mt-2"></div>
-				  </div> 
-				</div>    
-			</div>	    
+			</div>		  
+
+			<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
+				<div class="media border p-3">
+				  <div class="media-body">
+				    <h4><input type="checkbox" name="css" id="check1" value="css" checked="">   CSS</h4>
+				  	</div>
+				   <a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-plus-circle" style="font-size: 40px; color: black;"></i></a>
+				</div>
+
+				<!---alt="John Doe"-->
+			<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------>  
 				  
-			<div id="alumno" class="compartir">
-				<div class="jumbotron jumbotron-fluid w-100">
-				  <div class="container justify-content-center">
-				    <br>
-				    <br>
-				    <p class="lead"><img src="profe.png" width="50" > HTML5 </p>
-				    <div class="w-100 mt-2"></div>
-				  </div> 
-				</div>    
-			</div>
+			<div class="media border p-3">
+				  <div class="media-body">
+				    <h4><input type="checkbox" name="html5" id="check2" value="html5" checked="">   HTML5</h4>
+				  	</div>
+				   <a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-plus-circle" style="font-size: 40px; color: black;"></i></a>
+				</div>
 
-			<div id="alumno" class="compartir">
-				<div class="jumbotron jumbotron-fluid w-100">
-				  <div class="container justify-content-center">
-				    <br>
-				    <br>
-				    <p class="lead"><img src="profe.png" width="50" > JAVASCRIP </p>
-				    <div class="w-100 mt-2"></div>
-				  </div> 
-				</div>    
-			</div>
+				<!---alt="John Doe"-->
+			<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------> 
 
-			<div id="alumno" class="compartir">
-				<div class="jumbotron jumbotron-fluid w-100">
-				  <div class="container justify-content-center">
-				    <br>
-				    <br>
-				    <p class="lead"><img src="profe.png" width="50" > BOOTSTRAP </p>
-				    <div class="w-100 mt-2"></div>
-				  </div> 
-				</div>    
-			</div>	
+			<div class="media border p-3">
+				  <div class="media-body">
+				    <h4><input type="checkbox" name="javascrip" id="check3" value="javascrip" checked="">   JAVASCRIP</h4>
+				  	</div>
+				   <a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-plus-circle" style="font-size: 40px; color: black;"></i></a>
+				</div>
 
-			<div id="alumno" class="compartir">
-				<div class="jumbotron jumbotron-fluid w-100">
-				  <div class="container justify-content-center">
-				    <br>
-				    <br>
-				    <p class="lead"><img src="profe.png" width="50" > CSS3 </p>
-				    <div class="w-100 mt-2"></div>
-				  </div> 
-				</div>    
-			</div>		
+				<!---alt="John Doe"-->
+			<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------> 
+
+			<div class="media border p-3">
+				  <div class="media-body">
+				    <h4><input type="checkbox" name="bootstrap" id="check4" value="bootstrap" checked="">   BOOTTRAP</h4>
+				  	</div>
+				   <a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-plus-circle" style="font-size: 40px; color: black;"></i></a>
+				</div>
+
+				<!---alt="John Doe"-->
+			<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------> 
+
+			<div class="media border p-3">
+				  <div class="media-body">
+				    <h4><input type="checkbox" name="css3" id="check5" value="css3" checked="">   CSS3</h4>
+				  	</div>
+				   <a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+				   <a href=""><i class="fas fa-plus-circle" style="font-size: 40px; color: black;"></i></a>
+				</div>
+
+				<!---alt="John Doe"-->
+			<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------> 		
 		</div>		 
 	</section>
 				
-	<section class="contenedor">
+	<section class="pie">
 		<footer>
-			<img src="twiter.png" width="40">
-			<img src="facebook.png" width="40">
-			<p>ESCOMpartir ©2018 | Acerca de... | Trabajos | Centro de Noticias | Constactanos | Profesores | Comunidad | Blog | Privacidad | Terminos de Servicios | Idioma</p>
+			<div >
+				<a href="https://twitter.com/?lang=es"><img src="twitter.svg" width="40"></a>
+				<a href="https://www.facebook.com/FacebookMexico/?ref=br_rs"><img src="facebook.svg" width="40"></a><p>ESCOMpartir ©2018 | </p>	
+				
+			</div>
+			
 		</footer>
 	</section>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  	<div class="modal-dialog modal-dialog-centered" role="document">
+	    	<div class="modal-content">
+	     		<div class="modal-header">
+	        		<h5 class="modal-title" id="exampleModalLongTitle">Mensaje</h5>
+	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          			<span aria-hidden="true">&times;</span>
+	        		</button>
+	      		</div>
+		      	<div class="modal-body" id="mensaje-resp-ajax">
+		      	</div>
+	      		<div class="modal-footer">
+      			</div>
+	    	</div>
+	  	</div>
+	</div>
+		
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script src="assets/js/profesor.js"></script>
 </body>
 </html>

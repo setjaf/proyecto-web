@@ -6,7 +6,7 @@
 
 header{
 	width:100%;
-	height: 70px;
+	height: 60px;
 	background-color: #1169a3;
 	position: fixed;
 	top:0;
@@ -170,4 +170,12 @@ footer{
 	background-color: #000;
 	border-color: #E04727;
 	padding: 2rem 1rem
+}
+
+.usuario_info{
+	display: flex;
+	flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
