@@ -33,7 +33,7 @@ class Usuario {
 	llenarPermisos(rol){
 		var permisos={};
 		$.ajax({
-			url: 'http://localhost:81/proyecto-web/index-prueba.php',
+			url: 'http://localhost/proyecto-web/index-prueba.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {'accion':'getPermisos','rol': rol},
@@ -81,7 +81,7 @@ class Usuario {
 	cargarSolicitudes(){
 		var self = this;
 		$.ajax({
-			url: 'http://localhost:81/proyecto-web/index-prueba.php',
+			url: 'http://localhost/proyecto-web/index-prueba.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {accion: 'getSolicitudes'},
@@ -99,6 +99,7 @@ class Usuario {
 							    <div class="media-body align-self-center mr-3">
 							    	<h5 class="mt-0">${e[solicitud][1]} ${e[solicitud][2]}</h5>
 							        <p class="lead mb-0">${tipo_usuario[e[solicitud][3]]}</p>
+							        <p class="lead mb-0">Fecha alta: ${e[solicitud][5]}</p>
 							  	</div>
 							  	<form class="align-self-center mr-3">
 							  		<div style="display: none;">
@@ -145,7 +146,7 @@ class Usuario {
 					
 					console.log(datos.keys());
 					$.ajax({
-						url: 'http://localhost:81/proyecto-web/index-prueba.php',
+						url: 'http://localhost/proyecto-web/index-prueba.php',
 						contentType: false,
 						processData: false,
 						cache: false,
@@ -153,13 +154,32 @@ class Usuario {
 						dataType: 'json',
 						data: datos,
 					}).done(function(e) {
-						
 						console.log(e);
-						$('#mensaje-resp-ajax').html(e.mensaje);
-						$('#exampleModal').modal('hide');
-						$('#exampleModalCenter').modal("toggle");
-						$('#solicitudes_body').empty();
-						self.cargarSolicitudes();
+						if (e.accion=='crearUA') {
+							console.log('crearUA');
+							console.log(e);
+							$('#mensaje-resp-ajax').html(e.mensaje);
+							$('#exampleModal').modal('hide');
+							$('#exampleModalCenter').modal("toggle");
+							self.cargarUAs();
+
+						}else if(e.accion=='aceptarUsuario'){
+							
+							console.log(e);
+							$('#mensaje-resp-ajax').html(e.mensaje);
+							$('#exampleModal').modal('hide');
+							$('#exampleModalCenter').modal("toggle");
+							$('#solicitudes_body').empty();
+							self.cargarSolicitudes();
+
+						}else if (e.accion=='asignarUA') {
+							console.log(e);
+							$('#mensaje-resp-ajax').html(e.mensaje);
+							$('#exampleModal').modal('hide');
+							$('#exampleModalCenter').modal("toggle");
+						}
+						
+						
 
 					}).fail(function(e) {
 						$('#mensaje-resp-ajax').html(e.responseText);
@@ -173,9 +193,11 @@ class Usuario {
 
 	cargarProfesores(){
 
+		$('#profesor_prof_ua').empty();
+
 		var self = this;
 		$.ajax({
-			url: 'http://localhost:81/proyecto-web/index-prueba.php',
+			url: 'http://localhost/proyecto-web/index-prueba.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {accion: 'getProfesores'},
@@ -183,6 +205,10 @@ class Usuario {
 		.done(function(e) {
 			if (e.error==0) {
 				console.log(e);
+
+				$('#profesor_prof_ua').append(`
+							<option value="">Selecciona un profesor</option>
+							`);
 
 				for(var profesor in e){
 
@@ -195,7 +221,6 @@ class Usuario {
 				}
 
 			}else{
-
 				$('#mensaje-resp-ajax').html(e.mensaje);
 				$('#exampleModal').modal('hide');
 				$('#exampleModalCenter').modal("toggle");
@@ -210,14 +235,59 @@ class Usuario {
 
 	}
 
+	cargarUAs(){
+		
+		$('#ua_prof_ua').empty();
+
+		var self = this;
+		$.ajax({
+			url: 'http://localhost/proyecto-web/index-prueba.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {accion: 'getUAs'},
+		})
+		.done(function(e) {
+			if (e.error==0) {
+				console.log(e);
+
+				$('#ua_prof_ua').append(`
+							<option value="">Selecciona una unidad de aprendizaje</option>
+							`);
+
+				for(var ua in e){
+					
+					if ( Number.isInteger(parseInt(ua)) ) {
+						$('#ua_prof_ua').append(`
+							<option value="${e[ua][0]}">${e[ua][1]}</option>
+							`);
+					}
+					
+				}
+
+			}else{
+				$('#mensaje-resp-ajax').html(e.mensaje);
+				$('#exampleModal').modal('hide');
+				$('#exampleModalCenter').modal("toggle");
+
+			}
+		})
+		.fail(function(e) {
+			$('#mensaje-resp-ajax').html(e.responseText);
+			$('#exampleModal').modal('hide');
+			$('#exampleModalCenter').modal("toggle");
+		});
+
+	}
+
+
 }
 
 $(document).ready(function() {
 	usuario = new Usuario(getCookie('correo'),getCookie('nombre'),getCookie('paterno'),getCookie('rol'),getCookie('foto'));
 	usuario.cargarSolicitudes();
 	usuario.cargarProfesores();
+	usuario.cargarUAs();
 });
-
 
 
 

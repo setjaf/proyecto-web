@@ -14,14 +14,14 @@
 	switch ($_POST['accion']) {
 		case "nuevo_usuario":
 
-			$id_usuario=$procedimientos->insertar_usuario($_POST['correo_usuario'],$_POST['contrasena_nueva'],$_POST['nombre'],$_POST['paterno'],$_POST['materno'],$_POST['nacimiento'],(isset($_POST['boleta'])?$_POST['boleta']:NULL),$_POST['curp'],0,$_POST['rol']);
+			$result=$procedimientos->insertar_usuario($_POST['correo_usuario'],$_POST['contrasena_nueva'],$_POST['nombre'],$_POST['paterno'],$_POST['materno'],$_POST['nacimiento'],(isset($_POST['boleta'])?$_POST['boleta']:NULL),$_POST['curp'],0,$_POST['rol']);
 			try {
-				$id_usuario=(int)$id_usuario[0][0];
+				$id_usuario=$result[0][0];
 			} catch (Exception $e) {
 				$return['mensaje'] .=  'No se agregó usuario correctamente </br>'.$id_usuario;
 			}			
 
-			if(is_int($id_usuario)){
+			if(is_numeric($id_usuario)){
 				$return['error'] = 0;
 				$return['mensaje'] .=  "Se agregó usuario correctamente";
 
@@ -41,7 +41,7 @@
 				}			
 
 			}else{
-				$return['mensaje'] .= "No se agregó usuario correctamente <br>";
+				$return['mensaje'] .= "No se agregó usuario correctamente <br>".$result;
 			}
 
 			break;
@@ -110,7 +110,6 @@
 		case 'getSolicitudes':
 			
 			$solicitudes = $procedimientos->getSolicitudes();
-
 			if (is_array($solicitudes)) {
 
 				$return = array_merge($return,$solicitudes);
@@ -172,6 +171,47 @@
 
 			}
 			
+			break;
+
+		case 'crearUA':
+			if (isset($_POST['nombre_ua']) && isset($_POST['descripcion_ua']) && isset($_POST['nivel_ua'])) {
+				
+				$UA = $procedimientos->crearUA($_POST['nombre_ua'],$_POST['descripcion_ua'],$_POST['nivel_ua']);
+
+				if (!is_string($UA)) {
+					
+					$return['error'] = 0;
+					$return['mensaje'] .= 'Se agregó correctamente la unidad de aprendizaje. </br>';
+
+				}else{
+
+					$return['error'] = 1;
+					$return['mensaje'] .= 'No se agregó correctamente la unidad de aprendizaje. </br>'.$UA;
+
+				}
+
+			}			
+
+			break;
+
+		case 'asignarUA':
+			
+			if (isset($_POST['profesor_prof_ua']) && isset($_POST['ua_prof_ua'])) {
+				$asignado=$procedimientos->asignarUAProfesor($_POST['profesor_prof_ua'],$_POST['ua_prof_ua']);
+				if (!is_string($asignado)) {
+					
+					$return['error'] = 0;
+					$return['mensaje'] .= 'Se asigno correctamente la unidad de aprendizaje. </br>';
+
+				}else{
+
+					$return['error'] = 1;
+					$return['mensaje'] .= 'No se asigno correctamente la unidad de aprendizaje. </br>'.$UA;
+
+				}
+
+			}
+
 			break;
 
 		default:

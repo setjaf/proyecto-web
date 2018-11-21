@@ -19,7 +19,7 @@
 	    }
 
 	    private function conexion_mysql(){
-	    	$mysqli = new mysqli("127.0.0.1", "root", "root", "escompartiendo", 3306);
+	    	$mysqli = new mysqli("127.0.0.1", "root", "", "escompartiendo", 3306);
 
 			if ($mysqli->connect_errno) {
 			    echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
@@ -137,11 +137,7 @@
 
 						$i=0;
 
-						$fila = $result->fetch_row();
-
-						mysqli_query($con,"INSERT INTO solicitud_usuario_nuevo(usuario_nuevo) VALUES ($fila[0]);");
-						
-						$result=mysqli_query($con,"SELECT * FROM usuario WHERE correo='$correo'");
+						$return=array();
 
 						while ($fila = $result->fetch_row()) {
 							
@@ -152,21 +148,18 @@
 						$result->close();
 					}else {
 						
-						$return = $result;
+						$return = mysqli_error($con);
 						
 					}
-
-					$ERROR_MYSQL=mysqli_error($con);
 					
 					$con->close();
 
-					return ($return);								
+					return $return;								
 				
 			}else {
 
 
-				echo mysqli_error($con);
-				return false;
+				return mysqli_error($con);
 				
 			}
 
@@ -397,7 +390,7 @@
 			}
 		}
 
-		public function agregar_ua($nombre, $descripcion, $nivel){
+		public function crearUA($nombre, $descripcion, $nivel){
 
 			$con=$this->conexion_mysql();
 			if ($con!=null) {
@@ -407,7 +400,11 @@
 
 					$return = $result;
 
-					echo mysqli_error($con);
+					if (!$return) {
+
+						$return = mysqli_error($con);
+
+					}					
 
 					$con->close();				
 
@@ -468,7 +465,7 @@
 			if ($con!=null) {
 					$return=false;
 					
-					$result=mysqli_query($con,"SELECT * FROM unidad_aprendizaje");
+					$result=mysqli_query($con,"SELECT id, nombre FROM unidad_aprendizaje");
 
 					if(isset($result->num_rows) && (int)$result->num_rows>=0){
 						
@@ -501,17 +498,18 @@
 			
 		}
 
-		public function asignar_ua_profesor($profesor, $ua){
+		public function asignarUAProfesor($profesor, $ua){
 
 			$con=$this->conexion_mysql();
-			if ($con!=null) {
-				
+			if ($con!=null) {				
 
 					$result=mysqli_query($con,"INSERT INTO ua_profesor(ua,usuario) values ($ua,$profesor);");
 
 					$return = $result;
 
-					echo mysqli_error($con);
+					if (!$return) {
+						$return=mysqli_error($con);
+					}
 
 					$con->close();				
 
@@ -607,7 +605,7 @@
 			if ($con!=null) {
 					$return = false;
 
-					$result=mysqli_query($con,"SELECT correo, nombre, paterno, rol, foto FROM usuario WHERE status = 0");
+					$result=mysqli_query($con,"SELECT correo, nombre, paterno, rol, foto, fecha_alta FROM usuario WHERE status = 0");
 
 					if(isset($result->num_rows) && (int)$result->num_rows>=0){
 						
