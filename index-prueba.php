@@ -7,8 +7,6 @@
 
 	$return = ['error'=>1,'mensaje'=>''];
 
-	//print_r($_POST);
-
 	$return['accion']=$_POST['accion'];
 
 	switch ($_POST['accion']) {
@@ -157,7 +155,7 @@
 
 		case 'getUAs':
 
-			$UAs = $procedimientos->getUAs();
+			$UAs = $procedimientos->getUAs((isset($_POST['correo_usuario'])?$_POST['correo_usuario']:NULL));
 
 			if (is_array($UAs)) {
 
