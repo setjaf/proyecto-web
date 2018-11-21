@@ -214,8 +214,106 @@
 
 			break;
 
+		case 'crearGrupo':
+			
+			if (isset($_POST['nombre_nuevo_grupo']) && isset($_POST['ua_nuevo_grupo']) && isset($_POST['correo_usuario'])) {
+				
+				$UA = $procedimientos->crearGrupo($_POST['nombre_nuevo_grupo'],$_POST['ua_nuevo_grupo'],$_POST['correo_usuario']);
+
+				if (!is_string($UA)) {
+					
+					$return['error'] = 0;
+					$return['mensaje'] .= 'Se creó el grupo correctamente. </br>';
+
+				}else{
+
+					$return['error'] = 1;
+					$return['mensaje'] .= 'No se creó el grupo correctamente. </br>'.$UA;
+
+				}
+
+			}
+
+			break;
+
+		case 'getGrupos':
+
+			$Grupos = $procedimientos->getGrupos($_POST["correo_usuario"]);
+
+			if (is_array($Grupos)) {
+
+				$return = array_merge($return,$Grupos);
+				$return['error'] = 0;
+
+			}else{
+
+				$return['error'] = 1;
+				$return['mensaje'] .= 'No se lograron cargar las grupos. </br>'.$Grupos;
+
+			}
+			
+			break;
+
+		case 'eliminarGrupo':
+
+			if ( isset($_POST['grupo_eliminar']) && isset($_POST['correo_usuario'])) {
+				
+				$UA = $procedimientos->eliminarGrupo($_POST['grupo_eliminar'], $_POST['correo_usuario']);
+
+				if (!is_string($UA)) {
+					
+					$return['error'] = 0;
+					$return['mensaje'] .= 'Se eliminó correctamente el grupo. </br>';
+
+				}else{
+
+					$return['error'] = 1;
+					$return['mensaje'] .= 'No se eliminó correctamente el grupo. </br>'.$UA;
+
+				}
+
+			}
+
+			break;
+
+		case "nuevo_archivo":
+
+			$result=$procedimientos->insertar_archivo($_POST['nombre_archivo'],$_POST['descripcion_archivo'],$_POST['correo_usuario'],$_POST['ua_archivo']);
+
+			try {
+				$id_archivo=$result;
+			} catch (Exception $e) {
+				$return['mensaje'] .=  'No se agregó archivo correctamente </br>'.$id_archivo;
+			}
+
+			if(is_numeric($id_archivo)){
+				
+
+				if ( isset($_FILES['archivo']) && $_FILES['archivo']['error']=='0' ) {
+
+					$info = pathinfo($_FILES['archivo']['name']);
+
+					$ext = $info['extension']; // get the extension of the file
+					$newname = str_replace(' ', '_', $_POST['nombre_archivo'])."_".$id_archivo.'.'.$ext; 
+
+					$target = 'files/'.$newname;
+					if( move_uploaded_file( $_FILES['archivo']['tmp_name'], $target) && $procedimientos->insertar_url_archivo($target,$_POST['correo_usuario']) )
+					{
+						$return['error'] = 0;
+						$return['mensaje'] .=  "Se agregó archivo correctamente";
+					}else{
+						$return['mensaje'] .=  'No se logró agregar el archivo';
+					}
+				}			
+
+			}else{
+				$return['mensaje'] .= "No se agregó archivo correctamente <br>".$result;
+			}
+
+			break;
+		
 		default:
-			// code...
+				$return['mensaje'] .= 'No hay caso para esa acción';
 			break;
 	}
 

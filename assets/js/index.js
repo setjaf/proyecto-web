@@ -31,13 +31,13 @@ $( "form" ).submit(function( event ) {
 			document.cookie="foto="+e.foto;
 			switch(e.rol){
 				case '1':
-					window.location.replace("http://localhost/proyecto-web/administrador.html");
+					window.location.replace("administrador.html");
 				break;
 				case '2':
-					window.location.replace("http://localhost/proyecto-web/profesor.html");
+					window.location.replace("profesor.html");
 				break;
 				case '3':
-					window.location.replace("http://localhost/proyecto-web/alumno.html");
+					window.location.replace("alumno.html");
 				break;
 			}
 		}else{

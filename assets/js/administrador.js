@@ -33,7 +33,7 @@ class Usuario {
 	llenarPermisos(rol){
 		var permisos={};
 		$.ajax({
-			url: 'http://localhost/proyecto-web/index-prueba.php',
+			url: 'index-prueba.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {'accion':'getPermisos','rol': rol},
@@ -81,7 +81,7 @@ class Usuario {
 	cargarSolicitudes(){
 		var self = this;
 		$.ajax({
-			url: 'http://localhost/proyecto-web/index-prueba.php',
+			url: 'index-prueba.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {accion: 'getSolicitudes'},
@@ -146,7 +146,7 @@ class Usuario {
 					
 					console.log(datos.keys());
 					$.ajax({
-						url: 'http://localhost/proyecto-web/index-prueba.php',
+						url: 'index-prueba.php',
 						contentType: false,
 						processData: false,
 						cache: false,
@@ -197,7 +197,7 @@ class Usuario {
 
 		var self = this;
 		$.ajax({
-			url: 'http://localhost/proyecto-web/index-prueba.php',
+			url: 'index-prueba.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {accion: 'getProfesores'},
@@ -241,7 +241,7 @@ class Usuario {
 
 		var self = this;
 		$.ajax({
-			url: 'http://localhost/proyecto-web/index-prueba.php',
+			url: 'index-prueba.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {accion: 'getUAs'},

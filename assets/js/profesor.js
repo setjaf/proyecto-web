@@ -33,7 +33,7 @@ class Usuario {
 	llenarPermisos(rol){
 		var permisos={};
 		$.ajax({
-			url: 'http://localhost/proyecto-web/index-prueba.php',
+			url: 'index-prueba.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {'accion':'getPermisos','rol': rol},
@@ -58,7 +58,9 @@ class Usuario {
 			
 		})
 		.fail(function(e) {
-			alert(e);
+			$('#mensaje-resp-ajax').html(e.responseText);
+			$('#exampleModal').modal('hide');
+			$('#exampleModalCenter').modal("toggle");
 		});
 
 		return permisos;
@@ -75,8 +77,156 @@ class Usuario {
 
 	}
 
+	iniciarForm(){
+		var self = this;
+		$( "form" ).submit(function( event ) {
+
+					event.preventDefault();
+
+					console.log(event);
+
+					var formElement = event.currentTarget;
+
+					var datos = new FormData(formElement);
+
+					datos.append('correo_usuario',self.correo);
+					
+					console.log(datos.keys());
+					$.ajax({
+						url: 'index-prueba.php',
+						contentType: false,
+						processData: false,
+						cache: false,
+						type: 'POST',
+						dataType: 'json',
+						data: datos,
+					}).done(function(e) {
+						console.log(e);
+						if (e.accion=='crearGrupo') {
+							console.log('crearGrupo');
+							console.log(e);
+							$('#mensaje-resp-ajax').html(e.mensaje);
+							$('#exampleModal').modal('hide');
+							$('#exampleModal1').modal('hide');
+							$('#exampleModalCenter').modal("toggle");
+							self.cargarGrupos();
+
+						}else if(e.accion=='eliminarGrupo'){
+							
+							console.log(e);
+							$('#mensaje-resp-ajax').html(e.mensaje);
+							$('#exampleModal').modal('hide');
+							$('#exampleModal1').modal('hide');
+							$('#exampleModalCenter').modal("toggle");
+							$('#solicitudes_body').empty();
+							self.cargarGrupos();
+
+						}else if (e.accion=='nuevo_archivo') {
+							console.log(e);
+							$('#mensaje-resp-ajax').html(e.mensaje);
+							$('#exampleModal').modal('hide');
+							$('#exampleModalCenter').modal("toggle");
+						}
+						
+						
+
+					}).fail(function(e) {
+						console.log(e);
+						$('#mensaje-resp-ajax').html(e.responseText);
+						$('#exampleModal').modal('hide');
+						$('#exampleModalCenter').modal("toggle");
+					});
+				  
+				});	
+
+	}
+
+	cargarUAs(){
+
+		var self = this;
+		$.ajax({
+			url: 'index-prueba.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {accion: 'getUAs'},
+		})
+		.done(function(e) {
+			if (e.error==0) {
+
+				for(var ua in e){
+					
+					if ( Number.isInteger(parseInt(ua)) ) {
+						$('#uas_nuevo_grupo').append(`
+							<option value="${e[ua][0]}">${e[ua][1]}</option>
+							`);
+						$('#ua_archivo').append(`
+							<option value="${e[ua][0]}">${e[ua][1]}</option>
+							`);
+					}
+					
+				}
+
+			}else{
+				$('#mensaje-resp-ajax').html(e.mensaje);
+				$('#exampleModal').modal('hide');
+				$('#exampleModalCenter').modal("toggle");
+
+			}
+		})
+		.fail(function(e) {
+			$('#mensaje-resp-ajax').html(e.responseText);
+			$('#exampleModal').modal('hide');
+			$('#exampleModalCenter').modal("toggle");
+		});
+
+	}
+
+	cargarGrupos(){
+
+		$('#grupo_lista').empty();
+		$('#grupo_lista').append(`
+							<option value="">Selecciona el grupo a eliminar</option>
+							`);
+		
+		var self = this;
+		$.ajax({
+			url: 'index-prueba.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {accion: 'getGrupos', correo_usuario:self.correo},
+		})
+		.done(function(e) {
+			if (e.error==0) {
+
+				for(var ua in e){
+					
+					if ( Number.isInteger(parseInt(ua)) ) {
+						$('#grupo_lista').append(`
+							<option value="${e[ua][0]}">${e[ua][1]}</option>
+							`);
+					}
+					
+				}
+
+			}else{
+				$('#mensaje-resp-ajax').html(e.mensaje);
+				$('#exampleModal').modal('hide');
+				$('#exampleModalCenter').modal("toggle");
+
+			}
+		})
+		.fail(function(e) {
+			$('#mensaje-resp-ajax').html(e.responseText);
+			$('#exampleModal').modal('hide');
+			$('#exampleModalCenter').modal("toggle");
+		});
+
+	}
 }
 
 $(document).ready(function() {
 	usuario = new Usuario(getCookie('correo'),getCookie('nombre'),getCookie('paterno'),getCookie('rol'),getCookie('foto'));
+	usuario.iniciarForm();
+	usuario.cargarUAs();
+	usuario.cargarGrupos();
 });
