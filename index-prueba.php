@@ -12,6 +12,9 @@
 	$return['accion']=$_POST['accion'];
 
 	switch ($_POST['accion']) {
+		
+		/*Ya programadas en JavaScript*/
+
 		case "nuevo_usuario":
 
 			$result=$procedimientos->insertar_usuario($_POST['correo_usuario'],$_POST['contrasena_nueva'],$_POST['nombre'],$_POST['paterno'],$_POST['materno'],$_POST['nacimiento'],(isset($_POST['boleta'])?$_POST['boleta']:NULL),$_POST['curp'],0,$_POST['rol']);
@@ -278,7 +281,7 @@
 
 		case "nuevo_archivo":
 
-			$result=$procedimientos->insertar_archivo($_POST['nombre_archivo'],$_POST['descripcion_archivo'],$_POST['correo_usuario'],$_POST['ua_archivo']);
+			$result=$procedimientos->insertar_archivo($_POST['nombre_archivo'],$_POST['descripcion_archivo'],$_POST['correo_usuario'],$_POST['ua_archivo'],$_POST['nivel_archivo']);
 
 			try {
 				$id_archivo=$result;
@@ -308,6 +311,35 @@
 
 			}else{
 				$return['mensaje'] .= "No se agregó archivo correctamente <br>".$result;
+			}
+
+			break;
+
+
+		/*Aún no programadas en JavaScript*/
+
+		case 'desactivarUsuario':
+			$usuarioAceptado = $procedimientos->desactivarUsuario($_POST['correo_solicitud']);
+
+			if ($usuarioAceptado==True) {
+				$return['error']=0;
+				$return['mensaje'].='Se ha cambiado el status del usuario, ahora está como inactivo';
+			}else {
+				$return['error']=1;
+				$return['mensaje'].='No se logró cambiar el status del usuario, intentalo denuevo más tarde </br>'.$usuarioAceptado;
+			}
+
+			break;
+
+		case 'eliminarUsuario':
+			$usuarioAceptado = $procedimientos->eliminarUsuario($_POST['correo_solicitud']);
+
+			if ($usuarioAceptado==True) {
+				$return['error']=0;
+				$return['mensaje'].='Se ha eliminado el usuario correctamente';
+			}else {
+				$return['error']=1;
+				$return['mensaje'].='No se logró eliminar el usuario, intentalo denuevo más tarde </br>'.$usuarioAceptado;
 			}
 
 			break;

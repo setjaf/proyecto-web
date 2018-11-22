@@ -19,7 +19,7 @@
 		    }
 		    return "";
 		}
-		if (getCookie('rol')!=2) {
+		if ( getCookie('rol')!=2 && getCookie('rol')!=1 ) {
 			window.location.replace("index.html");
 		}
 
@@ -40,7 +40,9 @@
 				<p style="margin: 0; color:#F9F9F9;"><span style="font-family: 'Rajdhani', sans-serif; font-size: 1.5em;"> ESCOM</span>partiendo</p>
 			</div>
 			<ul>
-				<li><a href="index.html"><p><i class="fas fa-home" style="font-size: 30px; color: white"></i></p></a></li>
+				<li>
+					<a href="index.html"><p><i class="fas fa-home" style="font-size: 30px; color: white"></i></p></a>
+				</li>
 				<li><a href="#"><p><i class="fas fa-comment" style="font-size: 30px; color: white"></i></p></a></li>
 				<li id="info_usuario">
 					<!--<a href="#" class="usuario_info">
@@ -96,6 +98,16 @@
 									</div>
 
 									<div class="form-group col-12">
+										<label for="">Elige el nivel que tiene el archivo:</label>
+										<select name="nivel_archivo" id="nivel_archivo" required class="form-control">
+											<option value="">Selecciona un nivel</option>
+											<option value="1">Básico</option>
+											<option value="2">Medio</option>
+											<option value="3">Avanzado</option>								
+										</select>
+									</div>
+
+									<div class="form-group col-12">
 										<label for="">Archivo:</label>
 										<input type="file" required name="archivo" class="form-control">
 									</div>
@@ -145,6 +157,13 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>-->
 	<script src="http://localhost:81/bootstrap-4.1.1/js/bootstrap.min.js"></script>
-	<script src="assets/js/profesor.js"></script>
+	<script>	
+			if (getCookie('rol')==1) {
+				alert('adminnistrador');
+				$("body").append(`<script src="assets/js/administrador.js"><\/script>`);
+			}else{
+				$("body").append(`<script src="assets/js/profesor.js"><\/script>`);
+			}
+	</script>
 </body>
 </html>

@@ -665,6 +665,60 @@
 			
 		}
 
+		public function desactivarUsuario($correo)
+		{
+
+			$con= $this->conexion_mysql();
+			if ($con!=null) {
+					$return = false;
+					$result = mysqli_query($con,"UPDATE usuario SET status = 0 WHERE correo = '$correo'");
+										
+					$return = mysqli_error($con);
+					
+					if ($return=='') {
+						$return = $result;
+					}
+
+					$con->close();
+
+					return $return;
+					
+				
+			}
+			else{
+				return mysqli_error($con);
+
+			}
+			
+		}
+
+		public function eliminarUsuario($correo)
+		{
+
+			$con= $this->conexion_mysql();
+			if ($con!=null) {
+					$return = false;
+					$result = mysqli_query($con,"DELETE FROM usuario WHERE correo = '$correo'");
+										
+					$return = mysqli_error($con);
+					
+					if ($return=='') {
+						$return = $result;
+					}
+
+					$con->close();
+
+					return $return;
+					
+				
+			}
+			else{
+				return mysqli_error($con);
+
+			}
+			
+		}
+
 		public function crearGrupo($nombre, $ua, $correo){
 
 			$con=$this->conexion_mysql();
@@ -767,11 +821,11 @@
 
 		}
 
-		public function insertar_archivo($nombre_archivo,$descripcion_archivo,$correo,$ua){
+		public function insertar_archivo($nombre_archivo,$descripcion_archivo,$correo,$ua,$nivel){
 			
 			$con=$this->conexion_mysql();
 			if ($con!=null) {
-					$result=mysqli_query($con,"INSERT INTO archivo(nombre,fecha_carga,status,usuario,unidad_aprendizaje,descripcion) VALUE ('$nombre_archivo',CURDATE(),1,(SELECT id FROM usuario WHERE correo='$correo'),$ua,'$descripcion_archivo')");
+					$result=mysqli_query($con,"INSERT INTO archivo(nombre,fecha_carga,status,usuario,unidad_aprendizaje,descripcion, nivel) VALUE ('$nombre_archivo',CURDATE(),1,(SELECT id FROM usuario WHERE correo='$correo'),$ua,'$descripcion_archivo',$nivel)");
 					
 					if ($result) {
 
