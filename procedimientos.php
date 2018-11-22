@@ -19,7 +19,7 @@
 	    }
 
 	    private function conexion_mysql(){
-	    	$mysqli = new mysqli("127.0.0.1", "root", "root", "escompartiendo", 3306);
+	    	$mysqli = new mysqli("127.0.0.1", "root", "", "escompartiendo", 3306);
 
 			if ($mysqli->connect_errno) {
 			    echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
@@ -460,12 +460,19 @@
 
 		}
 
-		public function getUAs(){
+		public function getUAs($correo=NULL){
 			$con= $this->conexion_mysql();
 			if ($con!=null) {
 					$return=false;
+
+					if (isset($correo)) {
+
+						$result=mysqli_query($con,"SELECT id, nombre FROM unidad_aprendizaje a inner join ua_profesor b on a.id =  b.ua where b.usuario = (SELECT id FROM usuario WHERE correo = '$correo')");
 					
-					$result=mysqli_query($con,"SELECT id, nombre FROM unidad_aprendizaje");
+					}else{
+						$result=mysqli_query($con,"SELECT id, nombre FROM unidad_aprendizaje");
+					}				
+					
 
 					if(isset($result->num_rows) && (int)$result->num_rows>=0){
 						

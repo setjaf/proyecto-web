@@ -148,7 +148,7 @@ class Usuario {
 			url: 'index-prueba.php',
 			type: 'POST',
 			dataType: 'json',
-			data: {accion: 'getUAs'},
+			data: {accion: 'getUAs',correo_usuario:self.correo},
 		})
 		.done(function(e) {
 			if (e.error==0) {
