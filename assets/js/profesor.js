@@ -222,6 +222,54 @@ class Usuario {
 		});
 
 	}
+
+	cargarArchivos(){		
+		var self = this;
+		$.ajax({
+			url: 'index-prueba.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {accion: 'getArchivos', correo_usuario:self.correo},
+		})
+		.done(function(e) {
+			if (e.error==0) {
+
+				for(var ua in e){
+					
+					if ( Number.isInteger(parseInt(ua)) ) {
+						$('#grupo_lista').append(`
+							<div class="media-body-c text-center col-sm-3">
+
+								<a href="${e[archivo][3]}">
+									<i class="fas fa-file-word" style="font-size: 140px; color: black;"></i>
+									<h6>${e[archivo][0]}</h6>
+									<h6>${e[archivo][2]}</h6>
+								</a>
+								
+							</div>
+							`);
+					}
+					
+				}
+
+			}else{
+				console.log(e);
+				$('#mensaje-resp-ajax').html(e.mensaje);
+				$('#exampleModal').modal('hide');
+				$('#exampleModalCenter').modal("toggle");
+
+			}
+		})
+		.fail(function(e) {
+			console.log(e);
+			$('#mensaje-resp-ajax').html(e.responseText);
+			$('#exampleModal').modal('hide');
+			$('#exampleModalCenter').modal("toggle");
+		});
+
+	}
+
+	
 }
 
 $(document).ready(function() {
@@ -229,4 +277,5 @@ $(document).ready(function() {
 	usuario.iniciarForm();
 	usuario.cargarUAs();
 	usuario.cargarGrupos();
+	usuario.cargarArchivos();
 });

@@ -341,6 +341,23 @@
 			}
 
 			break;
+
+		case 'getArchivos':
+
+			$Archivos = $procedimientos->getArchivos($_POST["correo_usuario"]);
+
+			if (is_array($Archivos)) {
+
+				$return = array_merge($return,$Archivos);				
+				$return['error'] = 0;
+
+			}else{
+
+				$return['error'] = 1;
+				$return['mensaje'] .= 'No se lograron cargar los archivos. </br>'.$Archivos;
+
+			}			
+			break;
 		
 		default:
 				$return['mensaje'] .= 'No hay caso para esa acción';
@@ -348,11 +365,6 @@
 	}
 
 	echo json_encode($return);
-
-	function correoConfirmacion($correo='')
-	{
-		
-	}
 
 	/*print_r($_POST);
 	echo '<br>';

@@ -143,6 +143,8 @@ class Usuario {
 					var formElement = event.currentTarget;
 
 					var datos = new FormData(formElement);
+
+					datos.append('correo_usuario',self.correo);
 					
 					console.log(datos.keys());
 					$.ajax({
@@ -177,11 +179,17 @@ class Usuario {
 							$('#mensaje-resp-ajax').html(e.mensaje);
 							$('#exampleModal').modal('hide');
 							$('#exampleModalCenter').modal("toggle");
+						}else if (e.accion=='nuevo_archivo') {
+							console.log(e);
+							$('#mensaje-resp-ajax').html(e.mensaje);
+							$('#exampleModal').modal('hide');
+							$('#exampleModalCenter').modal("toggle");
 						}
 						
 						
 
 					}).fail(function(e) {
+						console.log(e);
 						$('#mensaje-resp-ajax').html(e.responseText);
 						$('#exampleModal').modal('hide');
 						$('#exampleModalCenter').modal("toggle");
@@ -238,7 +246,7 @@ class Usuario {
 	cargarUAs(){
 		
 		$('#ua_prof_ua').empty();
-
+		$('#ua_archivo').empty();
 		var self = this;
 		$.ajax({
 			url: 'index-prueba.php',
@@ -253,11 +261,17 @@ class Usuario {
 				$('#ua_prof_ua').append(`
 							<option value="">Selecciona una unidad de aprendizaje</option>
 							`);
+				$('#ua_archivo').append(`
+							<option value="">Selecciona una unidad de aprendizaje</option>
+							`);
 
 				for(var ua in e){
 					
 					if ( Number.isInteger(parseInt(ua)) ) {
 						$('#ua_prof_ua').append(`
+							<option value="${e[ua][0]}">${e[ua][1]}</option>
+							`);
+						$('#ua_archivo').append(`
 							<option value="${e[ua][0]}">${e[ua][1]}</option>
 							`);
 					}

@@ -69,7 +69,7 @@
 
 				<div class="jumbotron jumbotron-fluid w-100">
 					<div class="container justify-content-center">
-						<a href="profesor.html">Regresar</a>
+						<a href="" id="link_regresar">Regresar</a>
 					</div>
 					<div class="container justify-content-center">
 						<h2 class="display-4">Subir archivo</h2>
@@ -158,14 +158,15 @@
 	</div>
 		
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-	<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>-->
-	<script src="http://localhost:81/bootstrap-4.1.1/js/bootstrap.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<!--<script src="http://localhost:81/bootstrap-4.1.1/js/bootstrap.min.js"></script>-->
 	<script>	
 			if (getCookie('rol')==1) {
-				alert('adminnistrador');
 				$("body").append(`<script src="assets/js/administrador.js"><\/script>`);
+				$("#link_regresar").attr('href', 'administrador.html');
 			}else{
 				$("body").append(`<script src="assets/js/profesor.js"><\/script>`);
+				$("#link_regresar").attr('href', 'profesor.html');
 			}
 	</script>
 </body>

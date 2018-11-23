@@ -864,7 +864,7 @@
 			$con=$this->conexion_mysql();
 			if ($con!=null) {
 				
-					$result=mysqli_query($con,"UPDATE archivo SET url='$archivo_path' WHERE correo='$correo'");
+					$result=mysqli_query($con,"UPDATE archivo SET url='$archivo_path' WHERE usuario=(SELECT id FROM usuario WHERE correo='$correo')");
 
 					$return = $result;
 
@@ -881,6 +881,45 @@
 				
 			}
 
+		}
+
+		public function getArchivos($correo){
+			$con= $this->conexion_mysql();
+			if ($con!=null) {
+					$return=false;
+
+					mysqli_set_charset( $con, 'utf8');
+					
+					$result=mysqli_query($con,"SELECT nombre, descripcion, fecha_carga, url, unidad_aprendizaje, nivel FROM archivo WHERE usuario=(SELECT id FROM usuario WHERE correo='$correo') AND status=1");
+
+					if(isset($result->num_rows) && (int)$result->num_rows>=0){
+						
+						$i=0;
+
+						$return = array();
+						
+						while ($fila = $result->fetch_row()) {
+						    $return[$i]=$fila;
+						    $i++;
+						}
+
+						$result->close();
+					}else {
+						$return = mysqli_error($con);
+						
+					}
+
+					$con->close();
+
+					return $return;
+					
+				
+			}
+			else{
+
+				return mysqli_error($con);
+
+			}
 		}
 
 	}	
