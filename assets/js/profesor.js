@@ -28,6 +28,23 @@ class Usuario {
 		this.foto=foto;
 		this.permisos=this.llenarPermisos(this.rol);
 		this.iniciarInfo();
+		this.fileIcon = {
+			docx:'word',
+			pptx:'powerpoint',
+			xslx:'excel',
+			csv:'csv',
+			sql:'code',
+			js:'code',
+			py:'code',
+			h:'code',
+			pdf:'pdf',
+			jpg:'image',
+			png:'image',
+			gif:'image',
+			txt:'alt',
+			zip:'archive',
+			rar:'archive'
+		};
 	}
 
 	llenarPermisos(rol){
@@ -71,11 +88,27 @@ class Usuario {
 		$("#info_usuario").append(`
 			<a href="#" class="usuario_info">
 				<img src="${this.foto}" alt="Imagen usuario" width="40">
-				<p id="nombre_usuario">${this.nombre} ${this.paterno}</p>
-				<p><i class="fas fa-edit" style="font-size: 30px; color: white"></i></p>
+				
+				<p><span id="nombre_usuario">${this.nombre} ${this.paterno} <i class="fas fa-edit" style="font-size: 20px; color: white"></i></span></p>
 			</a>`);
 
 	}
+
+	cerrarSesion(){
+
+		document.cookie.split(";").forEach(function(c) {
+
+			console.log(c.replace(/^ +/, "").replace(/=.*/,""));
+			document.cookie = c.replace(/^ +/, "").replace(/=.*/,"=");
+
+
+		});
+
+		console.log(document.cookie);
+
+		window.location.replace('index.html');
+	}
+
 
 	iniciarForm(){
 		var self = this;
@@ -140,6 +173,7 @@ class Usuario {
 				});	
 
 	}
+
 
 	cargarUAs(){
 
@@ -234,15 +268,16 @@ class Usuario {
 		.done(function(e) {
 			if (e.error==0) {
 
-				for(var ua in e){
+				for(var archivo in e){
 					
-					if ( Number.isInteger(parseInt(ua)) ) {
-						$('#grupo_lista').append(`
+					if ( Number.isInteger(parseInt(archivo)) ) {
+						$('#archivos_creados').append(`
 							<div class="media-body-c text-center col-sm-3">
 
 								<a href="${e[archivo][3]}">
-									<i class="fas fa-file-word" style="font-size: 140px; color: black;"></i>
+									<i class="fas fa-file-${self.fileIcon[ e[archivo][3].substring(e[archivo][3].lastIndexOf('.')+1) ]}" style="font-size: 140px; color: black;"></i>
 									<h6>${e[archivo][0]}</h6>
+									<h6>${e[archivo][3].substring(e[archivo][3].lastIndexOf('/')+1)}</h6>
 									<h6>${e[archivo][2]}</h6>
 								</a>
 								
@@ -274,8 +309,18 @@ class Usuario {
 
 $(document).ready(function() {
 	usuario = new Usuario(getCookie('correo'),getCookie('nombre'),getCookie('paterno'),getCookie('rol'),getCookie('foto'));
+	
 	usuario.iniciarForm();
+	
 	usuario.cargarUAs();
+	
 	usuario.cargarGrupos();
+
 	usuario.cargarArchivos();
+
+	$('#cerrar_sesion').on('click', function() {
+		
+		usuario.cerrarSesion();
+		
+	});
 });

@@ -28,6 +28,23 @@ class Usuario {
 		this.foto=foto;
 		this.permisos=this.llenarPermisos(this.rol);
 		this.iniciarInfo();
+		this.fileIcon = {
+			docx:'word',
+			pptx:'powerpoint',
+			xslx:'excel',
+			csv:'csv',
+			sql:'code',
+			js:'code',
+			py:'code',
+			h:'code',
+			pdf:'pdf',
+			jpg:'image',
+			png:'image',
+			gif:'image',
+			txt:'alt',
+			zip:'archive',
+			rar:'archive'
+		};
 	}
 
 	llenarPermisos(rol){
@@ -39,7 +56,7 @@ class Usuario {
 			data: {'accion':'getPermisos','rol': rol},
 		})
 		.done(function(e) {
-			console.log(e);
+
 			if (e.error==0) {
 				for(var permiso in e){
 
@@ -72,10 +89,25 @@ class Usuario {
 		$("#info_usuario").append(`
 			<a href="#" class="usuario_info">
 				<img src="${this.foto}" alt="Imagen usuario" width="40">
-				<p id="nombre_usuario">${this.nombre} ${this.paterno}</p>
-				<p><i class="fas fa-edit" style="font-size: 30px; color: white"></i></p>
+				
+				<p><span id="nombre_usuario">${this.nombre} ${this.paterno} <i class="fas fa-edit" style="font-size: 20px; color: white"></i></span></p>
 			</a>`);
 
+	}
+	
+	cerrarSesion(){
+
+		document.cookie.split(";").forEach(function(c) {
+
+			console.log(c.replace(/^ +/, "").replace(/=.*/,""));
+			document.cookie = c.replace(/^ +/, "").replace(/=.*/,"=");
+
+
+		});
+
+		console.log(document.cookie);
+
+		window.location.replace('index.html');
 	}
 
 	cargarSolicitudes(){
@@ -94,9 +126,11 @@ class Usuario {
 
 					if ( Number.isInteger(parseInt(solicitud)) ) {
 						$('#solicitudes_body').append(`
-							<div class="media border p-3">
-						    	<img class="align-self-center mr-3" src="${e[solicitud][4]}" alt="Generic placeholder image" width="64">
-							    <div class="media-body align-self-center mr-3">
+							<div class="media border p-3">`+
+								
+								(e[solicitud][4]==""?`<i class="fas fa-user" style="font-size: 30px; color: white"></i>`:`<img class="align-self-center mr-3" src="${e[solicitud][4]}" alt="No logramos encontrar la imagen de perfil" width="64">`)+
+
+								`<div class="media-body align-self-center mr-3">
 							    	<h5 class="mt-0">${e[solicitud][1]} ${e[solicitud][2]}</h5>
 							        <p class="lead mb-0">${tipo_usuario[e[solicitud][3]]}</p>
 							        <p class="lead mb-0">Fecha alta: ${e[solicitud][5]}</p>
@@ -117,7 +151,7 @@ class Usuario {
 
 				self.iniciarForm();
 			}else{
-
+				console.log(e);
 				$('#mensaje-resp-ajax').html(e.mensaje);
 				$('#exampleModal').modal('hide');
 				$('#exampleModalCenter').modal("toggle");
@@ -125,6 +159,7 @@ class Usuario {
 			}
 		})
 		.fail(function(e) {
+			console.log(e);
 			$('#mensaje-resp-ajax').html(e.responseText);
 			$('#exampleModal').modal('hide');
 			$('#exampleModalCenter').modal("toggle");
@@ -236,6 +271,7 @@ class Usuario {
 			}
 		})
 		.fail(function(e) {
+			console.log(e);
 			$('#mensaje-resp-ajax').html(e.responseText);
 			$('#exampleModal').modal('hide');
 			$('#exampleModalCenter').modal("toggle");
@@ -279,6 +315,7 @@ class Usuario {
 				}
 
 			}else{
+				console.log(e);
 				$('#mensaje-resp-ajax').html(e.mensaje);
 				$('#exampleModal').modal('hide');
 				$('#exampleModalCenter').modal("toggle");
@@ -286,6 +323,7 @@ class Usuario {
 			}
 		})
 		.fail(function(e) {
+			console.log(e);
 			$('#mensaje-resp-ajax').html(e.responseText);
 			$('#exampleModal').modal('hide');
 			$('#exampleModalCenter').modal("toggle");
@@ -301,6 +339,13 @@ $(document).ready(function() {
 	usuario.cargarSolicitudes();
 	usuario.cargarProfesores();
 	usuario.cargarUAs();
+
+	$('#cerrar_sesion').on('click', function() {
+		
+		usuario.cerrarSesion();
+		
+	});
+
 });
 
 

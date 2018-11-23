@@ -19,13 +19,13 @@
 	    }
 
 	    private function conexion_mysql(){
-	    	$mysqli = new mysqli("127.0.0.1", "root", "", "escompartiendo", 3306);
+	    	$mysqli = new mysqli("127.0.0.1", "root", "root", "escompartiendo", 3306);
 
 			if ($mysqli->connect_errno) {
 			    echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 			    return null;
 			}
-
+			mysqli_set_charset( $mysqli, 'utf8');
 			return $mysqli;
 	    }
 
@@ -109,11 +109,7 @@
 
 					$con->close();
 
-					return $return;
-
-				
-
-				
+					return $return;			
 				
 			}else {
 
@@ -396,7 +392,7 @@
 			if ($con!=null) {
 				
 
-					$result=mysqli_query($con,"INSERT INTO unidad_aprendizaje(nombre,descripcion,nivel) values ('$nombre','$descripcion',nivel);");
+					$result=mysqli_query($con,"INSERT INTO unidad_aprendizaje(nombre,descripcion,nivel) values ('$nombre','$descripcion',$nivel);");
 
 					$return = $result;
 
@@ -467,7 +463,7 @@
 
 					if (isset($correo)) {
 
-						$result=mysqli_query($con,"SELECT id, nombre FROM unidad_aprendizaje a inner join ua_profesor b on a.id =  b.ua where b.usuario = (SELECT id FROM usuario WHERE correo = '$correo')");
+						$result=mysqli_query($con,"SELECT id, nombre FROM unidad_aprendizaje a inner join ua_profesor b on a.id =  b.ua where b.profesor = (SELECT id FROM usuario WHERE correo = '$correo')");
 					
 					}else{
 						$result=mysqli_query($con,"SELECT id, nombre FROM unidad_aprendizaje");
@@ -510,7 +506,7 @@
 			$con=$this->conexion_mysql();
 			if ($con!=null) {				
 
-					$result=mysqli_query($con,"INSERT INTO ua_profesor(ua,usuario) values ($ua,$profesor);");
+					$result=mysqli_query($con,"INSERT INTO ua_profesor(ua,profesor) values ($ua,$profesor);");
 
 					$return = $result;
 
@@ -732,7 +728,7 @@
 			if ($con!=null) {
 				
 
-					$result=mysqli_query($con,"INSERT INTO grupo(nombre,ua,usuario_encargado) values ('$nombre',$ua,(SELECT id FROM usuario WHERE correo='$correo'))");
+					$result=mysqli_query($con,"INSERT INTO grupo(nombre,ua,profesor) values ('$nombre',$ua,(SELECT id FROM usuario WHERE correo='$correo'))");
 
 					$return = $result;
 
@@ -763,7 +759,7 @@
 			if ($con!=null) {
 					$return=false;
 					
-					$result=mysqli_query($con,"SELECT id, nombre FROM grupo WHERE usuario_encargado=(SELECT id FROM usuario WHERE correo='$correo')");
+					$result=mysqli_query($con,"SELECT id, nombre FROM grupo WHERE profesor=(SELECT id FROM usuario WHERE correo='$correo')");
 
 					if(isset($result->num_rows) && (int)$result->num_rows>=0){
 						
@@ -802,7 +798,7 @@
 			if ($con!=null) {
 				
 
-					$result=mysqli_query($con,"DELETE FROM grupo WHERE id = $grupo_id and usuario_encargado=(SELECT id FROM usuario WHERE correo = '$correo')");
+					$result=mysqli_query($con,"DELETE FROM grupo WHERE id = $grupo_id and profesor=(SELECT id FROM usuario WHERE correo = '$correo')");
 
 					$return = $result;
 
@@ -832,7 +828,7 @@
 			
 			$con=$this->conexion_mysql();
 			if ($con!=null) {
-					$result=mysqli_query($con,"INSERT INTO archivo(nombre,fecha_carga,status,usuario,unidad_aprendizaje,descripcion, nivel) VALUE ('$nombre_archivo',CURDATE(),1,(SELECT id FROM usuario WHERE correo='$correo'),$ua,'$descripcion_archivo',$nivel)");
+					$result=mysqli_query($con,"INSERT INTO archivo(nombre,fecha_carga,status,profesor,unidad_aprendizaje,descripcion, nivel) VALUE ('$nombre_archivo',CURDATE(),1,(SELECT id FROM usuario WHERE correo='$correo'),$ua,'$descripcion_archivo',$nivel)");
 					
 					if ($result) {
 
@@ -864,7 +860,7 @@
 			$con=$this->conexion_mysql();
 			if ($con!=null) {
 				
-					$result=mysqli_query($con,"UPDATE archivo SET url='$archivo_path' WHERE usuario=(SELECT id FROM usuario WHERE correo='$correo')");
+					$result=mysqli_query($con,"UPDATE archivo SET url='$archivo_path' WHERE profesor=(SELECT id FROM usuario WHERE correo='$correo')");
 
 					$return = $result;
 
@@ -890,7 +886,7 @@
 
 					mysqli_set_charset( $con, 'utf8');
 					
-					$result=mysqli_query($con,"SELECT nombre, descripcion, fecha_carga, url, unidad_aprendizaje, nivel FROM archivo WHERE usuario=(SELECT id FROM usuario WHERE correo='$correo') AND status=1");
+					$result=mysqli_query($con,"SELECT nombre, descripcion, fecha_carga, url, unidad_aprendizaje, nivel FROM archivo WHERE profesor=(SELECT id FROM usuario WHERE correo='$correo') AND status=1");
 
 					if(isset($result->num_rows) && (int)$result->num_rows>=0){
 						
