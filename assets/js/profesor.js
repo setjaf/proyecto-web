@@ -306,9 +306,9 @@ class Usuario {
 				console.log(e);
 
 				for(var tareas in e){
-					
+
 					if ( Number.isInteger(parseInt(tareas)) ) {
-						console.log(self.fileIcon[ e[tareas][4].substring(e[tareas][4].lastIndexOf('.')+1) ]);
+						console.log(e[tareas]);
 						$('#grupo_'+e[tareas][0]).append(`
 							<div class="col-4">
 
@@ -354,17 +354,8 @@ class Usuario {
 				for(var archivo in e){
 					
 					if ( Number.isInteger(parseInt(archivo)) ) {
-						$('#archivos_creados').append(`
-							<div class="media-body-c text-center col-sm-3">
-
-								<a href="${e[archivo][3]}">
-									<i class="fas fa-file-${self.fileIcon[ e[archivo][3].substring(e[archivo][3].lastIndexOf('.')+1) ]}" style="font-size: 140px; color: black;"></i>
-									<h6>${e[archivo][0]}</h6>
-									<h6>${e[archivo][3].substring(e[archivo][3].lastIndexOf('/')+1)}</h6>
-									<h6>${e[archivo][2]}</h6>
-								</a>
-								
-							</div>
+						$('#archivos_lista').append(`
+							<option value="${e[archivo][6]}">${e[archivo][0]}</option>
 							`);
 						$('#archivo_lista').append(`
 							<option value="${e[archivo][6]}">${e[archivo][0]}</option>

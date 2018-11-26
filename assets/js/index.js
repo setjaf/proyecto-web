@@ -1,3 +1,18 @@
+function getCookie(cname) {
+		    var name = cname + "=";
+		    var decodedCookie = decodeURIComponent(document.cookie);
+		    var ca = decodedCookie.split(';');
+		    for(var i = 0; i <ca.length; i++) {
+		        var c = ca[i];
+		        while (c.charAt(0) == ' ') {
+		            c = c.substring(1);
+		        }
+		        if (c.indexOf(name) == 0) {
+		            return c.substring(name.length, c.length);
+		        }
+		    }
+		    return "";
+		}
 
 var url = ['','administrador.html','profesor.html','alumno.html'];
 
@@ -80,7 +95,7 @@ $( "form" ).submit(function( event ) {
 		
 		console.log(e);
 
-		if (e.accion == 'login' & e.error==0) {
+		if (e.accion == 'login' & e.error == 0) {
 			document.cookie="correo="+e.correo;
 			document.cookie="nombre="+e.nombre;
 			document.cookie="paterno="+e.paterno;
@@ -106,12 +121,14 @@ $( "form" ).submit(function( event ) {
 				break;
 			}
 		}else{
+			console.log(e);
 			$('#mensaje-resp-ajax').html(e.mensaje);
 			$('#exampleModal').modal('hide');
 			$('#exampleModalCenter').modal("toggle");
 		}				
 		console.log(document.cookie);
 	}).fail(function(e) {
+		console.log(e);
 		$('#mensaje-resp-ajax').html(e.responseText);
 		$('#exampleModal').modal('hide');
 		$('#exampleModalCenter').modal("toggle");

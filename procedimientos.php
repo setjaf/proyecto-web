@@ -19,7 +19,7 @@
 	    }
 
 	    private function conexion_mysql(){
-	    	$mysqli = new mysqli("127.0.0.1", "root", "root", "escompartiendo", 3306);
+	    	$mysqli = new mysqli("127.0.0.1", "root", "", "escompartiendo", 3306);
 
 			if ($mysqli->connect_errno) {
 			    echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
@@ -957,12 +957,12 @@
 			}
 		}
 
-		public function insertar_url_tarea($archivo_path,$correo,$grupo){
+		public function insertar_url_tarea($id,$archivo_path,$correo,$grupo){
 
 			$con=$this->conexion_mysql();
 			if ($con!=null) {
 				
-					$result=mysqli_query($con,"UPDATE tarea SET path_archivo='$archivo_path' WHERE profesor=(SELECT id FROM usuario WHERE correo='$correo') AND grupo=$grupo");
+					$result=mysqli_query($con,"UPDATE tarea SET path_archivo='$archivo_path' WHERE profesor=(SELECT id FROM usuario WHERE correo='$correo') AND id=$id");
 
 					$return = $result;
 
@@ -1023,6 +1023,38 @@
 
 			}
 			
+		}
+
+		public function eliminarArchivo($archivo_id,$correo){
+
+			$con=$this->conexion_mysql();
+			if ($con!=null) {
+				
+
+					$result=mysqli_query($con,"DELETE FROM archivo WHERE id = $archivo_id and profesor=(SELECT id FROM usuario WHERE correo = '$correo')");
+
+					$return = $result;
+
+					if (!$return) {
+
+						$return = mysqli_error($con);
+
+					}					
+
+					$con->close();				
+
+					return $return;				
+
+				
+				
+			}else {
+
+
+				echo mysqli_error($con);				
+				return false;
+
+			}
+
 		}
 
 	}	

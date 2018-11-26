@@ -369,7 +369,7 @@
 					$newname = str_replace(' ', '_', $_POST['nombre_tarea'])."_".$id_tarea.'.'.$ext; 
 
 					$target = 'files/'.$newname;
-					if( move_uploaded_file( $_FILES['archivo_tarea']['tmp_name'], $target) && $procedimientos->insertar_url_tarea($target,$_POST['correo_usuario'],$_POST['grupo_tarea']) )
+					if( move_uploaded_file( $_FILES['archivo_tarea']['tmp_name'], $target) && $procedimientos->insertar_url_tarea($id_tarea,$target,$_POST['correo_usuario'],$_POST['grupo_tarea']) )
 					{
 						$return['error'] = 0;
 						$return['mensaje'] .=  "Se agregó archivo correctamente";
@@ -384,6 +384,26 @@
 
 			break;
 
+		case "eliminarArchivo":
+			if ( isset($_POST['nombre_archivo_eliminar']) && isset($_POST['correo_usuario'])) {
+				
+				$UA = $procedimientos->eliminarArchivo($_POST['nombre_archivo_eliminar'], $_POST['correo_usuario']);
+
+				if (!is_string($UA)) {
+					
+					$return['error'] = 0;
+					$return['mensaje'] .= 'Se eliminó correctamente el archivo. </br>';
+
+				}else{
+
+					$return['error'] = 1;
+					$return['mensaje'] .= 'No se eliminó correctamente el archivo. </br>'.$UA;
+
+				}
+
+			}	
+
+			break;
 
 		/*Aún no programadas en JavaScript*/
 

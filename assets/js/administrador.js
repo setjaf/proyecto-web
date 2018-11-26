@@ -86,6 +86,7 @@ class Usuario {
 	}
 
 	iniciarInfo(){
+		console.log(this)
 		$("#info_usuario").append(`
 			<a href="#" class="usuario_info">
 				<img src="${this.foto}" alt="Imagen usuario" width="40">
