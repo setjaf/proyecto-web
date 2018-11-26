@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Editar Perfil</title>
+		<link rel="stylesheet" href="index.css">
+		<link href="https://fonts.googleapis.com/css?family=Rajdhani" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	</head>
+	<body>
+
+	<header>
+			<nav>
+				<div class="logos">
+					<p style="margin: 0; color:#F9F9F9;"><span style="font-family: 'Rajdhani', sans-serif; font-size: 1.5em;"> ESCOM</span>partiendo</p>
+				</div>
+				<ul>
+					<li><a href="index.html"><i class="fas fa-home" style="font-size: 30px; color: white"></i></a></li>
+					<li><a href="#"><i class="fas fa-comment" style="font-size: 30px; color: white"></i></a></li>
+					<li><a href="#"><i class="fas fa-user-circle" style="font-size: 30px; color: white"></i></a></li>
+					
+				</ul>
+				
+			</nav>
+		</header>
+		
+		<br>
+		<br>
+		<br>
+
+		<div class="titulo">
+
+			<h1 class="display-3">
+			<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 1.5em;">Editar </span>perfil
+			</h1>
+					
+		</div>
+
+			<div class="container">	
+				<div id="registro" class="registro" align="justify-content-end">
+					<div class="tab-content" id="myTabContent">
+
+						<div class="tab-pane fade show active" id="alumno_form" role="tabpanel" aria-labelledby="alumno-tab">
+							<form class="form-row justify-content-end" method="POST" enctype="multipart/form-data">
+
+								<p><div class="form-group col-3">
+									<label for="">Cambiar correo:</label>
+									<input type="email" class="form-control" name="correo_usuario" placeholder="ejemplo@correo.com" pattern="[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}" autocomplete="email" required>
+								</div>
+								<div class="form-group col-3">
+									<label for="">Cambiar Contraseña</label>
+									<input type="password" class="form-control" name="contrasena_nueva" id="contrasena_nueva1" placeholder="Escribe tu nueva contraseña" pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +" required>
+								</div>
+								<div class="form-group col-3">
+									<label for="">Contraseña nueva:</label>
+									<input type="password" class="form-control" placeholder="Escribe tu nueva contraseña" name="confirmar_contrasena_nueva" id="confirmar_contrasena_nueva1" pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +" required>
+								</div>
+								<div class="form-group col-3">
+									<label for="">Confirmar Contraseña:</label>
+									<input type="password" class="form-control" placeholder="Escribe tu nueva contraseña" name="confirmar_contrasena_nueva" id="confirmar_contrasena_nueva1" pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +" required>
+								</div></p>
+								<div class="form-group col-3">
+									<label for="">Nombre(s):</label>
+									<input type="text" class="form-control" name="nombre" autocomplete="give-name" placeholder="Juan" required>
+								</div>
+								<div class="form-group col-3">
+									<label for="">Apellido Paterno:</label>
+									<input type="text" class="form-control" name="paterno" autocomplete="family-name" placeholder="Pérez" required>
+								</div>
+								<div class="form-group col-3">
+									<label for="">Apellido Materno:</label>
+									<input type="text" class="form-control" name="materno" autocomplete="family-name" placeholder="Rodíguez" required>
+								</div>
+								<div class="form-group col-3">
+									<label for="">Fecha de nacimiento:</label>
+									<input type="date" class="form-control" name="nacimiento" autocomplete="bday" placeholder="00/00/0000" required>
+								</div>
+								<div class="form-group col-3">
+									<label for="">No. Boleta:</label>
+									<input type="text" class="form-control" name="boleta" pattern="[0-9]{10}" placeholder="0000000000"  required>
+								</div>
+								<div class="form-group col-5">
+									<label for="">CURP:</label>
+									<input type="text" class="form-control" name="curp" pattern="^[A-Z]{4}\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z]{6}(\d|[A-Z])\d$" placeholder="AAAA000101BBBBBB00" required>
+									<a href="https://www.gob.mx/curp/" target="_blank">Consultar CURP</a>
+								</div>
+
+								<div class="col-ms-5 media-body">
+									<span class="btn btn-default btn-file">
+					    				<h3 class="border p-2">Cambiar foto</h3> <input type="file">
+					    				<input type="file" name="mi archivo" multiple="true">
+									</span>
+								</div>
+
+								<div>
+									<input type="text" hidden name="rol" value="3">
+									<input type="text" hidden name="accion" value="nuevo_usuario">
+								</div>
+								<div class="form-group">
+									<input type="submit" name="accion" value="Editar usuario" class="btn btn_red" id="btn_guard">
+								</div>						
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+			<!-- Modal -->
+		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  	<div class="modal-dialog modal-dialog-centered" role="document">
+		    	<div class="modal-content">
+		     		<div class="modal-header">
+		        		<h5 class="modal-title" id="exampleModalLongTitle">Mensaje</h5>
+		        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          			<span aria-hidden="true">&times;</span>
+		        		</button>
+		      		</div>
+			      	<div class="modal-body" id="mensaje-resp-ajax">
+			      	</div>
+		      		<div class="modal-footer">
+	      			</div>
+		    	</div>
+		  	</div>
+		</div>
+
+		
+		<section class="pie">
+			<footer>
+				<div >
+					<a href="https://twitter.com/?lang=es"><img src="twitter.svg" width="40"></a>
+					<a href="https://www.facebook.com/FacebookMexico/?ref=br_rs"><img src="facebook.svg" width="40"></a><p>ESCOMpartir ©2018 | </p>	
+					
+				</div>
+				
+			</footer>
+		</section>
+
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+		<!--<script src="bootstrap-4.1.1/js/bootstrap.min.js"></script>-->
+		<script src="index.js"></script>
+
+	</body>
+</html>

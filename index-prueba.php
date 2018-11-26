@@ -313,6 +313,77 @@
 
 			break;
 
+		case 'getGruposArchivos':
+
+			$Grupos = $procedimientos->getGruposArchivos($_POST["correo_usuario"]);
+
+			if (is_array($Grupos)) {
+
+				$return = array_merge($return,$Grupos);
+				$return['error'] = 0;
+
+			}else{
+
+				$return['error'] = 1;
+				$return['mensaje'] .= 'No se lograron cargar las grupos. </br>'.$Grupos;
+
+			}
+			
+			break;
+
+		case 'getArchivos':
+
+			$Archivos = $procedimientos->getArchivos($_POST["correo_usuario"]);
+
+			if (is_array($Archivos)) {
+
+				$return = array_merge($return,$Archivos);				
+				$return['error'] = 0;
+
+			}else{
+
+				$return['error'] = 1;
+				$return['mensaje'] .= 'No se lograron cargar los archivos. </br>'.$Archivos;
+
+			}			
+			break;
+
+		case "nueva_tarea":
+
+			$result=$procedimientos->insertar_tarea($_POST['nombre_tarea'],$_POST['descripcion_tarea'],$_POST['fecha_entrega_tarea'],$_POST['correo_usuario'],$_POST['grupo_tarea'],$_POST['archivo_aignar_tarea']);
+
+			try {
+				$id_tarea=$result;
+			} catch (Exception $e) {
+				$return['mensaje'] .=  'No se agregó tarea correctamente </br>'.$id_tarea;
+			}
+
+			if(is_numeric($id_tarea)){
+				
+
+				if ( isset($_FILES['archivo_tarea']) && $_FILES['archivo_tarea']['error']=='0' ) {
+
+					$info = pathinfo($_FILES['archivo_tarea']['name']);
+
+					$ext = $info['extension']; // get the extension of the file
+					$newname = str_replace(' ', '_', $_POST['nombre_tarea'])."_".$id_tarea.'.'.$ext; 
+
+					$target = 'files/'.$newname;
+					if( move_uploaded_file( $_FILES['archivo_tarea']['tmp_name'], $target) && $procedimientos->insertar_url_tarea($target,$_POST['correo_usuario'],$_POST['grupo_tarea']) )
+					{
+						$return['error'] = 0;
+						$return['mensaje'] .=  "Se agregó archivo correctamente";
+					}else{
+						$return['mensaje'] .=  'No se logró agregar el archivo';
+					}
+				}			
+
+			}else{
+				$return['mensaje'] .= "No se agregó archivo correctamente <br>".$result;
+			}
+
+			break;
+
 
 		/*Aún no programadas en JavaScript*/
 
@@ -340,23 +411,6 @@
 				$return['mensaje'].='No se logró eliminar el usuario, intentalo denuevo más tarde </br>'.$usuarioAceptado;
 			}
 
-			break;
-
-		case 'getArchivos':
-
-			$Archivos = $procedimientos->getArchivos($_POST["correo_usuario"]);
-
-			if (is_array($Archivos)) {
-
-				$return = array_merge($return,$Archivos);				
-				$return['error'] = 0;
-
-			}else{
-
-				$return['error'] = 1;
-				$return['mensaje'] .= 'No se lograron cargar los archivos. </br>'.$Archivos;
-
-			}			
 			break;
 		
 		default:

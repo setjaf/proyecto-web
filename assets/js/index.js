@@ -87,6 +87,13 @@ $( "form" ).submit(function( event ) {
 			document.cookie="rol="+e.rol;
 			document.cookie="foto="+e.foto;
 			document.cookie="max-age=" + 60;
+
+			window.sessionStorage.setItem('correo',e.correo);
+			window.sessionStorage.setItem('nombre',e.nombre);
+			window.sessionStorage.setItem('paterno',e.paterno);
+			window.sessionStorage.setItem('rol',e.rol);
+			window.sessionStorage.setItem('foto',e.foto);
+
 			switch(e.rol){
 				case '1':
 					window.location.replace("administrador.html");

@@ -864,6 +864,12 @@
 
 					$return = $result;
 
+					if (!$return) {
+
+						$return = mysqli_error($con);
+
+					}	
+
 					$con->close();
 
 					return $return;		
@@ -886,7 +892,7 @@
 
 					mysqli_set_charset( $con, 'utf8');
 					
-					$result=mysqli_query($con,"SELECT nombre, descripcion, fecha_carga, url, unidad_aprendizaje, nivel FROM archivo WHERE profesor=(SELECT id FROM usuario WHERE correo='$correo') AND status=1");
+					$result=mysqli_query($con,"SELECT nombre, descripcion, fecha_carga, url, unidad_aprendizaje, nivel, id FROM archivo WHERE profesor=(SELECT id FROM usuario WHERE correo='$correo') AND status=1");
 
 					if(isset($result->num_rows) && (int)$result->num_rows>=0){
 						
@@ -916,6 +922,107 @@
 				return mysqli_error($con);
 
 			}
+		}
+
+		public function insertar_tarea($nombre_tarea,$descripcion_tarea,$fecha_termino,$correo,$grupo,$archivo){
+
+
+			$con=$this->conexion_mysql();
+			if ($con!=null) {
+
+					$result=mysqli_query($con,"INSERT INTO tarea(nombre, descripcion, fecha_creacion, fecha_termino, profesor, grupo, archivo, path_archivo) VALUE ('$nombre_tarea', '$descripcion_tarea',CURDATE(),'$fecha_termino',(SELECT id FROM usuario WHERE correo='$correo'),$grupo,$archivo,'')");
+					
+					if ($result) {
+
+						$result=mysqli_insert_id($con);
+
+						$i=0;
+
+						$return=$result;
+					}else {
+						
+						$return = mysqli_error($con);
+						
+					}
+					
+					$con->close();
+
+					return $return;								
+				
+			}else {
+
+
+				return mysqli_error($con);
+				
+			}
+		}
+
+		public function insertar_url_tarea($archivo_path,$correo,$grupo){
+
+			$con=$this->conexion_mysql();
+			if ($con!=null) {
+				
+					$result=mysqli_query($con,"UPDATE tarea SET path_archivo='$archivo_path' WHERE profesor=(SELECT id FROM usuario WHERE correo='$correo') AND grupo=$grupo");
+
+					$return = $result;
+
+					if (!$return) {
+
+						$return = mysqli_error($con);
+
+					}	
+
+					$con->close();
+
+					return $return;		
+		
+				
+			}else {
+
+
+				echo mysqli_error($con);
+				return false;
+				
+			}
+
+		}
+
+		public function getGruposArchivos($correo){
+			$con= $this->conexion_mysql();
+			if ($con!=null) {
+					$return=false;
+					
+					$result=mysqli_query($con,"SELECT a.id, a.nombre, b.nombre,b.descripcion, b.path_archivo, b.fecha_termino  FROM tarea b left join grupo a on a.id = b.grupo WHERE a.profesor=(SELECT id FROM usuario WHERE correo='$correo')");
+
+					if(isset($result->num_rows) && (int)$result->num_rows>=0){
+						
+						$i=0;
+
+						$return = array();
+						
+						while ($fila = $result->fetch_row()) {
+						    $return[$i]=$fila;
+						    $i++;
+						}
+
+						$result->close();
+					}else {
+						$return = mysqli_error($con);
+						
+					}
+
+					$con->close();
+
+					return $return;
+					
+				
+			}
+			else{
+
+				return mysqli_error($con);
+
+			}
+			
 		}
 
 	}	
