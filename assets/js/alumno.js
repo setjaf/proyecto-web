@@ -28,12 +28,30 @@ class Usuario {
 		this.foto=foto;
 		this.permisos=this.llenarPermisos(this.rol);
 		this.iniciarInfo();
+		this.fileIcon = {
+			'':'upload',
+			docx:'word',
+			pptx:'powerpoint',
+			xslx:'excel',
+			csv:'csv',
+			sql:'code',
+			js:'code',
+			py:'code',
+			h:'code',
+			pdf:'pdf',
+			jpg:'image',
+			png:'image',
+			gif:'image',
+			txt:'alt',
+			zip:'archive',
+			rar:'archive'
+		};
 	}
 
 	llenarPermisos(rol){
 		var permisos={};
 		$.ajax({
-			url: 'http://localhost/proyecto-web/index-prueba.php',
+			url: 'index-prueba.php',
 			type: 'POST',
 			dataType: 'json',
 			data: {'accion':'getPermisos','rol': rol},
@@ -58,7 +76,9 @@ class Usuario {
 			
 		})
 		.fail(function(e) {
-			alert(e);
+			$('#mensaje-resp-ajax').html(e.responseText);
+			$('#exampleModal').modal('hide');
+			$('#exampleModalCenter').modal("toggle");
 		});
 
 		return permisos;
@@ -69,12 +89,97 @@ class Usuario {
 		$("#info_usuario").append(`
 			<a href="#" class="usuario_info">
 				<img src="${this.foto}" alt="Imagen usuario" width="40">
-				<p id="nombre_usuario">${this.nombre} ${this.paterno}</p>
-				<p><i class="fas fa-edit" style="font-size: 30px; color: white"></i></p>
+				
+				<p><span id="nombre_usuario">${this.nombre} ${this.paterno} <i class="fas fa-edit" style="font-size: 20px; color: white"></i></span></p>
 			</a>`);
 
 	}
 
+	cerrarSesion(){
+
+		document.cookie.split(";").forEach(function(c) {
+
+			console.log(c.replace(/^ +/, "").replace(/=.*/,""));
+			document.cookie = c.replace(/^ +/, "").replace(/=.*/,"=");
+
+
+		});
+
+		console.log(document.cookie);
+
+		window.location.replace('index.html');
+	}
+
+
+	iniciarForm(){
+		var self = this;
+		$( "form" ).submit(function( event ) {
+
+					event.preventDefault();
+
+					console.log(event);
+
+					var formElement = event.currentTarget;
+
+					var datos = new FormData(formElement);
+
+					datos.append('correo_usuario',self.correo);
+					
+					console.log(datos.keys());
+					$.ajax({
+						url: 'index-prueba.php',
+						contentType: false,
+						processData: false,
+						cache: false,
+						type: 'POST',
+						dataType: 'json',
+						data: datos,
+					}).done(function(e) {
+						console.log(e);
+						if (e.accion=='crearGrupo') {
+							console.log('crearGrupo');
+							console.log(e);
+							$('#mensaje-resp-ajax').html(e.mensaje);
+							$('#exampleModal').modal('hide');
+							$('#exampleModal1').modal('hide');
+							$('#exampleModalCenter').modal("toggle");
+							self.cargarGrupos();
+
+						}else if(e.accion=='eliminarGrupo'){
+							
+							console.log(e);
+							$('#mensaje-resp-ajax').html(e.mensaje);
+							$('#exampleModal').modal('hide');
+							$('#exampleModal1').modal('hide');
+							$('#exampleModalCenter').modal("toggle");
+							$('#solicitudes_body').empty();
+							self.cargarGrupos();
+
+						}else if (e.accion=='nuevo_archivo') {
+							console.log(e);
+							$('#mensaje-resp-ajax').html(e.mensaje);
+							$('#exampleModal').modal('hide');
+							$('#exampleModalCenter').modal("toggle");
+						}
+						else if (e.accion=='nueva_tarea') {
+							console.log(e);
+							$('#mensaje-resp-ajax').html(e.mensaje);
+							$('#exampleModal').modal('hide');
+							$('#exampleModalCenter').modal("toggle");
+						}
+						
+						
+
+					}).fail(function(e) {
+						console.log(e);
+						$('#mensaje-resp-ajax').html(e.responseText);
+						$('#exampleModal').modal('hide');
+						$('#exampleModalCenter').modal("toggle");
+					});
+				  
+				});	
+
+	}
 }
 
 $(document).ready(function() {

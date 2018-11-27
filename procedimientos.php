@@ -19,7 +19,7 @@
 	    }
 
 	    private function conexion_mysql(){
-	    	$mysqli = new mysqli("127.0.0.1", "root", "", "escompartiendo", 3306);
+	    	$mysqli = new mysqli("127.0.0.1", "root", "root", "escompartiendo", 3306);
 
 			if ($mysqli->connect_errno) {
 			    echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
@@ -769,10 +769,14 @@
 						
 						while ($fila = $result->fetch_row()) {
 						    $return[$i]=$fila;
+						    $id=$return[$i][0];
+						    $result2=mysqli_query($con,"SELECT COUNT(*) FROM grupo_alumno WHERE grupo=$id");
+						    $return[$i][2]=$result2->fetch_row()[0];
 						    $i++;
 						}
 
 						$result->close();
+						$result2->close();
 					}else {
 						$return = mysqli_error($con);
 						
@@ -901,7 +905,9 @@
 						$return = array();
 						
 						while ($fila = $result->fetch_row()) {
-						    $return[$i]=$fila;
+							$result2=mysqli_query($con,"SELECT nombre FROM unidad_aprendizaje WHERE id = $fila[4]");
+							$return[$result2->fetch_row()[0]][]=$fila;
+						    //array_push($return[$result2->fetch_row()[0]],$fila);
 						    $i++;
 						}
 
@@ -992,7 +998,7 @@
 			if ($con!=null) {
 					$return=false;
 					
-					$result=mysqli_query($con,"SELECT a.id, a.nombre, b.nombre,b.descripcion, b.path_archivo, b.fecha_termino  FROM tarea b left join grupo a on a.id = b.grupo WHERE a.profesor=(SELECT id FROM usuario WHERE correo='$correo')");
+					$result=mysqli_query($con,"SELECT a.id, a.nombre, b.nombre,b.descripcion, b.path_archivo, b.fecha_termino  FROM tarea b left join grupo a on a.id = b.grupo WHERE a.profesor=(SELECT id FROM usuario WHERE correo='$correo') ORDER BY b.fecha_creacion DESC LIMIT 4;");
 
 					if(isset($result->num_rows) && (int)$result->num_rows>=0){
 						

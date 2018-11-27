@@ -227,7 +227,7 @@ class Usuario {
 		$('#grupo_lista').empty();
 		$('#grupos_creados').empty();
 		$('#grupo_lista').append(`
-							<option value="">Selecciona el grupo a eliminar</option>
+							<option value="">Selecciona el grupo</option>
 							`);
 		
 		var self = this;
@@ -260,16 +260,23 @@ class Usuario {
 										</div>
 									</div>
 
-									<div class="media-body col-sm-7">
-								   		<h5 class="">
-
-											<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif;">Tareas asigandas</span>
-										</h5>
-								   		<div id="grupo_${e[grupo][0]}" class="row">
+									<div class="media-body col-sm-7 ">
+								   		<div class="row">
+								   			<div class="col-12 text-center">
+												<h5 class="">
+													<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif;">Tareas asigandas</span>
+												</h5>
+										   		<div id="grupo_${e[grupo][0]}" class="row">
+										   		</div>
+								   			</div>
+								   			<div class="col-12 text-center">
+								   				<h5 class="">
+													<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif;">Alumnos inscritos</span>
+													
+												</h5>
+												<p class="display-4" style="color:#1169a3;font-family: 'Rajdhani', sans-serif;"">${e[grupo][2]}</p>
+								   			</div>
 								   		</div>
-								   		
-										<br>
-										<br>
 									</div>
 														
 								</div>
@@ -310,12 +317,12 @@ class Usuario {
 					if ( Number.isInteger(parseInt(tareas)) ) {
 						console.log(e[tareas]);
 						$('#grupo_'+e[tareas][0]).append(`
-							<div class="col-4">
+							<div class="col-3 text-center">
 
 								<a href="${e[tareas][4]}">
 									<i class="fas fa-file-${self.fileIcon[ e[tareas][4].substring(e[tareas][4].lastIndexOf('.')+1) ]}" style="font-size: 40px; color: black;"></i>
 									<h6>${e[tareas][2]}</h6>
-									<h6>${e[tareas][5]}</h6>
+									<p>${e[tareas][5]}</p>
 								</a>
 
 							</div>
@@ -350,16 +357,48 @@ class Usuario {
 		})
 		.done(function(e) {
 			if (e.error==0) {
+				console.log(e);
 
-				for(var archivo in e){
+				for(var ua in e){
 					
-					if ( Number.isInteger(parseInt(archivo)) ) {
-						$('#archivos_lista').append(`
-							<option value="${e[archivo][6]}">${e[archivo][0]}</option>
-							`);
-						$('#archivo_lista').append(`
-							<option value="${e[archivo][6]}">${e[archivo][0]}</option>
+					if ( ua!='mensaje' && ua!='error' && ua!='accion') {
+
+						$("#archivos_creados").append(`
+							
+							<div class="container">
+								<div class="titulo">
+									<h1 class="display-3">
+										<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 1.5rem;">${ua}</span>
+									</h1>
+								</div>
+								<div class="media p-0 col-12" id="ua_archivos_${e[ua][0][4]}">
+								</div>
+							</div>	
+
+							
+
 							`)
+
+						for (var archivo in e[ua]) {
+
+							$('#archivos_lista').append(`
+							<option value="${e[ua][archivo][6]}">${e[ua][archivo][0]}</option>
+							`);
+							$('#archivo_lista').append(`
+								<option value="${e[ua][archivo][6]}">${e[ua][archivo][0]}</option>
+								`)
+							$('#ua_archivos_'+e[ua][archivo][4]).append(`
+							<div class="media-body-c col-md-3 text-center">
+
+								<a href="${e[ua][archivo][3]}">
+									<i class="fas fa-file-${self.fileIcon[ e[ua][archivo][3].substring(e[ua][archivo][3].lastIndexOf('.')+1) ]}" style="font-size: 100px; color: black;"></i>
+									<h5>${e[ua][archivo][0]}</h5>
+									<p>${e[ua][archivo][2]}</p>
+								</a>
+
+							</div>
+							`);
+						}
 
 					}
 					

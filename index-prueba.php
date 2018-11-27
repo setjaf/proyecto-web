@@ -207,7 +207,7 @@
 				}else{
 
 					$return['error'] = 1;
-					$return['mensaje'] .= 'No se asigno correctamente la unidad de aprendizaje. </br>'.$UA;
+					$return['mensaje'] .= 'No se asigno correctamente la unidad de aprendizaje. </br>'.$asignado;
 
 				}
 
@@ -242,7 +242,6 @@
 			$Grupos = $procedimientos->getGrupos($_POST["correo_usuario"]);
 
 			if (is_array($Grupos)) {
-
 				$return = array_merge($return,$Grupos);
 				$return['error'] = 0;
 
@@ -368,7 +367,7 @@
 					$ext = $info['extension']; // get the extension of the file
 					$newname = str_replace(' ', '_', $_POST['nombre_tarea'])."_".$id_tarea.'.'.$ext; 
 
-					$target = 'files/'.$newname;
+					$target = 'files/tarea/'.$newname;
 					if( move_uploaded_file( $_FILES['archivo_tarea']['tmp_name'], $target) && $procedimientos->insertar_url_tarea($id_tarea,$target,$_POST['correo_usuario'],$_POST['grupo_tarea']) )
 					{
 						$return['error'] = 0;
@@ -440,126 +439,4 @@
 
 	echo json_encode($return);
 
-	/*print_r($_POST);
-	echo '<br>';
-	print_r($_FILES);*/
-
-	/*if (isset($_POST['nuevo_permiso']) && isset($_POST['permiso_desc'])) {
-
-		if($procedimientos->insertar_permiso($_POST['permiso_desc'])){
-			echo "Se agregó permiso correctamente";
-		}else{
-			echo "No se agregó permiso correctamente";
-		}
-		
-	}else if (isset($_POST['nuevo_rol']) && isset($_POST['perm_rol']) && isset($_POST['rol_desc'])) {
-
-		$id_rol = $procedimientos->insertar_rol($_POST['rol_desc']);
-
-		$id_rol = $id_rol[0][0];
-		$bandera=true;
-		foreach ($_POST['perm_rol'] as $perm) {
-			if(!$procedimientos->agregar_permiso_rol($id_rol,$perm)){
-				$bandera=false;
-			}
-		}
-		if(!$bandera){
-			echo "No se han agregado todos los permisos";
-		}else {
-			echo 'Se creo el rol y seagregaron todos los permisos';
-		}
-		
-	}else if (isset($_POST['agregar_usuario']) && isset($_POST['correo_usuario']) && isset($_POST['contrasena_nueva']) ) {
-
-		$id_usuario=$procedimientos->insertar_usuario($_POST['correo_usuario'],$_POST['contrasena_nueva'],$_POST['nombre'],$_POST['paterno'],$_POST['materno'],$_POST['nacimiento'],$_POST['boleta'],$_POST['curp'],1,$_POST['rol']);
-
-		$id_usuario=$id_usuario[0][0];
-
-		if($id_usuario){
-			echo "Se agregó usuario correctamente";
-
-			if ( isset($_FILES['foto']) && $_FILES['foto']['error']=='0' ) {
-
-				$info = pathinfo($_FILES['foto']['name']);
-
-				$ext = $info['extension']; // get the extension of the file
-				$newname = "user_".$id_usuario.'.'.$ext; 
-
-				$target = 'images/'.$newname;
-				if( move_uploaded_file( $_FILES['foto']['tmp_name'], $target) && $procedimientos->insertar_foto_usuario($target,$_POST['correo_usuario']) ){
-					echo ' -Se agregó foto correctamente';
-				}
-			}
-
-			
-
-		}else{
-			echo '<br>';
-			echo "No se agregó usuario correctamente";
-		}
-		
-	}else if(isset($_POST['buscar_usuario']) && isset($_POST['usuario_buscar']) ){
-
-		$usuario = $procedimientos->seleccionar_usuario($_POST['usuario_buscar']);
-		$usuario = $usuario[0];
-		if (!isset($usuario)) {
-			echo '<br>';
-			echo 'No se logró encontrar al usuario';
-		}
-
-	}else if (isset($_POST['editar_usuario']) && isset($_POST['correo_usuario_editar']) && isset($_POST['contrasena_nueva']) ) {
-
-		$id_usuario=$procedimientos->editar_usuario($_POST['correo_usuario_editar'],$_POST['contrasena_nueva'],$_POST['nombre'],$_POST['paterno'],$_POST['materno'],$_POST['nacimiento'],$_POST['boleta'],$_POST['curp'],1,$_POST['rol']);
-
-		$id_usuario=$id_usuario[0][0];
-
-		if($id_usuario){
-
-			echo '<br>';
-
-			echo "Se editó usuario correctamente";
-
-			if ( isset($_FILES['foto']) && $_FILES['foto']['error']=='0' ) {
-
-				$info = pathinfo($_FILES['foto']['name']);
-
-				$ext = $info['extension']; // get the extension of the file
-				$newname = "user_".$id_usuario.'.'.$ext; 
-
-				$target = 'images/'.$newname;
-				if( move_uploaded_file( $_FILES['foto']['tmp_name'], $target) && $procedimientos->insertar_foto_usuario($target,$_POST['correo_usuario']) ){
-					echo '<br>';
-					echo ' -Se agregó foto correctamente';
-				}
-			}
-
-			
-
-		}else{
-
-			echo "No se agregó usuario correctamente";
-		}
-		
-		
-	}else if ( isset($_POST['borrar_usuario']) && isset($_POST['usuario_buscar']) ) {
-		if($procedimientos->borrar_usuario($_POST['usuario_buscar'])){
-			echo "Se borró correctamente el usuario";
-		}else{
-			echo "No se borró correctamente el usuario";
-		}
-	}else if ( isset($_POST['agregar_ua']) && isset($_POST['nombre_ua']) && isset($_POST['descripcion_ua']) && isset($_POST['nivel_ua']) ) {
-		if ( $procedimientos->agregar_ua($_POST['nombre_ua'], $_POST['descripcion_ua'], $_POST['nivel_ua']) ) {
-			echo "Se agregó correctamente la unidad de aprendizaje";
-		}else {
-			echo "Nose logró agregar la unidad de aprendizaje";
-		}
-	}else if ( isset($_POST['agregar_ua_profesor']) && isset($_POST['profesor_prof_ua']) && isset($_POST['ua_prof_ua']) ){
-
-		if ($procedimientos->asignar_ua_profesor($_POST['profesor_prof_ua'],$_POST['ua_prof_ua'])) {
-			echo "Se asignó correctamente Unidad de Aprendizaje al profesor";
-		}else{
-			echo "No se ha asignado la Unidad de Aprendizaje al profesor";
-		}
-
-	}*/
- ?>
+	
