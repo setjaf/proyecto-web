@@ -19,7 +19,7 @@
 	    }
 
 	    private function conexion_mysql(){
-	    	$mysqli = new mysqli("127.0.0.1", "root", "root", "escompartiendo", 3306);
+	    	$mysqli = new mysqli("127.0.0.1", "root", "", "escompartiendo", 3306);
 
 			if ($mysqli->connect_errno) {
 			    echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
@@ -773,10 +773,11 @@
 						    $result2=mysqli_query($con,"SELECT COUNT(*) FROM grupo_alumno WHERE grupo=$id");
 						    $return[$i][2]=$result2->fetch_row()[0];
 						    $i++;
+						    $result2->close();
 						}
 
 						$result->close();
-						$result2->close();
+						
 					}else {
 						$return = mysqli_error($con);
 						
@@ -859,12 +860,12 @@
 			}
 		}
 
-		public function insertar_url_archivo($archivo_path,$correo){
+		public function insertar_url_archivo($archivo_path,$id_archivo,$correo){
 
 			$con=$this->conexion_mysql();
 			if ($con!=null) {
 				
-					$result=mysqli_query($con,"UPDATE archivo SET url='$archivo_path' WHERE profesor=(SELECT id FROM usuario WHERE correo='$correo')");
+					$result=mysqli_query($con,"UPDATE archivo SET url='$archivo_path' WHERE profesor=(SELECT id FROM usuario WHERE correo='$correo' AND id=$id_archivo)");
 
 					$return = $result;
 
@@ -909,6 +910,7 @@
 							$return[$result2->fetch_row()[0]][]=$fila;
 						    //array_push($return[$result2->fetch_row()[0]],$fila);
 						    $i++;
+						    $result2->close();
 						}
 
 						$result->close();

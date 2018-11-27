@@ -19,7 +19,7 @@
 			try {
 				$id_usuario=$result[0][0];
 			} catch (Exception $e) {
-				$return['mensaje'] .=  'No se agregó usuario correctamente </br>'.$id_usuario;
+				$return['mensaje'] .=  'No se agregó usuario correctamente </br>Debes esperar la autorización de un administrador para iniciar con el uso de tu cuenta</br>'.$id_usuario;
 			}			
 
 			if(is_numeric($id_usuario)){
@@ -297,7 +297,7 @@
 					$newname = str_replace(' ', '_', $_POST['nombre_archivo'])."_".$id_archivo.'.'.$ext; 
 
 					$target = 'files/'.$newname;
-					if( move_uploaded_file( $_FILES['archivo']['tmp_name'], $target) && $procedimientos->insertar_url_archivo($target,$_POST['correo_usuario']) )
+					if( move_uploaded_file( $_FILES['archivo']['tmp_name'], $target) && $procedimientos->insertar_url_archivo($target,$id_archivo,$_POST['correo_usuario']) )
 					{
 						$return['error'] = 0;
 						$return['mensaje'] .=  "Se agregó archivo correctamente";

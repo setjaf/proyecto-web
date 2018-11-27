@@ -195,3 +195,7 @@ footer{
     cursor: inherit;
     display: block;
 }
+
+/*
+Pra hacer que el overflow-x funcione
+white-space:no-wrap;*/
