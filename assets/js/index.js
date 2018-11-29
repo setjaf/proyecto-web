@@ -148,6 +148,18 @@ $(document).ready(function() {
 
 });
 
+$("input[name='nacimiento']").change(function(event) {
+	let fecha = new Date(event.target.value);
+	let hoy = new Date();
+	if (fecha.getDate()>=hoy.getDate()) {
+		$('#mensaje-resp-ajax').html('La fecha no puede ser de hoy o posterior a hoy');
+		$('#exampleModal').modal('hide');
+		$('#exampleModalCenter').modal("toggle");
+		event.target.value="";
+	}
+	
+});
+
 
 /***Inicia revisión de coincidencia entre campos de contraseña del registro***/
 
@@ -155,20 +167,42 @@ var cont1 = document.getElementById('contrasena_nueva1');
 var cont2 = document.getElementById('confirmar_contrasena_nueva1');
 var btn_guard = document.getElementById('btn_guard')
 
-cont1.addEventListener('change',function () {
+cont1.addEventListener('keyup',function () {
 	
 	if (cont1.value != cont2.value) {
 		btn_guard.setAttribute('disabled','disabled');
+		$('#contrasena_error').html(`
+			<div class="alert alert-danger" role="alert">
+				Las contraseñas no son iguales, verifícalas de nuevo.
+			</div>`);
+	}else if(cont1.value.length<=2 || /[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}/.test(cont1.value) || cont1.value.length>=9){
+		btn_guard.setAttribute('disabled','disabled');
+		$('#contrasena_error').html(`
+			<div class="alert alert-danger" role="alert">
+				Las contraseñas no tienen el formato correcto. Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +.
+			</div>`);
 	}else{
 		btn_guard.removeAttribute('disabled');
+		$('#contrasena_error').html(``);
 	}
 })
-cont2.addEventListener('change',function () {
+cont2.addEventListener('keyup',function () {
 	
 	if (cont1.value != cont2.value) {
 		btn_guard.setAttribute('disabled','disabled');
+		$('#contrasena_error').html(`
+			<div class="alert alert-danger" role="alert">
+				Las contraseñas no son iguales, verifícalas de nuevo.
+			</div>`);
+	}else if(cont1.value.length<=2 || /[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}/.test(cont1.value) || cont1.value.length>=9){
+		btn_guard.setAttribute('disabled','disabled');
+		$('#contrasena_error').html(`
+			<div class="alert alert-danger" role="alert">
+				Las contraseñas no tienen el formato correcto. Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +.
+			</div>`);
 	}else{
 		btn_guard.removeAttribute('disabled');
+		$('#contrasena_error').html(``);
 	}
 })
 
@@ -176,20 +210,42 @@ var cont3 = document.getElementById('contrasena_nueva2');
 var cont4 = document.getElementById('confirmar_contrasena_nueva2');
 var btn_guard1 = document.getElementById('btn_guard1')
 
-cont3.addEventListener('change',function () {
+cont3.addEventListener('keyup',function () {
 	
 	if (cont3.value != cont4.value) {
-		btn_guard1.setAttribute('disabled','disabled');
+		btn_guard.setAttribute('disabled','disabled');
+		$('#contrasena_error_p').html(`
+			<div class="alert alert-danger" role="alert">
+				Las contraseñas no son iguales, verifícalas de nuevo.
+			</div>`);
+	}else if(cont3.value.length<=2 || /[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}/.test(cont3.value) || cont3.value.length>=9){
+		btn_guard.setAttribute('disabled','disabled');
+		$('#contrasena_error_p').html(`
+			<div class="alert alert-danger" role="alert">
+				Las contraseñas no tienen el formato correcto. Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +.
+			</div>`);
 	}else{
-		btn_guard1.removeAttribute('disabled');
+		btn_guard.removeAttribute('disabled');
+		$('#contrasena_error_p').html(``);
 	}
 })
-cont4.addEventListener('change',function () {
+cont4.addEventListener('keyup',function () {
 	
 	if (cont3.value != cont4.value) {
-		btn_guard1.setAttribute('disabled','disabled');
+		btn_guard.setAttribute('disabled','disabled');
+		$('#contrasena_error_p').html(`
+			<div class="alert alert-danger" role="alert">
+				Las contraseñas no son iguales, verifícalas de nuevo.
+			</div>`);
+	}else if(cont3.value.length<=2 || /[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}/.test(cont3.value) || cont3.value.length>=9){
+		btn_guard.setAttribute('disabled','disabled');
+		$('#contrasena_error_p').html(`
+			<div class="alert alert-danger" role="alert">
+				Las contraseñas no tienen el formato correcto. Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +.
+			</div>`);
 	}else{
-		btn_guard1.removeAttribute('disabled');
+		btn_guard.removeAttribute('disabled');
+		$('#contrasena_error_p').html(``);
 	}
 })
 
@@ -198,19 +254,41 @@ var cont5 = document.getElementById('contrasena_nueva3');
 var cont6 = document.getElementById('confirmar_contrasena_nueva3');
 var btn_guard2 = document.getElementById('btn_guard2')
 
-cont5.addEventListener('change',function () {
+cont5.addEventListener('keyup',function () {
 	
 	if (cont5.value != cont6.value) {
-		btn_guard2.setAttribute('disabled','disabled');
+		btn_guard.setAttribute('disabled','disabled');
+		$('#contrasena_error_a').html(`
+			<div class="alert alert-danger" role="alert">
+				Las contraseñas no son iguales, verifícalas de nuevo.
+			</div>`);
+	}else if(cont5.value.length<=2 || /[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}/.test(cont5.value) || cont5.value.length>=9){
+		btn_guard.setAttribute('disabled','disabled');
+		$('#contrasena_error_a').html(`
+			<div class="alert alert-danger" role="alert">
+				Las contraseñas no tienen el formato correcto. Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +.
+			</div>`);
 	}else{
-		btn_guard2.removeAttribute('disabled');
+		btn_guard.removeAttribute('disabled');
+		$('#contrasena_error_a').html(``);
 	}
 })
-cont6.addEventListener('change',function () {
+cont6.addEventListener('keyup',function () {
 	
 	if (cont5.value != cont6.value) {
-		btn_guard2.setAttribute('disabled','disabled');
+		btn_guard.setAttribute('disabled','disabled');
+		$('#contrasena_error_a').html(`
+			<div class="alert alert-danger" role="alert">
+				Las contraseñas no son iguales, verifícalas de nuevo.
+			</div>`);
+	}else if(cont5.value.length<=2 || /[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}/.test(cont5.value) || cont5.value.length>=9){
+		btn_guard.setAttribute('disabled','disabled');
+		$('#contrasena_error_a').html(`
+			<div class="alert alert-danger" role="alert">
+				Las contraseñas no tienen el formato correcto. Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +.
+			</div>`);
 	}else{
-		btn_guard2.removeAttribute('disabled');
+		btn_guard.removeAttribute('disabled');
+		$('#contrasena_error_a').html(``);
 	}
 });

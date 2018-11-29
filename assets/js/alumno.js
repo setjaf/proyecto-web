@@ -180,8 +180,207 @@ class Usuario {
 				});	
 
 	}
+
+	cargarUAs(){
+		
+		$('#uas_buscar').empty();
+		$('#ua_archivo').empty();
+		var self = this;
+		$.ajax({
+			url: 'index-prueba.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {accion: 'getUAs'},
+		})
+		.done(function(e) {
+			if (e.error==0) {
+				console.log(e);
+
+				$('#uas_buscar').append(`
+							<option value="">Selecciona una unidad de aprendizaje</option>
+							`);
+				$('#ua_archivo').append(`
+							<option value="">Selecciona una unidad de aprendizaje</option>
+							`);
+
+				for(var ua in e){
+					
+					if ( Number.isInteger(parseInt(ua)) ) {
+						$('#uas_buscar').append(`
+							<option value="${e[ua][0]}">${e[ua][1]}</option>
+							`);
+						$('#ua_archivo').append(`
+							<option value="${e[ua][0]}">${e[ua][1]}</option>
+							`);
+					}
+					
+				}
+
+			}else{
+				console.log(e);
+				$('#mensaje-resp-ajax').html(e.mensaje);
+				$('#exampleModal').modal('hide');
+				$('#exampleModalCenter').modal("toggle");
+
+			}
+		})
+		.fail(function(e) {
+			console.log(e);
+			$('#mensaje-resp-ajax').html(e.responseText);
+			$('#exampleModal').modal('hide');
+			$('#exampleModalCenter').modal("toggle");
+		});
+
+	}
+
+	cargarProfesores(ua=null){
+
+		$('#profesores_buscar').empty();
+
+		var self = this;
+		$.ajax({
+			url: 'index-prueba.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {accion: 'getProfesores',ua_buscar:ua},
+		})
+		.done(function(e) {
+			if (e.error==0) {
+				console.log(e);
+
+				$('#profesores_buscar').append(`
+							<option value="">Selecciona un profesor</option>
+							`);
+
+				for(var profesor in e){
+
+					if ( Number.isInteger(parseInt(profesor)) ) {
+						$('#profesores_buscar').append(`
+							<option value="${e[profesor][0]}">${e[profesor][1]} ${e[profesor][2]} ${e[profesor][3]}</option>
+							`);
+					}
+					
+				}
+
+			}else{
+				$('#mensaje-resp-ajax').html(e.mensaje);
+				$('#exampleModal').modal('hide');
+				$('#exampleModalCenter').modal("toggle");
+
+			}
+		})
+		.fail(function(e) {
+			console.log(e);
+			$('#mensaje-resp-ajax').html(e.responseText);
+			$('#exampleModal').modal('hide');
+			$('#exampleModalCenter').modal("toggle");
+		});
+
+	}
+
+	cargarGrupos(form){
+
+
+
+		$('#grupo_lista').empty();
+		$('#grupos_creados').empty();
+		$('#grupo_lista').append(`
+							<option value="">Selecciona el grupo</option>
+							`);
+
+		console.log(event);
+
+		var formElement = form;
+
+		var datos = new FormData(formElement);
+
+		datos.append('correo_usuario',self.correo);
+		
+		var self = this;
+		$.ajax({
+			url: 'index-prueba.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {accion: 'getGrupos', correo_usuario:self.correo},
+		})
+		.done(function(e) {
+			if (e.error==0) {
+
+				for(var grupo in e){
+					
+					if ( Number.isInteger(parseInt(grupo)) ) {
+						$('#grupo_lista').append(`
+							<option value="${e[grupo][0]}">${e[grupo][1]}</option>
+							`);
+						$('#grupos_creados').append(`
+							<div class="col-sm-12">
+								<div class="media border p-3">
+
+									<div class="container col-sm-5">
+										<div class="titulo">
+											<h1 class="display-3">
+												<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 40px;">${e[grupo][1]}</span>
+											</h1>								
+											<br>
+											<br>
+										</div>
+									</div>
+
+									<div class="media-body col-sm-7 ">
+								   		<div class="row">
+								   			<div class="col-12 text-center">
+												<h5 class="">
+													<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif;">Tareas asigandas</span>
+												</h5>
+										   		<div id="grupo_${e[grupo][0]}" class="row">
+										   		</div>
+								   			</div>
+								   			<div class="col-12 text-center">
+								   				<h5 class="">
+													<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif;">Alumnos inscritos</span>
+													
+												</h5>
+												<p class="display-4" style="color:#1169a3;font-family: 'Rajdhani', sans-serif;"">${e[grupo][2]}</p>
+								   			</div>
+								   		</div>
+									</div>
+														
+								</div>
+
+							</div>
+							`);
+					}
+					
+				}
+
+			}else{
+				$('#mensaje-resp-ajax').html(e.mensaje);
+				$('#exampleModal').modal('hide');
+				$('#exampleModalCenter').modal("toggle");
+
+			}
+		})
+		.fail(function(e) {
+			$('#mensaje-resp-ajax').html(e.responseText);
+			$('#exampleModal').modal('hide');
+			$('#exampleModalCenter').modal("toggle");
+		});
+	}
 }
 
 $(document).ready(function() {
 	usuario = new Usuario(getCookie('correo'),getCookie('nombre'),getCookie('paterno'),getCookie('rol'),getCookie('foto'));
+	usuario.cargarUAs();
+
+	$('#cerrar_sesion').on('click', function() {
+		
+		usuario.cerrarSesion();
+		
+	});
+
+	$('#uas_buscar').on('change', function(e) {
+
+		usuario.cargarProfesores(e.target.value);
+		
+	});
 });

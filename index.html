@@ -143,16 +143,15 @@
 					<form class="form-row justify-content-end">
 						<div class="form-group col-12">
 							<label for="">Correo electrónico:</label>
-							<input type="email" class="form-control" name="correo_contacto" placeholder="ejemplo@correo.com" pattern="[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}">
+							<label for="">setjafet@gmail.com</label>
 						</div>
 						<div class="form-group col-12">
-							<label for="">Motivo de contacto:</label>
-							<input type="text" class="form-control" name="motivo_contacto">
+							<label for="">Teléfono:</label>
+							<label for="">5519621837</label>
 						</div>
 						<div class="form-group col-12">
-							<label for="">Mensaje:</label>
-							<textarea name="mensaje_contacto" id="mensaje_contacto" class="form-control"></textarea>
-							<input type="text" hidden name="accion" value="contacto">
+							<label for="">Dirección:</label>
+							<label for="">Av. Juan de Dios Bátiz S/N, Nueva Industrial Vallejo, 07738 Ciudad de México, CDMX</label>
 						</div>
 						<div class="form-group">
 							<input type="submit" value="Enviar" class="btn btn_red">
@@ -182,158 +181,174 @@
 					</ul>
 					<div class="tab-content" id="myTabContent">
 
-						<div class="tab-pane fade show active" id="alumno_form" role="tabpanel" aria-labelledby="alumno-tab">
+						<div class="tab-pane fade show active mt-3" id="alumno_form" role="tabpanel" aria-labelledby="alumno-tab">
 							<form class="form-row justify-content-end" method="POST" enctype="multipart/form-data">
-
-								<div class="form-group col-12">
-									<label for="">Correo electrónico:</label>
-									<input type="email" class="form-control" name="correo_usuario" placeholder="ejemplo@correo.com" pattern="[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}" autocomplete="email" required>
-								</div>
-								<div class="form-group col-12">
-									<label for="">Contraseña:</label>
-									<input type="password" class="form-control" name="contrasena_nueva" id="contrasena_nueva1" placeholder="Escribe tu nueva contraseña" pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +" required>
-								</div>
-								<div class="form-group col-12">
-									<label for="">Confirmar Contraseña:</label>
-									<input type="password" class="form-control" placeholder="Escribe tu nueva contraseña" name="confirmar_contrasena_nueva" id="confirmar_contrasena_nueva1" pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +" required>
-								</div>
-								<div class="form-group col-12">
-									<label for="">Nombre(s):</label>
+								<div class="form-group col-6">
+									<label for="">*Nombre(s):</label>
 									<input type="text" class="form-control" name="nombre" autocomplete="give-name" placeholder="Juan" required>
 								</div>
-								<div class="form-group col-12">
-									<label for="">Apellido Paterno:</label>
+								<div class="form-group col-6">
+									<label for="">*Apellido Paterno:</label>
 									<input type="text" class="form-control" name="paterno" autocomplete="family-name" placeholder="Pérez" required>
 								</div>
-								<div class="form-group col-12">
-									<label for="">Apellido Materno:</label>
+								<div class="form-group col-6">
+									<label for="">*Apellido Materno:</label>
 									<input type="text" class="form-control" name="materno" autocomplete="family-name" placeholder="Rodíguez" required>
 								</div>
-								<div class="form-group col-12">
-									<label for="">Fecha de nacimiento:</label>
+								<div class="form-group col-6">
+									<label for="">*Correo electrónico:</label>
+									<input type="email" class="form-control" name="correo_usuario" placeholder="ejemplo@correo.com" pattern="[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}" autocomplete="email" required>
+								</div>
+								<div class="w-100" id="contrasena_error">
+									
+								</div>
+								<div class="form-group col-6">
+									<label for="">*Contraseña:</label>
+									<input type="password" class="form-control" name="contrasena_nueva" id="contrasena_nueva1" placeholder="Escribe tu nueva contraseña" pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +" required>
+								</div>
+								<div class="form-group col-6">
+									<label for="">*Confirmar Contraseña:</label>
+									<input type="password" class="form-control" placeholder="Escribe tu nueva contraseña" name="confirmar_contrasena_nueva" id="confirmar_contrasena_nueva1" pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +" required>
+								</div>
+								
+								<div class="form-group col-6">
+									<label for="">*Fecha de nacimiento:</label>
 									<input type="date" class="form-control" name="nacimiento" autocomplete="bday" placeholder="00/00/0000" required>
 								</div>
-								<div class="form-group col-12">
-									<label for="">No. Boleta:</label>
+								<div class="form-group col-6">
+									<label for="">*No. Boleta:</label>
 									<input type="text" class="form-control" name="boleta" pattern="[0-9]{10}" placeholder="0000000000"  required>
 								</div>
-								<div class="form-group col-12">
-									<label for="">CURP:</label>
+								<div class="form-group col-6">
+									<label for="">*CURP:</label>
 									<input type="text" class="form-control" name="curp" pattern="^[A-Z]{4}\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z]{6}(\d|[A-Z])\d$" placeholder="AAAA000101BBBBBB00" required>
 									<a href="https://www.gob.mx/curp/" target="_blank">Consultar CURP</a>
 								</div>
-								<div class="form-group col-12">
-									<label for="">Foto:</label>
-									<input type="file" class="form-control" name="foto" accept="image/*">
+								<div class="form-group col-6">
+									<label for="">*Foto:</label>
+									<input type="file" class="form-control" name="foto" accept="image/*" required>
 								</div>
 
-								<div>
+								<div class="w-100">
 									<input type="text" hidden name="rol" value="3">
 									<input type="text" hidden name="accion" value="nuevo_usuario">
 								</div>
-								<div class="form-group">
+								<div class="form-group col-6">
+									<label for=""></label>
 									<input type="submit" name="accion" value="Agregar usuario" class="btn btn_red" id="btn_guard">
 								</div>						
 							</form>
 						</div>
 
-						<div class="tab-pane fade" id="profesor_form" role="tabpanel" aria-labelledby="profesor-tab">
+						<div class="tab-pane fade mt-3" id="profesor_form" role="tabpanel" aria-labelledby="profesor-tab">
 							<form class="form-row justify-content-end" method="POST" enctype="multipart/form-data">
-
-								<div class="form-group col-12">
-									<label for="">Correo electrónico:</label>
-									<input type="email" class="form-control" name="correo_usuario" placeholder="ejemplo@correo.com" pattern="[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}" autocomplete="email" required>
-								</div>
-								<div class="form-group col-12">
-									<label for="">Contraseña:</label>
-									<input type="password" class="form-control" name="contrasena_nueva" id="contrasena_nueva2" placeholder="Escribe tu nueva contraseña" required pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +">
-								</div>
-								<div class="form-group col-12">
-									<label for="">Confirmar Contraseña:</label>
-									<input type="password" class="form-control" placeholder="Escribe tu nueva contraseña" name="confirmar_contrasena_nueva" id="confirmar_contrasena_nueva2" required pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +">
-								</div>
-								<div class="form-group col-12">
-									<label for="">Nombre(s):</label>
+								
+								<div class="form-group col-6">
+									<label for="">*Nombre(s):</label>
 									<input type="text" class="form-control" name="nombre" autocomplete="give-name" placeholder="Juan" required>
 								</div>
-								<div class="form-group col-12">
-									<label for="">Apellido Paterno:</label>
+								<div class="form-group col-6">
+									<label for="">*Apellido Paterno:</label>
 									<input type="text" class="form-control" name="paterno" autocomplete="family-name" placeholder="Pérez" required>
 								</div>
-								<div class="form-group col-12">
-									<label for="">Apellido Materno:</label>
+								<div class="form-group col-6">
+									<label for="">*Apellido Materno:</label>
 									<input type="text" class="form-control" name="materno" autocomplete="family-name" placeholder="Rodíguez" required>
 								</div>
-								<div class="form-group col-12">
-									<label for="">Fecha de nacimiento:</label>
+								<div class="form-group col-6">
+									<label for="">*Correo electrónico:</label>
+									<input type="email" class="form-control" name="correo_usuario" placeholder="ejemplo@correo.com" pattern="[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}" autocomplete="email" required>
+								</div>
+
+								<div class="w-100" id="contrasena_error_p">
+									
+								</div>
+								<div class="form-group col-6">
+									<label for="">*Contraseña:</label>
+									<input type="password" class="form-control" name="contrasena_nueva" id="contrasena_nueva2" placeholder="Escribe tu nueva contraseña" required pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +">
+								</div>
+								<div class="form-group col-6">
+									<label for="">*Confirmar Contraseña:</label>
+									<input type="password" class="form-control" placeholder="Escribe tu nueva contraseña" name="confirmar_contrasena_nueva" id="confirmar_contrasena_nueva2" required pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +">
+								</div>
+								
+								<div class="form-group col-6">
+									<label for="">*Fecha de nacimiento:</label>
 									<input type="date" class="form-control" name="nacimiento" autocomplete="bday" placeholder="00/00/0000" required>
 								</div>
-								<div class="form-group col-12">
-									<label for="">CURP:</label>
+								<div class="form-group col-6">
+									<label for="">*CURP:</label>
 									<input type="text" class="form-control" name="curp" pattern="^[A-Z]{4}\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z]{6}(\d|[A-Z])\d$" placeholder="AAAA000101BBBBBB00" required>
 									<a href="https://www.gob.mx/curp/" target="_blank">Consultar CURP</a>
 								</div>
-								<div class="form-group col-12">
+								<div class="form-group col-6">
 									<label for="">Foto:</label>
 									<input type="file" class="form-control" name="foto" accept="image/*">
 								</div>
 
-								<div>
+								<div class="w-100">
 									<input type="text" hidden name="rol" value="2">
 									<input type="text" hidden name="accion" value="nuevo_usuario">
 								</div>
-								<div class="form-group">
+								<div class="form-group col-6">
+									<label for=""></label>
 									<input type="submit" name="accion" value="Agregar usuario" class="btn btn_red" id="btn_guard1">
 								</div>						
 							</form>
 						</div>
 
-						<div class="tab-pane fade" id="administrador_form" role="tabpanel" aria-labelledby="administrador-tab">
+						<div class="tab-pane fade mt-3" id="administrador_form" role="tabpanel" aria-labelledby="administrador-tab">
 							<form class="form-row justify-content-end" method="POST" enctype="multipart/form-data">
-
-								<div class="form-group col-12">
-									<label for="">Correo electrónico:</label>
-									<input type="email" class="form-control" name="correo_usuario" placeholder="ejemplo@correo.com" pattern="[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}" autocomplete="email" required>
-								</div>
-								<div class="form-group col-12">
-									<label for="">Contraseña:</label>
-									<input type="password" class="form-control" name="contrasena_nueva" id="contrasena_nueva3" placeholder="Escribe tu nueva contraseña" required pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +">
-								</div>
-								<div class="form-group col-12">
-									<label for="">Confirmar Contraseña:</label>
-									<input type="password" class="form-control" placeholder="Escribe tu nueva contraseña" name="confirmar_contrasena_nueva" id="confirmar_contrasena_nueva3" required pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +">
-								</div>
-								<div class="form-group col-12">
-									<label for="">Nombre(s):</label>
+								
+								<div class="form-group col-6">
+									<label for="">*Nombre(s):</label>
 									<input type="text" class="form-control" name="nombre" autocomplete="give-name" placeholder="Juan" required>
 								</div>
-								<div class="form-group col-12">
-									<label for="">Apellido paterno:</label>
+								<div class="form-group col-6">
+									<label for="">*Apellido paterno:</label>
 									<input type="text" class="form-control" name="paterno" autocomplete="family-name" placeholder="Pérez" required>
 								</div>
-								<div class="form-group col-12">
-									<label for="">Apellido materno:</label>
+								<div class="form-group col-6">
+									<label for="">*Apellido materno:</label>
 									<input type="text" class="form-control" name="materno" autocomplete="family-name" placeholder="Rodíguez" required>
 								</div>
-								<div class="form-group col-12">
-									<label for="">Fecha de nacimiento:</label>
+								<div class="form-group col-6">
+									<label for="">*Correo electrónico:</label>
+									<input type="email" class="form-control" name="correo_usuario" placeholder="ejemplo@correo.com" pattern="[\w.%+-]+@[\w.-]+\.[a-zA-Z]{2,6}" autocomplete="email" required>
+								</div>
+
+								<div class="w-100" id="contrasena_error_a">
+									
+								</div>
+								<div class="form-group col-6">
+									<label for="">*Contraseña:</label>
+									<input type="password" class="form-control" name="contrasena_nueva" id="contrasena_nueva3" placeholder="Escribe tu nueva contraseña" required pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +">
+								</div>
+								<div class="form-group col-6">
+									<label for="">*Confirmar Contraseña:</label>
+									<input type="password" class="form-control" placeholder="Escribe tu nueva contraseña" name="confirmar_contrasena_nueva" id="confirmar_contrasena_nueva3" required pattern="[0-9a-zA-Z\*\+ ]{3,8}" title="Longitud de 3 a 8 caracteres, letras minúsculas y mayúsculas, números y * ó +">
+								</div>
+								
+								<div class="form-group col-6">
+									<label for="">*Fecha de nacimiento:</label>
 									<input type="date" class="form-control" name="nacimiento" autocomplete="bday" placeholder="00/00/0000" required>
 								</div>
-								<div class="form-group col-12">
-									<label for="">CURP:</label>
+								<div class="form-group col-6">
+									<label for="">*CURP:</label>
 									<input type="text" class="form-control" name="curp" pattern="^[A-Z]{4}\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])[A-Z]{6}(\d|[A-Z])\d$" placeholder="AAAA000101BBBBBB00" required>
 									<a href="https://www.gob.mx/curp/" target="_blank">Consultar CURP</a>
 								</div>
-								<div class="form-group col-12">
-									<label for="">Foto:</label>
+								<div class="form-group col-6">
+									<label for="">*Foto:</label>
 									<input type="file" class="form-control" name="foto" accept="image/*">
 								</div>
 
-								<div>
+								<div class="w-100">
 									<input type="text" hidden name="rol" value="1">
 									<input type="text" hidden name="accion" value="nuevo_usuario">
 								</div>
-								<div class="form-group">
+								<div class="form-group col-6">
+									<label for=""></label>
 									<input type="submit" name="accion" value="Agregar usuario" class="btn btn_red" id="btn_guard2">
 								</div>						
 							</form>

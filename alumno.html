@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Profesor</title>
+	<title>Alumno</title>
 	<script>
 		function getCookie(cname) {
 		    var name = cname + "=";
@@ -61,303 +61,342 @@
 	</header>
 
 	<section class="contenedor">
-
-		<div class="container">
+		<div class="container">		
 			
-			<div class="inicio row justify-content-center" id="inicio">
+			<div class="inicio row justify-content-center">
 
 				<div class="titulo">
-
 					<h1 class="display-3">
 						<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 1.5em;">Alumno</span>
+					</h1>				
+				</div>
+				<div class="titulo">
+					<h1 class="display-3">
+						<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 60px;">Grupos</span>
 					</h1>
-									
+					<br>
+					<br>
 				</div>
-
 				<div class="botones_inicio row justify-content-around">
-					<div class="col-sm-3">
-						<a href="archivosguardados.html" class="btn btn_red btn-lg">Buscar Archivos</a>
-					</div>
-
-					<div class="col-sm-3">
-						<a href="#alumno" class="btn btn_red btn-lg">Subir tarea</a>	
-					</div>
-					<!--modal buscar grupo-->
-					<div class="col-sm-3">
-						<a href="#" data-toggle="modal" data-target="#exampleModal9" class="btn btn_red btn-lg" id="Buscar"> Buscar grupo</a>
-						<div class="modal fade" id="exampleModal9" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  						<div class="modal-dialog" role="document">
-	    						<div class="modal-content">
-		      						<div class="modal-header">
-		        						<h5 class="modal-title" id="exampleModalLabel"> Buscar grupo</h5>
-		        						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          						<span aria-hidden="true">&times;</span>
-		        						</button>
-		      						</div>
-
-		      						<div class="modal-body">
-
-		        						<form>
-				  						<div class="form-group">
-				  							<label for="exampleModalLabel">Nombre de Profesor</label>
-				  							<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" >			    						
-				  						</div>
-				  						<div class="form-group">
-				    						<label for="exampleInputPassword1">Nombre del Grupo</label>
-				    						<input type="exampleModalLabel" class="form-control" id="exampleInputPassword1" >
-				
-
-				  						</div>
-				  						<button type="submit" class="btn btn-primary">Buscar</button>
-										</form>
-
-		     						</div>
-		      					
-
-	    						</div>
-	  						</div>
+						<div class="col-sm-2">
+							<a href="#" data-toggle="modal" data-target="#exampleModal1" class="btn btn_red btn-lg" id="Eliminar">Subir tarea</a>
+							<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  						<div class="modal-dialog" role="document">
+		    						<div class="modal-content">
+		      							<div class="modal-header">
+			        						<h5 class="modal-title" id="exampleModalLabel">Subir tarea</h5>
+			        						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          						<span aria-hidden="true">&times;</span>
+			        						</button>
+			      						</div>
+			      						<div class="modal-body">
+			        						<form>
+						  						<div class="form-group">
+						  							<label for="exampleModalLabel1">Nombre de tarea</label>
+						  							<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">	
+						  						</div>
+						  						<div class="form-group">
+						    						<label>Descripcion de tarea</label>
+						    						<input type="text" class="form-control" id="exampleInputPassword1">			
+						  						</div>
+						  						<div class="form-group">
+						    						<label>Fecha de entrega</label>
+						    						<input class="form-control" type="date" id="fechaentrega">			
+						  						</div>
+						  						<div class="form-group">
+						    						<label>Descarga de archivo</label><br>
+						    						<a href=""><i class="fas fa-arrow-circle-down" style="font-size: 60px;"></i></a>			
+						  						</div>
+						  						<div class="form-group">
+						    						<label>Enviar archivo</label>
+						    						<input class="form-control" type="file" id="enviar">			
+						  						</div>
+						  						<button type="submit" class="btn btn-primary" style="background: #E31434;">Enviar</button>
+											</form>
+			     						</div>
+			      						<div class="modal-footer">
+			        						<span>Me equivoque <a href="#registro" id="btnregistro">Deshacer</a></span>
+			      						</div>
+		    						</div>
+		  						</div>
+							</div>
 						</div>
-							
-					</div>
-					<!--modal buscar grupo-->
-				</div>
-				
-					<br>
-					<br>
-				<!--div class="position-absolute" style="bottom: 20px;">
+
+						<div class="col-sm-2">
+							<a href="#Misgrupos" class="btn btn_red btn-lg" id="Eliminar"> Mis grupos</a>												
+						</div>
+
+				</div>	
+		
+				<div class="position-absolute" style="bottom: 20px;">
 					<div class="col-12 mt-5 ">
-						<a href="#profesor" class="no_link" >Bajar</a>
+						<a href="#Grupos" class="no_link" >Bajar</a><br>
 					</div>
 					<div class="col-12">
-						<a href="#compartir" class="no_link"><i class="fas fa-chevron-down"></i></a>
-					</div>
-				</div-->
-			</div>	
-
-			<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
-
-			<br>
-			<br>
-			
-
-				<!---alt="John Doe"-->
-			<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------> 
-
-			<div id="asignar_ua" class="solicitud mt-5">
-
-				<div class="jumbotron jumbotron-fluid w-100">
-					<div class="container justify-content-center">
-						<h2 class="display-4">Tareas pendientes</h2>
-					</div>
-					
-					<div class="container">
-
-						<div class="row justify-content-center">
-
-							<div class="col-8">
-
-								<form class="form-row justify-content-end" method="POST" >
-
-									<div class="form-group col-12">
-										<label for="">Selecciona tarea:</label>
-										<select name="profesor_prof_ua" id="profesor_prof_ua" required class="form-control">
-											<option value="">Seleciona una tarea</option>
-										</select>
-									</div>
-
-									
-
-									<input type="text" name="accion" value="asignarUA" hidden>
-
-									<div class="col-ms-6 media-body">
-										<span class="btn btn-default btn-file">
-						    				<h3 class="border p-2">Elegir archivos</h3> <input type="file">
-						    				<input classtype="file" name="mi archivo" multiple="true">
-										</span>
-									</div>
-
-									<div class="form-group">
-										<input type="submit" value="subir" class="btn btn_red" name="agregar_ua_profesor">
-									</div>
-
-								</form>
-								
-							</div>			  	
-					  		
-						  	
-						</div>
+						<a href="#Grupos" class="no_link"><i class="fas fa-chevron-down"></i></a>
 					</div>
 				</div>
+
 			</div>
 
-
-			<div id="asignar_ua" class="solicitud mt-5">
-
-				<div class="jumbotron jumbotron-fluid w-100">
-					<div class="container justify-content-center">
-						<h2 class="display-4">Subir tarea</h2>
-					</div>
-					
-					<div class="container">
-
-						<div class="row justify-content-center">
-
-							<div class="col-8">
-
-								<form class="form-row justify-content-end" method="POST" >
-
-									<div class="form-group col-12">
-										<textarea name="multilinea" cols="50" rows="4" placeholder="Escribe una descripción de tu tarea"></textarea>
-									</div>
-
-									
-
-									<input type="text" name="accion" value="asignarUA" hidden>
-
-									<div class="col-ms-6 media-body">
-										<span class="btn btn-default btn-file">
-						    				<h3 class="border p-2">Elegir archivos</h3> <input type="file">
-						    				<input type="file" name="mi archivo" multiple="true">
-										</span>
-									</div>
-
-									<div class="form-group">
-										<input type="submit" value="subir" class="btn btn_red" name="agregar_ua_profesor">
-									</div>
-
-								</form>
-								
-							</div>			  	
-					  		
-						  	
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-		
-		<div class="row">
+			<div class="row" id="Grupos">
 				<div class="col-sm-12">
-					<div class="media border p-3">
+					
 
-						<div class="container">
+						
+					<div class="media  p-3">
+						<div class="container col-12 mb-3 mt-5">
+
 							<div class="titulo">
 								<h1 class="display-3">
-									<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 60px;">Grupos</span>
-								</h1>
-								<br>
-								<br>
+									<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 60px;">Buscar grupo</span>
+								</h1> 
+							</div>
+						<!------------------------------------------------------------------------------------------------------>
+							<form class="justify-content-center row col-12" id="buscar_grupos">
+								<div class="form-group col-sm-4">
+									<label for="ex1" style="font-size: 18px;">Ingresa nombre del grupo a inscribir:</label>
+									<input class="form-control" id="ex1" type="text" name="nombre_buscar">
+								</div>	
+							
+								<div class="form-group col-sm-4">
+										
+									<label for="ex1">Profesor</label>
+									<select class="form-control" id="profesores_buscar" name="profesores_buscar">
+										<option value="">Selecciona un profesor</option>
+									</select>	
+									
+								</div>
+
+								<div class=" form-group col-sm-4">
+									<label for="ex1">Unidad de aprendizaje</label>
+									<select class="form-control" id="uas_buscar" name="uas_buscar">
+										<option value="">Selecciona una unidad de aprendizaje</option>
+									</select>									
+								</div>	
+							</form>
+						</div>
+						<!---------------------------------------------------------------------------------------------------->
+						<div class="col-sm-12">
+							<div class="media border p-3">
+								<div class="container col-sm-5">
+									<div class="titulo">
+										<h1 class="display-3">
+											<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 40px;">GRUPO 1</span>
+										</h1> 
+										<br>
+										<br>
+									</div>
+								</div>
+
+								
+
+								<div class="media-body col-sm-7">
+									<h5>
+										<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif;">Tareas asigandas</span>
+									</h5>
+									<div class="lista-tareas">
+										<a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-plus-circle" style="font-size: 50px; color: #1169a3;"></i></a>
+								    </div>								    
+									<br>
+									<br>
+								</div>
 							</div>
 						</div>
-						<!------------------------------------------------------------------------------------------------------------------------------------------>
 						
-
-							
-						
-							<br>
-							<br>
-						<!------------------------------------------------------------------------------------------------------------------------------------------>
-							<div class="col-sm-12">
-								<div class="media border p-3">
-
-								<div class="container col-sm-5">
-								<div class="titulo">
-								<h1 class="display-3">
-								<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 40px;">GRUPO 1</span>
-								</h1> 
-								<br>
-								<br>
-								</div>
-								</div>
-
-								<div class="media-body col-sm-7">
-								     <h5 class="">
-
-								<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif;">Tareas asigandas</span>
-								</h5>
-								     <div>
-								     	<a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
-										<a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
-										<a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
-										<a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
-								     	<a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
-										<a href=""><i class="fas fa-plus-circle" style="font-size: 50px; color: blue;"></i></a>
-								     </div>
-								    
-								<br>
-								<br>
-								</div>
-								</div>
-
-							</div>
-						<!------------------------------------------------------------------------------------------------------------------------------------------>
 
 						<div class="col-sm-12">
-								<div class="media border p-3">
-
+							<div class="media border p-3">
 								<div class="container col-sm-5">
-								<div class="titulo">
-								<h1 class="display-3">
-								<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 40px;">GRUPO 2</span>
-								</h1> 
-								<br>
-								<br>
-								</div>
+									<div class="titulo">
+										<h1 class="display-3">
+											<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 40px;">GRUPO 2</span>
+										</h1> 
+										<br>
+										<br>
+									</div>
 								</div>
 
 								<div class="media-body col-sm-7">
-								     <h5 class="">
-
-								<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif;">Tareas asigandas</span>
-								</h5>
-								     <div style="text-align: left;">
-								     	<a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+									<h5>
+										<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif;">Tareas asigandas</span>
+									</h5>
+									<div class="lista-tareas" >
+										<a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
 										<a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
 										<a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
 										<a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
-								     	<a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
-										<a href=""><i class="fas fa-plus-circle" style="font-size: 50px; color: blue;"></i></a>
-								     </div>
-								    
-								<br>
-								<br>
+										<a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-plus-circle" style="font-size: 50px; color: #1169a3;"></i></a>
+									</div>										 <br>
+									<br>
 								</div>
-								</div>
-
 							</div>
-						<!------------------------------------------------------------------------------------------------------------------------------------------>					
+						</div>
+						
+						<div class="col-sm-12 mt-5" id="Misgrupos">
+							<h1 class="display-3" style="text-align: center;">
+								<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 60px;">Mis grupos</span>
+							</h1>
+							<div class="row">
+								<div class="col-sm-6 border">
+									<h1 class="display-3" style="text-align: center;">
+										<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 40px;">Grupos inscritos</span>
+									</h1>
+
+									<label for="ex1">Mis grupos</label>
+									<select class="form-control" style="background: #e9ecef; font-family: 'Montserrat', sans-serif; font-size: 14px;">
+										<option name="lista" value="grupo1">Grupo 1</option>
+										<option name="lista" value="grupo2">Grupo 2</option>
+										<option name="lista" value="grupo3">Grupo 3</option>
+									</select>	
+
+									<div>
+										<h1 class="display-3" style="text-align: center;">
+											<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 30px;">Grupo/Tareas</span>
+										</h1>
+
+									</div>	
+
+									<!------------------------------------------------------------------------------------------------------------>
+									<div class="lista-tareas" >
+										<a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-word" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-excel" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-powerpoint" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-pdf" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-file-video" style="font-size: 40px; color: black;"></i></a>
+										<a href=""><i class="fas fa-plus-circle" style="font-size: 50px; color: #1169a3;"></i></a>
+									</div>
+										
+
+											
+									
+
+									<!------------------------------------------------------------------------------------------------------------>
+									
+									<div class="col-sm-2">
+												<br><a href="#" data-toggle="modal" data-target="#exampleModal12" class="btn btn_red btn-lg" id="Eliminar">Salir de grupo</a><br><br>
+												<div class="modal fade" id="exampleModal12" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  						<div class="modal-dialog" role="document">
+							    						<div class="modal-content">
+							      							<div class="modal-header">
+								        						<h5 class="modal-title" id="exampleModalLabel">Salir de un grupo</h5>
+								        						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								          						<span aria-hidden="true">&times;</span>
+								        						</button>
+								      						</div>
+								      						<div class="modal-body">
+								        						<form>
+								        							<div class="form-group">
+											  							<label for="exampleModalLabel1">Nombre de grupo</label>
+											  							<select class="form-control" placeholder="Grupos" style="background: #e9ecef; font-family: 'Montserrat', sans-serif; font-size: 14px;">
+																			<option name="lista" value="grupo1" placeholder="Grupos">Grupo 1</option>
+																			<option name="lista" value="grupo2">Grupo 2</option>
+																		</select>	
+											  						</div>
+											  						<div class="form-group">
+											  							<label for="exampleModalLabel1">Unidad de aprendizaje</label>
+											  							<select class="form-control" placeholder="Grupos" style="background: #e9ecef; font-family: 'Montserrat', sans-serif; font-size: 14px;">
+																			<option name="lista" value="grupo1" placeholder="Grupos">UA 1</option>
+																			<option name="lista" value="grupo2">UA 2</option>
+																		</select>	
+											  						</div>
+											  						<button type="submit" class="btn btn-primary" style="background: #E31434;">Salir</button>
+																</form>
+								     						</div>
+								      						
+							    						</div>
+							  						</div>
+												</div>
+											</div>
+
+								</div>
+
+								<div class="col-sm-6 border">
+									<h1 class="display-3" style="text-align: center;">
+										<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 40px;">TODOS LOS GRUPOS</span>
+									</h1>
+
+									<ul class="list-group">
+									  	<li class="list-group-item">Grupo 1<a href=""><i class="fas fa-plus-circle" style="align-content: right; font-size: 40px; color: #1169a3;"></i></a></li>
+									  	<li class="list-group-item">Grupo 2<a href=""><i class="fas fa-plus-circle" style="align-content: right; font-size: 40px; color: #1169a3;"></i></a></li>
+									  	<li class="list-group-item">Grupo 3<a href=""><i class="fas fa-plus-circle" style="align-content: right; font-size: 40px; color: #1169a3;"></i></a></li>
+									</ul>
+
+								</div>								
+							</div>
+						</div>
 					</div>
-
-				</div>
-				
+				</div>				
 			</div>
-
-
-
-
-
-
-
+		</div>
+		<br>
+		<br>
 	</section>
 	<br>
 	
 	<section class="pie">
 		<footer>
 			<div>
-				<span><a href="https://twitter.com/?lang=es"><img src="twitter.svg" width="40"></a></span>
-				<span><a href="https://www.facebook.com/FacebookMexico/?ref=br_rs"><img src="facebook.svg" width="40"></a></span>
+				<p>
+				<a href="https://twitter.com/escomunidad?ref_src=twsrc%5Etfw%7Ctwcamp%5Eembeddedtimeline%7Ctwterm%5Eprofile%3Aescomunidad&ref_url=http%3A%2F%2Fwww.isc.escom.ipn.mx%2F"><i class="fab fa-twitter-square" style="color: white; font-size: 40px; padding: 5px;"></i></a>	
+				<a href="https://www.facebook.com/escomipnmx/"><i class="fab fa-facebook-square" style="color: white; font-size: 40px; padding: 5px;"></i></a>
 				
-			</div>
-			<div>
-				<span>
-					<p>ESCOMpartir ©2018 |</p>	
-				</span>
 				
-			</div>
-					
+				ESCOMpartir ©2018 |</p>	
+			</div>					
 		</footer>			
-	</section>	
+	</section>		
 
 
 	<!-- Modal -->

@@ -140,7 +140,7 @@
 
 		case 'getProfesores':
 
-			$profesores = $procedimientos->getProfesores();
+			$profesores = $procedimientos->getProfesores(isset($_POST['ua'])?$_POST['ua']:null);
 
 			if (is_array($profesores)) {
 

@@ -132,7 +132,7 @@ class Usuario {
 								(e[solicitud][4]==""?`<i class="fas fa-user" style="font-size: 30px; color: white"></i>`:`<img class="align-self-center mr-3" src="${e[solicitud][4]}" alt="No logramos encontrar la imagen de perfil" width="64">`)+
 
 								`<div class="media-body align-self-center mr-3">
-							    	<h5 class="mt-0">${e[solicitud][1]} ${e[solicitud][2]}</h5>
+							    	<h5 class="mt-0">${e[solicitud][1]} ${e[solicitud][2]} ${e[solicitud][6]}</h5>
 							        <p class="lead mb-0">${tipo_usuario[e[solicitud][3]]}</p>
 							        <p class="lead mb-0">Fecha alta: ${e[solicitud][5]}</p>
 							  	</div>

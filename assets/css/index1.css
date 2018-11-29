@@ -31,7 +31,7 @@ nav > ul{
 	list-style: none;
 	margin: 0;
 	height: 100%;
-	width: 60%;
+	width: 50%;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
@@ -65,10 +65,6 @@ nav > ul > li > a > p{
 	text-align: center;
 }
 
-div > h2 > p > img{
-	margin: 4 px;
-}
-
 .logos{
 	width: 20%;
 	display: flex;
@@ -94,17 +90,10 @@ div > h2 > p > img{
 
 .contenedor{
 
-	border-image-repeat: 
+	width: 100%;
 
 }
 
-.add img, .word img, .excel, .mp4 img, .pdf img, .powerpoint img{
-	display: inline-block;
-     font-size: inherit;
-}
-.user{
-	align-items: right;
-}
 .content{
 	
 	width: 50%;
@@ -112,34 +101,7 @@ div > h2 > p > img{
 
 }
 
-.solicitud{
-	text-align: left;
-	align-items: left;
-}
-
-.lead{
-	
-	text-align: justify;
-	align-items: right;
-}
-.parrafo{
-	text-align: justify;
-}
-
-
-
-.pie{
-	font-size: 10px;
-	display: block;
-
-}
-
-.fecha{
-	font-family: "Times New Roman", Times, serif;
-	font-size: 15px;
-}
-
-.inicio, .compartir, .contacto, .solicitud, .registro{
+.inicio, .compartir, .contacto, .registro{
 
 	width: 100%;	
 	text-align: center;
@@ -187,9 +149,8 @@ div > h2 > p > img{
 	text-decoration: none;
 
 }
-
 a.btn:hover{
-	color:#B8B8B8;
+	color:#FFF;
 	text-decoration: none;
 }
 
@@ -208,75 +169,16 @@ footer{
 	color: #fff;
 	background-color: #000;
 	border-color: #E04727;
-	padding: 1em 1em
-
-}
-
-.texto{
-	text-align: justify;
-    	text-justify: inter-word;
-
-}
-
-.texto1{
-	padding-bottom: 2rem;
-}
-
-.lead{
-	padding: 2px;
-}
-
-.w3-red{
-	background-color: #D5D8DC;
-	font-family:'Montserrat', sans-serif;
-	color: #fff;
 	padding: 2rem 1rem
 }
 
-.fecha{
-	font-family:'Montserrat', sans-serif;
-	box-sizing: border-box;
-	padding: 2rem;
-	position: relative;
-	text-align: right;
-
+.usuario_info{
+	display: flex;
+	flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
-
-div#fecha1{
-	text-align: left;
-}
-
-.p-5{
-	background-color: #D5D8DC;
-}
-
-.col-xs-2{
-	font-family:'Montserrat', sans-serif;
-	font-size: 2rem;
-	border-color: #E04727;
-	padding: 2rem;
-}
-
-.col-xs-1{
-	font-family:'Montserrat', sans-serif;
-	font-size: 1rem;
-	border-color: #E04727;
-	padding: 2rem;
-	
-}
-
-.fas{
-	padding: 5px;
-}
-
-.subir{
-	padding: 6rem;
-}
-
-.btn-file {
-  position: relative;
-  overflow: hidden;
-  }
 
 .btn-file input[type=file] {
     position: absolute;
@@ -294,74 +196,6 @@ div#fecha1{
     display: block;
 }
 
-.p-2{
-	color: #FFF;
-	background-color: #E31434;
-  	transition: background-color .5s;
-  	flex-wrap: wrap;
-  	font-family:'Montserrat', sans-serif;
-  	padding: 1rem;
-    font-size: 1.25rem;
-    line-height: 1.5;
-    border-radius: .3rem;
-}
-
-.file-loading{
-	position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
-}
-
-.p-1{
-	padding: 10px;
-}
-
-.p-3{
-	color: #000;
-	
-  	
-  	flex-wrap: wrap;
-  	font-family:'Montserrat', sans-serif;
-  	padding: 1px;
-    font-size: 1.25rem;
-    line-height: 1.5;
-    border-radius: .3rem;
-}
-
-.media-body-c{
-	padding: 3rem;
-}
-
-.fa-file-word{
-	padding: 5px;
-	
-}
-
-.lista-tareas{
-	overflow-x: auto;
-    white-space: nowrap;
-}
-
-.usuario_info{
-	display: flex;
-	flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-
-
-
-
-
-
-
+/*
+Pra hacer que el overflow-x funcione
+white-space:no-wrap;*/

@@ -418,13 +418,19 @@
 
 		}
 
-		public function getProfesores(){
+		public function getProfesores($ua){
 
 			$con= $this->conexion_mysql();
 			if ($con!=null) {
 					$return=false;
+					$result=false;
+					if (isset($ua)) {
+						$result=mysqli_query($con,"SELECT * FROM usuario a INNER JOIN ua_profesor b ON b.profesor=a.id WHERE b.ua=$ua AND a.status = 1 AND a.rol=(SELECT id FROM rol WHERE descripcion='profesor')");
+					}else {
+						$result=mysqli_query($con,"SELECT id, nombre, paterno, materno FROM usuario WHERE rol = (SELECT id FROM rol WHERE descripcion='profesor') and status=1");
+					}
 
-					$result=mysqli_query($con,"SELECT id, nombre, paterno, materno FROM usuario WHERE rol = (SELECT id FROM rol WHERE descripcion='profesor') and status=1");
+					
 					if(isset($result->num_rows) && (int)$result->num_rows>=0){
 						
 						$i=0;
@@ -608,7 +614,7 @@
 			if ($con!=null) {
 					$return = false;
 
-					$result=mysqli_query($con,"SELECT correo, nombre, paterno, rol, foto, fecha_alta FROM usuario WHERE status = 0");
+					$result=mysqli_query($con,"SELECT correo, nombre, paterno, rol, foto, fecha_alta, materno FROM usuario WHERE status = 0");
 
 					if(isset($result->num_rows) && (int)$result->num_rows>=0){
 						
@@ -758,6 +764,8 @@
 			$con= $this->conexion_mysql();
 			if ($con!=null) {
 					$return=false;
+
+					//SELECT * FROM grupo a LEFT JOIN grupo_alumno b ON a.id = b.grupo WHERE b.grupo IS NULL AND (b.alumno <> (SELECT id FROM usuario WHERE correo='setjafet@gmail.com') OR b.alumno IS NULL) AND (nombre LIKE '%N%');
 					
 					$result=mysqli_query($con,"SELECT id, nombre FROM grupo WHERE profesor=(SELECT id FROM usuario WHERE correo='$correo')");
 
