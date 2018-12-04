@@ -425,7 +425,7 @@
 					$return=false;
 					$result=false;
 					if (isset($ua)) {
-						$result=mysqli_query($con,"SELECT * FROM usuario a INNER JOIN ua_profesor b ON b.profesor=a.id WHERE b.ua=$ua AND a.status = 1 AND a.rol=(SELECT id FROM rol WHERE descripcion='profesor')");
+						$result=mysqli_query($con,"SELECT id, nombre, paterno, materno FROM usuario a INNER JOIN ua_profesor b ON b.profesor=a.id WHERE ".(is_numeric($ua)?"b.ua=$ua AND ":"")."a.status = 1 AND a.rol=(SELECT id FROM rol WHERE descripcion='profesor')");
 					}else {
 						$result=mysqli_query($con,"SELECT id, nombre, paterno, materno FROM usuario WHERE rol = (SELECT id FROM rol WHERE descripcion='profesor') and status=1");
 					}
@@ -760,14 +760,73 @@
 
 		}
 
-		public function getGrupos($correo){
+		public function getGrupos($correo,$ua,$profesor,$nombre=null){
 			$con= $this->conexion_mysql();
 			if ($con!=null) {
+
 					$return=false;
 
-					//SELECT * FROM grupo a LEFT JOIN grupo_alumno b ON a.id = b.grupo WHERE b.grupo IS NULL AND (b.alumno <> (SELECT id FROM usuario WHERE correo='setjafet@gmail.com') OR b.alumno IS NULL) AND (nombre LIKE '%N%');
+					if (isset($profesor) || isset($ua)) {
+						$result=mysqli_query($con,"SELECT a.id, a.nombre, a.profesor, c.nombre, c.paterno, c.materno, d.nombre FROM grupo a LEFT JOIN grupo_alumno b ON a.id = b.grupo INNER JOIN usuario c ON c.id = a.profesor INNER JOIN unidad_aprendizaje d ON d.id = a.ua WHERE (a.nombre LIKE '%$nombre%') ".(is_numeric($profesor)?"AND a.profesor = $profesor ":"").(is_numeric($ua)?"AND a.ua = $ua ":"")."AND (b.alumno <> (SELECT id FROM usuario WHERE correo='$correo') OR b.alumno IS NULL)");
+					}else{
+						$result=mysqli_query($con,"SELECT id, nombre FROM grupo WHERE profesor=(SELECT id FROM usuario WHERE correo='$correo')");
+					}
 					
-					$result=mysqli_query($con,"SELECT id, nombre FROM grupo WHERE profesor=(SELECT id FROM usuario WHERE correo='$correo')");
+
+					//SELECT * FROM grupo a LEFT JOIN grupo_alumno b ON a.id = b.grupo WHERE b.grupo IS NULL AND a.profesor = $profesor AND a.ua = $ua AND (b.alumno <> (SELECT id FROM usuario WHERE correo='$correo') OR b.alumno IS NULL) AND (nombre LIKE '%$nombre%');
+					
+					
+
+					if(isset($result->num_rows) && (int)$result->num_rows>=0){
+						
+						$i=0;
+
+						$return = array();
+						
+						while ($fila = $result->fetch_row()) {
+						    $return[$i]=$fila;
+						    $id=$return[$i][0];
+						    $result2=mysqli_query($con,"SELECT COUNT(*) FROM grupo_alumno WHERE grupo=$id");
+						    $return[$i][2]=$result2->fetch_row()[0];
+						    $i++;
+						    $result2->close();
+						}
+
+						$result->close();
+						
+					}else {
+						$return = mysqli_error($con);
+						
+					}
+
+					$con->close();
+
+					return $return;
+					
+				
+			}
+			else{
+
+				return mysqli_error($con);
+
+			}
+			
+		}
+
+		public function getGruposAlumno($correo){
+			$con= $this->conexion_mysql();
+			if ($con!=null) {
+
+					$return=false;
+
+					
+					$result=mysqli_query($con,"SELECT b.id, b.nombre FROM grupo_alumno a INNER JOIN grupo b on a.grupo = b.id WHERE a.alumno = (SELECT id FROM usuario WHERE correo='$correo')");
+					
+					
+
+					//SELECT * FROM grupo a LEFT JOIN grupo_alumno b ON a.id = b.grupo WHERE b.grupo IS NULL AND a.profesor = $profesor AND a.ua = $ua AND (b.alumno <> (SELECT id FROM usuario WHERE correo='$correo') OR b.alumno IS NULL) AND (nombre LIKE '%$nombre%');
+					
+					
 
 					if(isset($result->num_rows) && (int)$result->num_rows>=0){
 						
@@ -1072,6 +1131,116 @@
 			}
 
 		}
+
+		public function inscribirGrupo( $grupo,$correo){
+
+			$con=$this->conexion_mysql();
+			if ($con!=null) {				
+
+					$result=mysqli_query($con,"INSERT INTO grupo_alumno(alumno,grupo) values ( (SELECT id FROM usuario WHERE correo = '$correo') ,$grupo);");
+
+					$return = $result;
+
+					if (!$return) {
+						$return=mysqli_error($con);
+					}
+
+					$con->close();				
+
+					return $return;				
+
+				
+				
+			}else {
+
+
+				echo mysqli_error($con);				
+				return false;
+
+			}
+
+		}
+		// 
+
+		public function getTareas($correo,$grupo)
+		{
+
+			$con= $this->conexion_mysql();
+			if ($con!=null) {
+					$return = false;
+
+					$result=mysqli_query($con,"SELECT a.id, a.nombre, a.descripcion, a.fecha_termino, a.path_archivo, c.nombre, c.url, a.grupo FROM tarea a LEFT JOIN tarea_enviada b ON a.id = b.tarea INNER JOIN archivo c ON c.id = a.archivo WHERE (b.tarea IS NULL OR b.alumno <>(SELECT id FROM usuario WHERE correo='$correo') ) AND a.grupo = $grupo AND CURDATE()<=DATE(a.fecha_termino)");
+
+					if(isset($result->num_rows) && (int)$result->num_rows>=0){
+						
+						$i=0;
+
+						$return = array();
+						
+						while ($fila = $result->fetch_row()) {
+						    $return[$i]=$fila;
+						    $i++;
+						}
+
+						$result->close();
+					}else {
+
+						$return = mysqli_error($con);
+						
+					}
+
+					$con->close();
+
+					return $return;
+					
+				
+			}
+			else{
+				return mysqli_error($con);
+
+			}
+			
+		}
+		public function getTarea($id_tarea)
+				{
+
+					$con= $this->conexion_mysql();
+					if ($con!=null) {
+							$return = false;
+
+							$result=mysqli_query($con,"SELECT a.id, a.nombre,a.descripcion,a.fecha_termino,a.path_archivo,b.nombre,b.url FROM tarea a INNER JOIN archivo b ON a.archivo = b.id WHERE a.id = $id_tarea");
+
+							if(isset($result->num_rows) && (int)$result->num_rows>=0){
+								
+								$i=0;
+
+								$return = array();
+								
+								while ($fila = $result->fetch_row()) {
+								    $return[$i]=$fila;
+								    $i++;
+								}
+
+								$result->close();
+							}else {
+
+								$return = mysqli_error($con);
+								
+							}
+
+							$con->close();
+
+							return $return;
+							
+						
+					}
+					else{
+						return mysqli_error($con);
+
+					}
+					
+				}
+
 
 	}	
 

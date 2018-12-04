@@ -148,10 +148,12 @@ $(document).ready(function() {
 
 });
 
-$("input[name='nacimiento']").change(function(event) {
+$("input[name='nacimiento']").focusout(function(event) {
+	console.log(event.target.value);
 	let fecha = new Date(event.target.value);
 	let hoy = new Date();
-	if (fecha.getDate()>=hoy.getDate()) {
+	console.log(fecha,hoy);
+	if (fecha>=hoy) {
 		$('#mensaje-resp-ajax').html('La fecha no puede ser de hoy o posterior a hoy');
 		$('#exampleModal').modal('hide');
 		$('#exampleModalCenter').modal("toggle");

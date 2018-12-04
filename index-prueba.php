@@ -140,7 +140,7 @@
 
 		case 'getProfesores':
 
-			$profesores = $procedimientos->getProfesores(isset($_POST['ua'])?$_POST['ua']:null);
+			$profesores = $procedimientos->getProfesores(isset($_POST['ua_buscar'])?$_POST['ua_buscar']:null);
 
 			if (is_array($profesores)) {
 
@@ -239,7 +239,7 @@
 
 		case 'getGrupos':
 
-			$Grupos = $procedimientos->getGrupos($_POST["correo_usuario"]);
+			$Grupos = $procedimientos->getGrupos($_POST["correo_usuario"],(isset($_POST["uas_buscar"])?$_POST["uas_buscar"]:null),(isset($_POST["profesores_buscar"])?$_POST["profesores_buscar"]:null),(isset($_POST["nombre_buscar"])?$_POST["nombre_buscar"]:""));
 
 			if (is_array($Grupos)) {
 				$return = array_merge($return,$Grupos);
@@ -350,7 +350,7 @@
 		case "nueva_tarea":
 
 			$result=$procedimientos->insertar_tarea($_POST['nombre_tarea'],$_POST['descripcion_tarea'],$_POST['fecha_entrega_tarea'],$_POST['correo_usuario'],$_POST['grupo_tarea'],$_POST['archivo_aignar_tarea']);
-
+			
 			try {
 				$id_tarea=$result;
 			} catch (Exception $e) {
@@ -358,7 +358,9 @@
 			}
 
 			if(is_numeric($id_tarea)){
-				
+
+				$return['error'] = 0;
+				$return['mensaje'] .=  "Se agregó tarea correctamente";
 
 				if ( isset($_FILES['archivo_tarea']) && $_FILES['archivo_tarea']['error']=='0' ) {
 
@@ -371,11 +373,11 @@
 					if( move_uploaded_file( $_FILES['archivo_tarea']['tmp_name'], $target) && $procedimientos->insertar_url_tarea($id_tarea,$target,$_POST['correo_usuario'],$_POST['grupo_tarea']) )
 					{
 						$return['error'] = 0;
-						$return['mensaje'] .=  "Se agregó archivo correctamente";
+						$return['mensaje'] .=  "Se agregó archivo de tarea correctamente";
 					}else{
 						$return['mensaje'] .=  'No se logró agregar el archivo';
 					}
-				}			
+				}		
 
 			}else{
 				$return['mensaje'] .= "No se agregó archivo correctamente <br>".$result;
@@ -431,7 +433,80 @@
 			}
 
 			break;
-		
+
+		case 'inscribirGrupo':
+			
+			if (isset($_POST['grupo_inscribir'])) {
+				$asignado=$procedimientos->inscribirGrupo($_POST['grupo_inscribir'],$_POST['correo_usuario']);
+				if (!is_string($asignado)) {
+					
+					$return['error'] = 0;
+					$return['mensaje'] .= 'Se inscribió correctamnte el grupo. </br>';
+
+				}else{
+
+					$return['error'] = 1;
+					$return['mensaje'] .= 'No se asigno correctamente grupo. </br>'.$asignado;
+
+				}
+
+			}else{
+				$return['mensaje'] .= 'No se asigno correctamente grupo. </br>'.$asignado;
+			}
+
+			break;
+
+		case 'getGruposAlumno':
+
+			$Grupos = $procedimientos->getGruposAlumno($_POST["correo_usuario"]);
+
+			if (is_array($Grupos)) {
+				$return = array_merge($return,$Grupos);
+				$return['error'] = 0;
+
+			}else{
+
+				$return['error'] = 1;
+				$return['mensaje'] .= 'No se lograron cargar las grupos. </br>'.$Grupos;
+
+			}
+			
+			break;
+
+		case 'getTareas':
+			
+			$tareas = $procedimientos->getTareas($_POST['correo_usuario'],$_POST['grupo_tareas']);
+			if (is_array($tareas)) {
+
+				$return = array_merge($return,$tareas);
+				$return['error'] = 0;
+
+			}else{
+
+				$return['error'] = 1;
+				$return['mensaje'] .= 'No se lograron cargar las tareas. </br>'.$tareas;
+
+			}
+
+			break;
+
+		case 'getTarea':
+			
+			$tareas = $procedimientos->getTarea($_POST['tarea_buscar']);
+			if (is_array($tareas)) {
+
+				$return = array_merge($return,$tareas);
+				$return['error'] = 0;
+
+			}else{
+
+				$return['error'] = 1;
+				$return['mensaje'] .= 'No se logró cargar la tarea. </br>'.$tareas;
+
+			}
+
+			break;
+
 		default:
 				$return['mensaje'] .= 'No hay caso para esa acción';
 			break;

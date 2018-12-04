@@ -346,9 +346,14 @@ div#fecha1{
 	
 }
 
-.lista-tareas{
+.lista-tareas > .row{
 	overflow-x: auto;
-    white-space: nowrap;
+  	white-space: nowrap;
+  	flex-wrap: inherit !important;
+}
+.lista-tareas >.row > .col-3{
+	display: inline-block;
+  	float: none;
 }
 
 .usuario_info{
