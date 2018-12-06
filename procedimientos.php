@@ -4,7 +4,8 @@
 	 * summary
 	 */
 
-	/* La clase Procedimientos nos funciona para realizar todas las consultas a la base de datos que son necesarias para el funcionamiento del  */
+	/* La clase Procedimientos nos funciona para realizar todas las consultas a la base de datos que son necesarias para cada una de las funcionalidades*/
+
 	class Procedimientos
 	{
 	    /**
@@ -12,44 +13,63 @@
 	     */
 	    private $con=null;
 	    
+	    /*Este es un método constructor que unicamente funciona para probar que funcione la base de datos*/
 	    public function __construct(){
-	        $con=$this->conexion_mysql();
-	        if ($con!=null) {
+	    	/*La variable $con funciona para guardar el objeto de conexión de mysql*/
+	        /*Guardamos la conexión en la variable $con*/
+			$con=$this->conexion_mysql();
+	        /*Se verifica que no exista ningún error*/
+			if ($con!=null) {
 	        }
-	        $con->close();
+	        /*Se cierra la conexión*/
+					$con->close();
 
 	    }
 
+	    /*El método conexion_mysql() se utiliza para poder iniciar la comunicación con la base de datos*/
 	    private function conexion_mysql(){
+	    	/*La variable mysqli guarda la información de la conexión*/
 	    	$mysqli = new mysqli("127.0.0.1", "root", "", "escompartiendo", 3306);
 
+	    	/*Se hace una prueba de la conexión*/
 			if ($mysqli->connect_errno) {
+				/*Si es un error salimos del método y retornamos un error*/
 			    echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 			    return null;
 			}
+			/* Configuramos que la respuesta de nuestra conexión sea en codificación UTF-8*/
 			mysqli_set_charset( $mysqli, 'utf8');
+			/*Retornamos el estatus de la conexión*/
 			return $mysqli;
 	    }
 
 	    public function insertar_permiso($descripcion=""){
 
+	    	/*Guardamos la conexión en la variable $con*/
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 				
+					/*Se ejecuta el Script que nos permite insertar un permiso*/
 
 					$result=mysqli_query($con,"INSERT INTO permiso(descripcion) values ('$descripcion');");
 
+					/*Se guarda el lresultado en la variable $return  que posteriormente será retornada*/
+
 					$return = $result;
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;				
 
 				
 				
 			}else {
 
-
+				/*Si tenemos un error, vamos retornar el mensaje de error que nos envía MYSQL*/
 				echo mysqli_error($con);				
 				return false;
 
@@ -59,9 +79,11 @@
 
 		public function insertar_rol($descripcion=""){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
 
 
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 
 				
@@ -76,17 +98,21 @@
 						    $i++;
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 						
 						$return = $result;
 
+						/*Se cierra la conexión*/
 						$result->close();
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 
 							
@@ -94,6 +120,7 @@
 			}else {
 
 
+				/*Si existe un error, retornamos la información del error*/
 				echo mysqli_error($con);
 				return false;
 				
@@ -102,56 +129,69 @@
 		}
 
 		public function agregar_permiso_rol($rol="",$permiso=""){
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 				
 					$result=mysqli_query($con,"INSERT INTO rol_permiso(rol,permiso) values ($rol,$permiso);");
 
 					$return = $result;
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;			
 				
 			}else {
 
 
+				/*Si existe un error, retornamos la información del error*/
 				echo mysqli_error($con);
 				return false;
 				
 			}
 
 		}
-
+		/*Este método nos permite guardar un usuario nuevo*/ 
 		public function insertar_usuario($correo,$contraseña,$nombre,$paterno,$materno,$fecha_nacimiento,$boleta="",$curp,$status,$rol){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
-					
+
+					/*Se ejecuta el Script que nos permite insertar un usuario nuevo*/
 					$result=mysqli_query($con,"INSERT INTO usuario(correo,contrasena,fecha_alta,nombre,paterno,materno,fecha_nacimiento,boleta,CURP,status,rol,foto) values ('$correo','$contraseña',CURDATE(),'$nombre','$paterno','$materno','$fecha_nacimiento',".($boleta==''?'NULL':"'".$boleta."'").",'$curp',$status,$rol,'')");
 					
 					if ($result) {
+						/*Se realiza una consulta para saber el id del usuario nuevo*/
 						$result=mysqli_query($con,"SELECT * FROM usuario WHERE correo='$correo'");
 
 						$i=0;
-
+						/*Se crea la variable $return como un array vacío*/
 						$return=array();
-
+						/*Se lee cada una de la filas de la respuesta*/
 						while ($fila = $result->fetch_row()) {
 							
 						    $return[$i]=$fila;
 						    $i++;
 						}
-
+						/*Se cierra la conexión*/
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 						
 						$return = mysqli_error($con);
 						
 					}
-					
+
+					/*Se cierra la conexión*/
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;								
 				
 			}else {
@@ -163,23 +203,29 @@
 
 		}
 
+		/*Este método guarda una foto para un usuario nuevo*/
 		public function insertar_foto_usuario($foto_path,$correo){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
-				
+					
 					$result=mysqli_query($con,"UPDATE usuario SET foto='$foto_path' WHERE correo='$correo'");
 
 					$return = $result;
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;		
 		
 				
 			}else {
 
 
+				/*Si existe un error, retornamos la información del error*/
 				echo mysqli_error($con);
 				return false;
 				
@@ -189,6 +235,7 @@
 
 		public function seleccionar_permiso(){
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 				
 					if($result=mysqli_query($con,"SELECT * FROM permiso")){
@@ -200,6 +247,7 @@
 						    $i++;
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 						echo mysqli_error($con);
@@ -207,13 +255,16 @@
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
 			}
 			else{
+				/*Si existe un error, retornamos la información del error*/
 				echo mysqli_error($con);
 				return false;
 
@@ -223,6 +274,7 @@
 
 		public function seleccionar_rol(){
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 				
 					if($result=mysqli_query($con,"SELECT * FROM rol")){
@@ -234,6 +286,7 @@
 						    $i++;
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 						echo mysqli_error($con);
@@ -241,13 +294,18 @@
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
 			}
 			else{
+
+				/*Si existe un error, retornamos la información del error*/
 				echo mysqli_error($con);
 				return false;
 
@@ -257,6 +315,8 @@
 
 		public function seleccionar_usuarios(){
 			$con= $this->conexion_mysql();
+			
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 				
 					if($result=mysqli_query($con,"SELECT * FROM usuario")){
@@ -268,6 +328,7 @@
 						    $i++;
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 						echo mysqli_error($con);
@@ -275,13 +336,16 @@
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
 			}
 			else{
+				/*Si existe un error, retornamos la información del error*/
 				echo mysqli_error($con);
 				return false;
 
@@ -292,6 +356,7 @@
 		public function seleccionar_usuario($id_usuario){
 			$con= $this->conexion_mysql();
 
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 				
 					if($result=mysqli_query($con,"SELECT * FROM usuario WHERE id=$id_usuario")){
@@ -303,6 +368,7 @@
 						    $i++;
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 
@@ -312,8 +378,10 @@
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
@@ -328,7 +396,9 @@
 
 		public function editar_usuario($correo,$contraseña,$nombre,$paterno,$materno,$fecha_nacimiento,$boleta,$curp,$status,$rol){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 					
 					$result=mysqli_query($con," UPDATE usuario SET contrasena='$contraseña',nombre='$nombre', paterno='$paterno' , materno='$materno',fecha_nacimiento='$fecha_nacimiento' ,boleta='$boleta' ,CURP='$curp',rol=$rol WHERE correo='$correo'");
@@ -343,6 +413,7 @@
 						    $i++;
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 						
@@ -350,13 +421,16 @@
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;									
 				
 			}else {
 
 
+				/*Si existe un error, retornamos la información del error*/
 				echo mysqli_error($con);
 				return false;
 				
@@ -365,7 +439,9 @@
 		}
 
 		public function borrar_usuario($id){
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 
 				
@@ -374,14 +450,17 @@
 
 					$return = $result;
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;		
 				
 				
 			}else {
 
 
+				/*Si tenemos un error, vamos retornar el mensaje de error que nos envía MYSQL*/
 				echo mysqli_error($con);				
 				return false;
 
@@ -390,7 +469,9 @@
 
 		public function crearUA($nombre, $descripcion, $nivel){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 				
 
@@ -404,8 +485,10 @@
 
 					}					
 
+					/*Se cierra la conexión*/
 					$con->close();				
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;				
 
 				
@@ -413,6 +496,7 @@
 			}else {
 
 
+				/*Si tenemos un error, vamos retornar el mensaje de error que nos envía MYSQL*/
 				echo mysqli_error($con);				
 				return false;
 
@@ -423,6 +507,7 @@
 		public function getProfesores($ua){
 
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 					$return=false;
 					$result=false;
@@ -444,6 +529,7 @@
 						    $i++;
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 
@@ -451,8 +537,10 @@
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
@@ -466,6 +554,7 @@
 
 		public function getUAs($correo=NULL){
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 					$return=false;
 
@@ -489,14 +578,17 @@
 						    $i++;
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 						$return = mysqli_error($con);
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
@@ -511,7 +603,9 @@
 
 		public function asignarUAProfesor($profesor, $ua){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {				
 
 					$result=mysqli_query($con,"INSERT INTO ua_profesor(ua,profesor) values ($ua,$profesor);");
@@ -522,8 +616,10 @@
 						$return=mysqli_error($con);
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();				
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;				
 
 				
@@ -531,6 +627,7 @@
 			}else {
 
 
+				/*Si tenemos un error, vamos retornar el mensaje de error que nos envía MYSQL*/
 				echo mysqli_error($con);				
 				return false;
 
@@ -539,7 +636,9 @@
 		}
 		public function validar_usuario($usuario, $contrasena){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 					$return = false;
 				
@@ -552,6 +651,7 @@
 						    $i++;
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 
@@ -559,8 +659,10 @@
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 
 
@@ -578,6 +680,7 @@
 		{
 
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 					$return = false;
 					if($result=mysqli_query($con,"SELECT b.id, b.descripcion FROM rol_permiso a INNER JOIN permiso b ON a.permiso = b.id WHERE a.rol = $rol")){
@@ -589,6 +692,7 @@
 						    $i++;
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 
@@ -596,8 +700,10 @@
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
@@ -613,6 +719,7 @@
 		{
 
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 					$return = false;
 
@@ -629,6 +736,7 @@
 						    $i++;
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 
@@ -636,8 +744,10 @@
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
@@ -653,6 +763,7 @@
 		{
 
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 					$return = false;
 					$result = mysqli_query($con,"UPDATE usuario SET status = 1 WHERE correo = '$correo'");
@@ -663,8 +774,10 @@
 						$return = $result;
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
@@ -680,6 +793,7 @@
 		{
 
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 					$return = false;
 					$result = mysqli_query($con,"UPDATE usuario SET status = 0 WHERE correo = '$correo'");
@@ -690,8 +804,10 @@
 						$return = $result;
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
@@ -707,6 +823,7 @@
 		{
 
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 					$return = false;
 					$result = mysqli_query($con,"DELETE FROM usuario WHERE correo = '$correo'");
@@ -717,8 +834,10 @@
 						$return = $result;
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
@@ -732,7 +851,9 @@
 
 		public function crearGrupo($nombre, $ua, $correo){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 				
 
@@ -746,8 +867,10 @@
 
 					}					
 
+					/*Se cierra la conexión*/
 					$con->close();				
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;				
 
 				
@@ -755,6 +878,7 @@
 			}else {
 
 
+				/*Si tenemos un error, vamos retornar el mensaje de error que nos envía MYSQL*/
 				echo mysqli_error($con);				
 				return false;
 
@@ -764,6 +888,7 @@
 
 		public function getGrupos($correo,$ua,$profesor,$nombre=null){
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 
 					$return=false;
@@ -795,6 +920,7 @@
 						    $result2->close();
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 						
 					}else {
@@ -802,8 +928,10 @@
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
@@ -818,6 +946,7 @@
 
 		public function getGruposAlumno($correo){
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 
 					$return=false;
@@ -846,6 +975,7 @@
 						    $result2->close();
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 						
 					}else {
@@ -853,8 +983,10 @@
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
@@ -869,7 +1001,9 @@
 
 		public function eliminarGrupo($grupo_id,$correo){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 				
 
@@ -883,8 +1017,10 @@
 
 					}					
 
+					/*Se cierra la conexión*/
 					$con->close();				
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;				
 
 				
@@ -892,6 +1028,7 @@
 			}else {
 
 
+				/*Si tenemos un error, vamos retornar el mensaje de error que nos envía MYSQL*/
 				echo mysqli_error($con);				
 				return false;
 
@@ -901,7 +1038,9 @@
 
 		public function insertar_archivo($nombre_archivo,$descripcion_archivo,$correo,$ua,$nivel){
 			
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 					$result=mysqli_query($con,"INSERT INTO archivo(nombre,fecha_carga,status,profesor,unidad_aprendizaje,descripcion, nivel) VALUE ('$nombre_archivo',CURDATE(),1,(SELECT id FROM usuario WHERE correo='$correo'),$ua,'$descripcion_archivo',$nivel)");
 					
@@ -918,8 +1057,10 @@
 						
 					}
 					
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;								
 				
 			}else {
@@ -932,7 +1073,9 @@
 
 		public function insertar_url_archivo($archivo_path,$id_archivo,$correo){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 				
 					$result=mysqli_query($con,"UPDATE archivo SET url='$archivo_path' WHERE profesor=(SELECT id FROM usuario WHERE correo='$correo') AND id=$id_archivo");
@@ -945,14 +1088,17 @@
 
 					}	
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;		
 		
 				
 			}else {
 
 
+				/*Si existe un error, retornamos la información del error*/
 				echo mysqli_error($con);
 				return false;
 				
@@ -962,6 +1108,7 @@
 
 		public function getArchivos($correo){
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 					$return=false;
 
@@ -983,14 +1130,17 @@
 						    $result2->close();
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 						$return = mysqli_error($con);
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
@@ -1005,7 +1155,9 @@
 		public function insertar_tarea($nombre_tarea,$descripcion_tarea,$fecha_termino,$correo,$grupo,$archivo){
 
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 
 					$result=mysqli_query($con,"INSERT INTO tarea(nombre, descripcion, fecha_creacion, fecha_termino, profesor, grupo, archivo, path_archivo) VALUE ('$nombre_tarea', '$descripcion_tarea',CURDATE(),'$fecha_termino',(SELECT id FROM usuario WHERE correo='$correo'),$grupo,$archivo,'')");
@@ -1023,8 +1175,10 @@
 						
 					}
 					
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;								
 				
 			}else {
@@ -1037,7 +1191,9 @@
 
 		public function insertar_url_tarea($id,$archivo_path,$correo,$grupo){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 				
 					$result=mysqli_query($con,"UPDATE tarea SET path_archivo='$archivo_path' WHERE profesor=(SELECT id FROM usuario WHERE correo='$correo') AND id=$id");
@@ -1050,14 +1206,17 @@
 
 					}	
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;		
 		
 				
 			}else {
 
 
+				/*Si existe un error, retornamos la información del error*/
 				echo mysqli_error($con);
 				return false;
 				
@@ -1067,6 +1226,7 @@
 
 		public function getGruposArchivos($correo){
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 					$return=false;
 					
@@ -1083,14 +1243,17 @@
 						    $i++;
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 						$return = mysqli_error($con);
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
@@ -1105,7 +1268,9 @@
 
 		public function eliminarArchivo($archivo_id,$correo){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 				
 
@@ -1119,8 +1284,10 @@
 
 					}					
 
+					/*Se cierra la conexión*/
 					$con->close();				
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;				
 
 				
@@ -1128,6 +1295,7 @@
 			}else {
 
 
+				/*Si tenemos un error, vamos retornar el mensaje de error que nos envía MYSQL*/
 				echo mysqli_error($con);				
 				return false;
 
@@ -1137,7 +1305,9 @@
 
 		public function inscribirGrupo($grupo,$correo){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {				
 
 					$result=mysqli_query($con,"INSERT INTO grupo_alumno(alumno,grupo) values ( (SELECT id FROM usuario WHERE correo = '$correo') ,$grupo);");
@@ -1148,8 +1318,10 @@
 						$return=mysqli_error($con);
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();				
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;				
 
 				
@@ -1157,6 +1329,7 @@
 			}else {
 
 
+				/*Si tenemos un error, vamos retornar el mensaje de error que nos envía MYSQL*/
 				echo mysqli_error($con);				
 				return false;
 
@@ -1169,6 +1342,7 @@
 		{
 
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 					$return = false;
 
@@ -1185,6 +1359,7 @@
 						    $i++;
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 
@@ -1192,8 +1367,10 @@
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
@@ -1208,7 +1385,8 @@
 				{
 
 					$con= $this->conexion_mysql();
-					if ($con!=null) {
+					/*Se verifica que no exista ningún error*/
+			if ($con!=null) {
 							$return = false;
 
 							$result=mysqli_query($con,"SELECT a.id, a.nombre,a.descripcion,a.fecha_termino,a.path_archivo,b.nombre,b.url FROM tarea a INNER JOIN archivo b ON a.archivo = b.id WHERE a.id = '$id_tarea'");
@@ -1224,16 +1402,19 @@
 								    $i++;
 								}
 
-								$result->close();
+								/*Se cierra la conexión*/
+						$result->close();
 							}else {
 
 								$return = mysqli_error($con);
 								
 							}
 
-							$con->close();
+							/*Se cierra la conexión*/
+					$con->close();
 
-							return $return;
+							/*Se regresa el resultado de la consulta*/
+					return $return;
 							
 						
 					}
@@ -1247,7 +1428,9 @@
 		public function enviartarea($tarea,$correo){
 
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 
 					$result=mysqli_query($con,"INSERT INTO tarea_enviada(fecha_subida, alumno,tarea) VALUE (CURDATE(), (SELECT id FROM usuario WHERE correo='$correo'),$tarea)");
@@ -1265,8 +1448,10 @@
 						
 					}
 					
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;								
 				
 			}else {
@@ -1279,7 +1464,9 @@
 
 		public function insertar_url_tarea_enviada($id,$archivo_path,$correo){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 				
 					$result=mysqli_query($con,"UPDATE tarea_enviada SET path_archivo='$archivo_path' WHERE alumno=(SELECT id FROM usuario WHERE correo='$correo') AND tarea=$id");
@@ -1292,14 +1479,17 @@
 
 					}	
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;		
 		
 				
 			}else {
 
 
+				/*Si existe un error, retornamos la información del error*/
 				echo mysqli_error($con);
 				return false;
 				
@@ -1309,7 +1499,9 @@
 
 		public function id_usuario($correo){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 				
 					$result=mysqli_query($con,"SELECT id FROM usuario WHERE correo='$correo'");
@@ -1322,14 +1514,17 @@
 
 					}	
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;		
 		
 				
 			}else {
 
 
+				/*Si existe un error, retornamos la información del error*/
 				echo mysqli_error($con);
 				return false;
 				
@@ -1339,7 +1534,9 @@
 
 		public function salirGrupo($grupo,$correo){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 				
 
@@ -1353,8 +1550,10 @@
 
 					}					
 
+					/*Se cierra la conexión*/
 					$con->close();				
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;				
 
 				
@@ -1362,6 +1561,7 @@
 			}else {
 
 
+				/*Si tenemos un error, vamos retornar el mensaje de error que nos envía MYSQL*/
 				echo mysqli_error($con);				
 				return false;
 
@@ -1373,6 +1573,7 @@
 
 
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 
 					$return=false;
@@ -1394,6 +1595,7 @@
 						    $return[$id][]=$fila;
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 						
 					}else {
@@ -1401,8 +1603,10 @@
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
@@ -1419,7 +1623,9 @@
 
 		public function comentarArchivo($archivo,$correo,$comentario,$calificacion){
 
+			/*Guardamos la conexión en la variable $con*/
 			$con=$this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {				
 
 					$result=mysqli_query($con,"INSERT INTO comentario(usuario,archivo,comentario,calificacion,fecha_comentario) values ( (SELECT id FROM usuario WHERE correo = '$correo') ,$archivo,'$comentario',$calificacion,CURDATE());");
@@ -1430,8 +1636,10 @@
 						$return=mysqli_error($con);
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();				
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;				
 
 				
@@ -1439,6 +1647,7 @@
 			}else {
 
 
+				/*Si tenemos un error, vamos retornar el mensaje de error que nos envía MYSQL*/
 				echo mysqli_error($con);				
 				return false;
 
@@ -1449,6 +1658,7 @@
 		public function getComentarios($id_archivo){
 
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 					$return=false;
 					$result=false;
@@ -1466,6 +1676,7 @@
 						    $i++;
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 
@@ -1473,8 +1684,10 @@
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				
@@ -1490,6 +1703,7 @@
 		{
 
 			$con= $this->conexion_mysql();
+			/*Se verifica que no exista ningún error*/
 			if ($con!=null) {
 					$return = false;
 
@@ -1506,6 +1720,7 @@
 						    $i++;
 						}
 
+						/*Se cierra la conexión*/
 						$result->close();
 					}else {
 
@@ -1513,8 +1728,10 @@
 						
 					}
 
+					/*Se cierra la conexión*/
 					$con->close();
 
+					/*Se regresa el resultado de la consulta*/
 					return $return;
 					
 				

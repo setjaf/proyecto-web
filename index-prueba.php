@@ -5,7 +5,8 @@
 
 	$usuario=null;
 
-	$return = ['error'=>1,'mensaje'=>''];
+	/*Regresamos el resultado que nos devolvió $procedimientos*/
+				$return = ['error'=>1,'mensaje'=>''];
 
 	$return['accion']=$_POST['accion'];
 
@@ -58,6 +59,7 @@
 
 			if (is_array($rol)) {
 
+				/*Regresamos el resultado que nos devolvió $procedimientos*/
 				$return = array_merge($return,$rol[0]);
 				$return['error'] = 0;
 				$return['mensaje'] .=  "Inicio de sesión correcto";
@@ -101,6 +103,7 @@
 
 			if (is_array($permisos)) {
 
+				/*Regresamos el resultado que nos devolvió $procedimientos*/
 				$return = array_merge($return,$permisos);
 				$return['error'] = 0;
 
@@ -118,6 +121,7 @@
 			$solicitudes = $procedimientos->getSolicitudes();
 			if (is_array($solicitudes)) {
 
+				/*Regresamos el resultado que nos devolvió $procedimientos*/
 				$return = array_merge($return,$solicitudes);
 				$return['error'] = 0;
 
@@ -149,6 +153,7 @@
 
 			if (is_array($profesores)) {
 
+				/*Regresamos el resultado que nos devolvió $procedimientos*/
 				$return = array_merge($return,$profesores);
 				$return['error'] = 0;
 
@@ -167,6 +172,7 @@
 
 			if (is_array($UAs)) {
 
+				/*Regresamos el resultado que nos devolvió $procedimientos*/
 				$return = array_merge($return,$UAs);
 				$return['error'] = 0;
 
@@ -247,6 +253,7 @@
 			$Grupos = $procedimientos->getGrupos($_POST["correo_usuario"],(isset($_POST["uas_buscar"])?$_POST["uas_buscar"]:null),(isset($_POST["profesores_buscar"])?$_POST["profesores_buscar"]:null),(isset($_POST["nombre_buscar"])?$_POST["nombre_buscar"]:""));
 
 			if (is_array($Grupos)) {
+				/*Regresamos el resultado que nos devolvió $procedimientos*/
 				$return = array_merge($return,$Grupos);
 				$return['error'] = 0;
 
@@ -325,6 +332,7 @@
 
 			if (is_array($Grupos)) {
 
+				/*Regresamos el resultado que nos devolvió $procedimientos*/
 				$return = array_merge($return,$Grupos);
 				$return['error'] = 0;
 
@@ -343,6 +351,7 @@
 
 			if (is_array($Archivos)) {
 
+				/*Regresamos el resultado que nos devolvió $procedimientos*/
 				$return = array_merge($return,$Archivos);				
 				$return['error'] = 0;
 
@@ -440,6 +449,7 @@
 			$Grupos = $procedimientos->getGruposAlumno($_POST["correo_usuario"]);
 
 			if (is_array($Grupos)) {
+				/*Regresamos el resultado que nos devolvió $procedimientos*/
 				$return = array_merge($return,$Grupos);
 				$return['error'] = 0;
 
@@ -457,6 +467,7 @@
 			$tareas = $procedimientos->getTareas($_POST['correo_usuario'],$_POST['grupo_tareas']);
 			if (is_array($tareas)) {
 
+				/*Regresamos el resultado que nos devolvió $procedimientos*/
 				$return = array_merge($return,$tareas);
 				$return['error'] = 0;
 
@@ -474,6 +485,7 @@
 			$tareas = $procedimientos->getTarea($_POST['tarea_buscar']);
 			if (is_array($tareas)) {
 
+				/*Regresamos el resultado que nos devolvió $procedimientos*/
 				$return = array_merge($return,$tareas);
 				$return['error'] = 0;
 
@@ -542,6 +554,7 @@
 			$archivos = $procedimientos->buscarArchivos(isset($_POST["nombre_buscar"])?$_POST["nombre_buscar"]:null,isset($_POST["profesores_buscar"])?$_POST["profesores_buscar"]:null,isset($_POST["uas_buscar"])?$_POST["uas_buscar"]:null,isset($_POST["nivel_buscar"])?$_POST["nivel_buscar"]:null);
 
 			if (is_array($archivos)) {
+				/*Regresamos el resultado que nos devolvió $procedimientos*/
 				$return = array_merge($return,$archivos);
 				$return['error'] = 0;
 
@@ -582,6 +595,7 @@
 
 			if (is_array($Comentarios)) {
 
+				/*Regresamos el resultado que nos devolvió $procedimientos*/
 				$return = array_merge($return,$Comentarios);
 				$return['error'] = 0;
 
@@ -593,8 +607,6 @@
 			}
 			
 			break;
-
-		/*Aún no programadas en JavaScript*/
 
 		case 'desactivarUsuario':
 			$usuarioAceptado = $procedimientos->desactivarUsuario($_POST['correo_solicitud']);
@@ -626,7 +638,8 @@
 			
 			$UsuariosActivos = $procedimientos->getUsuariosActivos();
 			if (is_array($UsuariosActivos)) {
-
+				/*Regresamos el resultado que nos devolvió $procedimientos*/
+				/*Regresamos el resultado que nos devolvió $procedimientos*/
 				$return = array_merge($return,$UsuariosActivos);
 				$return['error'] = 0;
 
