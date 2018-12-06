@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Administrador</title>
+	<!---verifica mediante cookies que el usuario este looegado-->
 	<script>
 		function getCookie(cname) {
 		    var name = cname + "=";
@@ -24,6 +25,8 @@
 		}
 
 	</script>
+
+	<!---libreria bootstrap-->
 	<link rel="stylesheet" href="assets/css/index.css">
 	<link href="https://fonts.googleapis.com/css?family=Rajdhani" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
@@ -32,11 +35,12 @@
 	<!--<link rel="stylesheet" href="http://localhost:81/bootstrap-4.1.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="http://localhost:81/iconfont/css/all.css">-->
 
-
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<!--peticion de jquery--->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
 </head>
 <body>
+	<!---------------------Cabeza de la pagina----------------------------------------------------------------->
 	<header>
 		<nav>
 			<div class="logos">
@@ -61,16 +65,16 @@
 		</nav>
 	</header>
 
-
+	<!----seccion contenedor de toda la pagina-->
 	<section class="contenedor">
 
 		<div class="container">
-			
+			<!------>
 			<div class="inicio row justify-content-center" id="inicio">
 
 				<div class="titulo">
 
-					<h1 class="display-3">
+					<h1 class="display-3"><!------>
 						<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 1.5em;">Administrador</span>
 					</h1>
 					<br>
@@ -79,7 +83,7 @@
 
 				<br>
 				<br>
-
+						<!---botones--->
 				<div class="botones_inicio row justify-content-around">
 
 					<div class="col-sm-4 pt-2">
@@ -102,7 +106,7 @@
 					</div>
 	
 				</div>
-
+				<!---btn para mover en la misma pagina--->
 				<div class="position-absolute" style="bottom: 20px;">
 					<div class="col-12 mt-5 ">
 						<a href="#solicitudes_usuarios" class="no_link" >Ir a solicitudes</a>
@@ -115,7 +119,7 @@
 
 				
 			</div>
-
+			<!---solicitudes de usuarios nuevos--->
 			<div id="solicitudes_usuarios" class="solicitud mt-5">
 
 				<div class="jumbotron jumbotron-fluid w-100">
@@ -156,13 +160,14 @@
 				    
 				    
 				  </div>
+				  <!---boton para subir al inicio--->
 				  <div class="col-sm-3">
 						<a href="#" class="btn btn_red btn-lg" id="Subir">Ir al inicio</a>
 					</div>
 				</div>
 				
 			</div>
-
+				<!--crear unidades de aprendizaje---->
 			<div id="crear_ua" class="solicitud mt-5">
 
 				<div class="jumbotron jumbotron-fluid w-100">
@@ -175,7 +180,7 @@
 						<div class="row justify-content-center">
 
 							<div class="col-8">
-
+								<!----datos para u.aprendizaje-->
 								<form class="form-row justify-content-end" method="POST" >
 									
 									<div class="form-group col-12">
@@ -211,7 +216,7 @@
 
 						
 					</div>
-
+					<!----boton para ir al inicio-->
 					<div class="col-sm-3">
 						<a href="#" class="btn btn_red btn-lg" id="Subir">Ir al inicio</a>
 					</div>
@@ -220,7 +225,7 @@
 				  </div>
 				
 			</div>
-
+			<!----asignar unidad de aprendizaje-->
 			<div id="asignar_ua" class="solicitud mt-5">
 
 				<div class="jumbotron jumbotron-fluid w-100">
@@ -233,7 +238,7 @@
 						<div class="row justify-content-center">
 
 							<div class="col-8">
-
+								<!---datos para seleccionar una unidad de aprendizaje--->
 								<form class="form-row justify-content-end" method="POST" >
 
 									<div class="form-group col-12">
@@ -265,7 +270,7 @@
 
 						
 					</div>
-
+					<!---boton para sabir al inicio--->
 					<div class="col-sm-3">
 						<a href="#" class="btn btn_red btn-lg" id="Subir">Ir al inicio</a>
 					</div>
@@ -275,7 +280,7 @@
 				
 			</div>
 
-
+			<!---muestra usuarios activos--->
 			<div id="usuarios_activos" class="solicitud mt-5">
 
 				<div class="jumbotron jumbotron-fluid w-100">
@@ -309,6 +314,7 @@
 				    
 				    
 				  </div>
+				  <!--boton para subir al inicio---->
 				  <div class="col-sm-3">
 						<a href="#" class="btn btn_red btn-lg" id="Subir">Ir al inicio</a>
 					</div>
@@ -318,15 +324,19 @@
 		
 	</section>
 
-	
+	<!----pie de pagina-->
 	<section class="pie">
 		<footer>
-			<a href="https://twitter.com/?lang=es"><img src="twitter.svg" width="40"></a>
-			<a href="https://www.facebook.com/FacebookMexico/?ref=br_rs"><img src="facebook.svg" width="40"></a>
-
-			<p>ESCOMpartir ©2018 | <a href="acercade.html"> Acerca de...</a> | <a href="">Trabajos</a> | <a href="">Centro de Noticias</a> | <a href="">Constactanos</a> | <a href="">Profesores</a> | <a href="">Comunidad</a> | <a href="">Blog</a> | <a href="">Privacidad</a> | <a href="">Terminos de Servicios</a> | <a href="">Idioma</a></p>
-		</footer>
-	</section>
+			<div>
+				<p>
+				<a href="https://twitter.com/escomunidad?ref_src=twsrc%5Etfw%7Ctwcamp%5Eembeddedtimeline%7Ctwterm%5Eprofile%3Aescomunidad&ref_url=http%3A%2F%2Fwww.isc.escom.ipn.mx%2F"><i class="fab fa-twitter-square" style="color: white; font-size: 40px; padding: 5px;"></i></a>	
+				<a href="https://www.facebook.com/escomipnmx/"><i class="fab fa-facebook-square" style="color: white; font-size: 40px; padding: 5px;"></i></a>
+				
+				
+				ESCOMpartir ©2018 |</p>	
+			</div>					
+		</footer>			
+	</section>		
 
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
