@@ -582,6 +582,28 @@
 			
 			break;
 
+		case 'comentarArchivo':
+			
+			if (isset($_POST['id_archivo'])) {
+				$asignado=$procedimientos->comentarArchivo($_POST['id_archivo'],$_POST['correo_usuario'],$_POST['comentario_archivo'],$_POST['calificacion_archivo']);
+				if (!is_string($asignado)) {
+					
+					$return['error'] = 0;
+					$return['mensaje'] .= 'Se insertó correctamente el comentario. </br>';
+
+				}else{
+
+					$return['error'] = 1;
+					$return['mensaje'] .= 'No se insertó correctamente el comentario. </br>'.$asignado;
+
+				}
+
+			}else{
+				$return['mensaje'] .= 'No se insertó correctamente el comentario. </br>'.$asignado;
+			}
+
+			break;
+
 		default:
 				$return['mensaje'] .= 'No hay caso para esa acción';
 			break;

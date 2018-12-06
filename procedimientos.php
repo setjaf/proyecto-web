@@ -19,7 +19,7 @@
 	    }
 
 	    private function conexion_mysql(){
-	    	$mysqli = new mysqli("127.0.0.1", "root", "", "escompartiendo", 3306);
+	    	$mysqli = new mysqli("127.0.0.1", "root", "root", "escompartiendo", 3306);
 
 			if ($mysqli->connect_errno) {
 			    echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
@@ -1411,6 +1411,36 @@
 
 			}
 
+
+		}
+
+
+		public function comentarArchivo($archivo,$correo,$comentario,$calificacion){
+
+			$con=$this->conexion_mysql();
+			if ($con!=null) {				
+
+					$result=mysqli_query($con,"INSERT INTO comentario(usuario,archivo,comentario,calificacion,fecha_comentario) values ( (SELECT id FROM usuario WHERE correo = '$correo') ,$archivo,'$comentario',$calificacion,CURDATE());");
+
+					$return = $result;
+
+					if (!$return) {
+						$return=mysqli_error($con);
+					}
+
+					$con->close();				
+
+					return $return;				
+
+				
+				
+			}else {
+
+
+				echo mysqli_error($con);				
+				return false;
+
+			}
 
 		}
 

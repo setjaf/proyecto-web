@@ -130,6 +130,17 @@ class Usuario {
 							$('#mensaje-resp-ajax').html(e.mensaje);
 							$('#exampleModal').modal('hide');
 							$('#exampleModalCenter').modal("toggle");
+						}else if(e.accion=='eliminarArchivo'){
+							
+							console.log(e);
+							$('#mensaje-resp-ajax').html(e.mensaje);
+							$('#exampleModal').modal('hide');
+							$('#exampleModa12').modal('hide');
+							$('#exampleModalCenter').modal("toggle");
+							$('#solicitudes_body').empty();
+							self.cargarArchivos();
+
+
 						}
 						
 						

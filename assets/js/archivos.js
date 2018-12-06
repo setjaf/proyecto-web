@@ -116,13 +116,11 @@ class Usuario {
 								$('#exampleModalCenter').modal("toggle");
 							}
 
-						}else if(e.accion=='inscribirGrupo'){
-							self.cargarGrupos();
+						}else if(e.accion=='comentarArchivo'){
 							$('#mensaje-resp-ajax').html(e.mensaje);
 							$('#exampleModal').modal('hide');
 							$('#exampleModal1').modal('hide');
 							$('#exampleModalCenter').modal("toggle");
-							$("#buscar_grupos").submit();
 
 						}else if (e.accion=='enviarTarea') {
 							$('#descripcion_tarea').val('');
@@ -295,7 +293,7 @@ class Usuario {
 					$('#lista_archivos_ua_'+ua).append(`
 					
 						<div class="text-center ml-1 mr-1 col-3">
-							<button class="btn btn-link" name="btn_archivo" value="${e[ua][archivo][0]}" data-grupo="${e[ua][archivo][6]}" data->
+							<button class="btn btn-link" name="btn_archivo" value="${e[ua][archivo][0]}" data-nombre="${e[ua][archivo][1]}" data-descripcion="${e[ua][archivo][2]}" data-fecha="${e[ua][archivo][3]}" data-url="${e[ua][archivo][4]}" data-nivel="${e[ua][archivo][5]}" data-profesor="${e[ua][archivo][7]} ${e[ua][archivo][8]} ${e[ua][archivo][9]}" data-ua="${e[ua][archivo][11]}">
 								<i class="fas fa-file-${self.fileIcon[e[ua][archivo][4].substring(e[ua][archivo][4].lastIndexOf('.')+1) ]}" style="font-size: 40px; color: black;"></i>
 								<h5>${e[ua][archivo][1]}</h5>
 								<p style="font-size:15px;">${e[ua][archivo][3]}</p>
@@ -313,7 +311,19 @@ class Usuario {
 		$('[name="btn_archivo"]').on('click', function(e) {
 					console.log(e);
 					console.log(e.currentTarget.value);
-					$('#lista_tareas_grupo_tarea').val(e.currentTarget.value).change();
+					//$('#lista_tareas_grupo_tarea').val(e.currentTarget.value).change();
+					$('#id_archivo').val(e.currentTarget.value);
+					$('#nombre_archivo').html(e.currentTarget.dataset.nombre);
+					$('#desc_archivo').html(e.currentTarget.dataset.descripcion);
+					$('#fecha_archivo').html(e.currentTarget.dataset.fecha)
+					$('#url_archivo').html(`
+							<a class="btn btn-link" name="btn_archivo" href="${e.currentTarget.dataset.url}" download>
+								<i class="fas fa-file-${self.fileIcon[e.currentTarget.dataset.url.substring(e.currentTarget.dataset.url.lastIndexOf('.')+1) ]}" style="font-size: 40px; color: black;"></i>
+							</a>`);
+					$('#nivel_archivo').html(e.currentTarget.dataset.nivel);
+					$('#propietario_archivo').html(e.currentTarget.dataset.profesor);
+					$('#u_a_archivo').html(e.currentTarget.dataset.ua);
+					//$('#').html(e.currentTarget.dataset.);
 					$('#exampleModal1').modal('show');	
 				});
 
