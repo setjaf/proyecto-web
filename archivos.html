@@ -27,10 +27,10 @@
 		<link rel="stylesheet" href="assets/css/index.css">
 		<link href="https://fonts.googleapis.com/css?family=Rajdhani" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-		<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">-->
-		<link rel="stylesheet" href="http://localhost:81/bootstrap-4.1.1/css/bootstrap.min.css">
-		<link rel="stylesheet" href="http://localhost:81/iconfont/css/all.css">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+		<!--<link rel="stylesheet" href="http://localhost:81/bootstrap-4.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://localhost:81/iconfont/css/all.css">-->
 
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -156,47 +156,59 @@
 				</div>
 				<div class="modal-body">
 				<form class="form-row">
+
+					<input type="text" name="id_archivo" id="id_archivo" hidden> 
+
 					<div class="form-group col-6">
 
-						<label>Nombre del archivo:</label>
+						<label style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 20px;">Nombre del archivo:</label>
 						<p id="nombre_archivo"></p>
 						
 					</div>
 					<div class="form-group col-6">
-						<label>Fecha en la que se subió el archivo: </label>
+						<label style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 20px;">Fecha en la que se subió el archivo: </label>
 						<p id="fecha_archivo"></p>			
 					</div>
 					<div class="form-group col-12">
-						<label for="exampleModalLabel1">Descripción del archivo:</label>
+						<label style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 20px;">Descripción del archivo:</label>
 						<p id="desc_archivo"></p>	
 					</div>
 					
 					<div class="form-group col-6">
-						<label>Descargar archivo:</label>
+						<label style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 20px;">Descargar archivo:</label>
 						<div id="url_archivo">
 							
 						</div>			
 					</div>
 					<div class="form-group col-6" >
-						<label>Nivel del archivo:</label><br>
+						<label style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 20px;">Nivel del archivo:</label><br>
 						<p id="nivel_archivo"></p>		
 					</div>
 
 					<div class="form-group col-6" >
-						<label>Propietario:</label><br>
+						<label style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 20px;">Propietario:</label><br>
 						<p id="propietario_archivo"></p>		
 					</div>
 
 					<div class="form-group col-6" >
-						<label>Unidad de aprendizaje:</label><br>
+						<label style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 20px;">Unidad de aprendizaje:</label><br>
 						<p id="u_a_archivo"></p>		
 					</div>
 
-					<h5>Calificar archivo</h5>
+					<h3 style="color:#1169a3; font-family: 'Rajdhani', sans-serif;">Comentarios de los usuarios</h3>
+
+					<div style="overflow-y: auto; max-height: 200px;" class="container border-top border-bottom mb-3">
+
+						<div id="comentarios_archivo" >
+							
+						</div>
+					</div>
+
+					<h3 style="color:#1169a3; font-family: 'Rajdhani', sans-serif;">Calificar el archivo</h3>
 
 					<div class="form-group col-12">
 						<label>Calificación:</label>
-						<select name="calificacion_archivo" class="form-control" required>
+						<select name="calificacion_archivo" class="form-control" id="calificacion_archivo" required>
 							<option value="">Selecciona una opción</option>
 							<option value="1">Bueno</option>
 							<option value="2">Regular</option>
@@ -207,8 +219,8 @@
 
 					<div class="form-group col-12" >
 						<label>Comentario:</label><br>
-						<input type="text" name="id_archivo" id="id_archivo" hidden> 
-						<textarea name="comentario_archivo" id="cemontario_archivo" class="form-control"></textarea>	
+						
+						<textarea name="comentario_archivo" id="comentario_archivo" class="form-control"></textarea>	
 					</div>
 
 
@@ -235,8 +247,8 @@
 		</section>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-		<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>-->
-		<script src="http://localhost:81/bootstrap-4.1.1/js/bootstrap.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+		<!--<script src="http://localhost:81/bootstrap-4.1.1/js/bootstrap.min.js"></script>-->
 		<script src="assets/js/archivos.js"></script>	
 
 	</body>

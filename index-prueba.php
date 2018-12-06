@@ -413,34 +413,6 @@
 
 			break;
 
-		/*Aún no programadas en JavaScript*/
-
-		case 'desactivarUsuario':
-			$usuarioAceptado = $procedimientos->desactivarUsuario($_POST['correo_solicitud']);
-
-			if ($usuarioAceptado==True) {
-				$return['error']=0;
-				$return['mensaje'].='Se ha cambiado el status del usuario, ahora está como inactivo';
-			}else {
-				$return['error']=1;
-				$return['mensaje'].='No se logró cambiar el status del usuario, intentalo denuevo más tarde </br>'.$usuarioAceptado;
-			}
-
-			break;
-
-		case 'eliminarUsuario':
-			$usuarioAceptado = $procedimientos->eliminarUsuario($_POST['correo_solicitud']);
-
-			if ($usuarioAceptado==True) {
-				$return['error']=0;
-				$return['mensaje'].='Se ha eliminado el usuario correctamente';
-			}else {
-				$return['error']=1;
-				$return['mensaje'].='No se logró eliminar el usuario, intentalo denuevo más tarde </br>'.$usuarioAceptado;
-			}
-
-			break;
-
 		case 'inscribirGrupo':
 			
 			if (isset($_POST['grupo_inscribir'])) {
@@ -603,6 +575,71 @@
 			}
 
 			break;
+
+		case 'getComentarios':
+
+			$Comentarios = $procedimientos->getComentarios(isset($_POST['id_archivo'])?$_POST['id_archivo']:0);
+
+			if (is_array($Comentarios)) {
+
+				$return = array_merge($return,$Comentarios);
+				$return['error'] = 0;
+
+			}else{
+
+				$return['error'] = 1;
+				$return['mensaje'] .= 'No se lograron cargar los comentarios. </br>'.$Comentarios;
+
+			}
+			
+			break;
+
+		/*Aún no programadas en JavaScript*/
+
+		case 'desactivarUsuario':
+			$usuarioAceptado = $procedimientos->desactivarUsuario($_POST['correo_solicitud']);
+
+			if ($usuarioAceptado==True) {
+				$return['error']=0;
+				$return['mensaje'].='Se ha cambiado el status del usuario, ahora está como inactivo';
+			}else {
+				$return['error']=1;
+				$return['mensaje'].='No se logró cambiar el status del usuario, intentalo denuevo más tarde </br>'.$usuarioAceptado;
+			}
+
+			break;
+
+		case 'eliminarUsuario':
+			$usuarioAceptado = $procedimientos->eliminarUsuario($_POST['correo_solicitud']);
+
+			if ($usuarioAceptado==True) {
+				$return['error']=0;
+				$return['mensaje'].='Se ha eliminado el usuario correctamente';
+			}else {
+				$return['error']=1;
+				$return['mensaje'].='No se logró eliminar el usuario, intentalo denuevo más tarde </br>'.$usuarioAceptado;
+			}
+
+			break;
+
+		case 'getUsuariosActivos':
+			
+			$UsuariosActivos = $procedimientos->getUsuariosActivos();
+			if (is_array($UsuariosActivos)) {
+
+				$return = array_merge($return,$UsuariosActivos);
+				$return['error'] = 0;
+
+			}else{
+
+				$return['error'] = 1;
+				$return['mensaje'] .= 'No se lograron cargar las usuarios activos. </br>'.$UsuariosActivos;
+
+			}
+
+			break;
+
+		
 
 		default:
 				$return['mensaje'] .= 'No hay caso para esa acción';

@@ -3,6 +3,8 @@
 	/**
 	 * summary
 	 */
+
+	/* La clase Procedimientos nos funciona para realizar todas las consultas a la base de datos que son necesarias para el funcionamiento del  */
 	class Procedimientos
 	{
 	    /**
@@ -19,7 +21,7 @@
 	    }
 
 	    private function conexion_mysql(){
-	    	$mysqli = new mysqli("127.0.0.1", "root", "root", "escompartiendo", 3306);
+	    	$mysqli = new mysqli("127.0.0.1", "root", "", "escompartiendo", 3306);
 
 			if ($mysqli->connect_errno) {
 			    echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
@@ -1443,6 +1445,88 @@
 			}
 
 		}
+
+		public function getComentarios($id_archivo){
+
+			$con= $this->conexion_mysql();
+			if ($con!=null) {
+					$return=false;
+					$result=false;
+					
+					$result=mysqli_query($con,"SELECT b.nombre, b.paterno, b.materno, b.foto, a.comentario, a.calificacion FROM comentario a INNER JOIN usuario b ON a.usuario=b.id WHERE archivo=$id_archivo");
+										
+					if(isset($result->num_rows) && (int)$result->num_rows>=0){
+						
+						$i=0;
+
+						$return = array();
+						
+						while ($fila = $result->fetch_row()) {
+						    $return[$i]=$fila;
+						    $i++;
+						}
+
+						$result->close();
+					}else {
+
+						$return=mysqli_error($con);
+						
+					}
+
+					$con->close();
+
+					return $return;
+					
+				
+			}
+			else{
+				return mysqli_error($con);
+
+			}
+
+		}
+
+		public function getUsuariosActivos()
+		{
+
+			$con= $this->conexion_mysql();
+			if ($con!=null) {
+					$return = false;
+
+					$result=mysqli_query($con,"SELECT correo, nombre, paterno, rol, foto, fecha_alta, materno FROM usuario WHERE status = 1");
+
+					if(isset($result->num_rows) && (int)$result->num_rows>=0){
+						
+						$i=0;
+
+						$return = array();
+						
+						while ($fila = $result->fetch_row()) {
+						    $return[$i]=$fila;
+						    $i++;
+						}
+
+						$result->close();
+					}else {
+
+						$return = mysqli_error($con);
+						
+					}
+
+					$con->close();
+
+					return $return;
+					
+				
+			}
+			else{
+				return mysqli_error($con);
+
+			}
+			
+		}
+
+
 
 
 

@@ -556,8 +556,8 @@ $(document).ready(function() {
 
 	$('#alumno_grupos').on('change', function(e) {
 		console.log(e);
-		usuario.cargarTareas(e.currentTarget.value,true);
-		$('#alumno_grupos_tarea').val(e.currentTarget.value).change();
+		//usuario.cargarTareas(e.currentTarget.value,true);
+		//$('#alumno_grupos_tarea').val(e.currentTarget.value).change();
 		$('#grupos_salir').val(e.currentTarget.value).change();	
 	});
 

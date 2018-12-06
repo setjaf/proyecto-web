@@ -77,6 +77,7 @@ class Usuario {
 	}
 
 	cargarSolicitudes(){
+		$('#solicitudes_body').empty();
 		var self = this;
 		$.ajax({
 			url: 'index-prueba.php',
@@ -135,6 +136,7 @@ class Usuario {
 
 	iniciarForm(){
 		var self = this;
+		$("form").unbind();
 		$( "form" ).submit(function( event ) {
 
 					event.preventDefault();
@@ -174,6 +176,7 @@ class Usuario {
 							$('#exampleModalCenter').modal("toggle");
 							$('#solicitudes_body').empty();
 							self.cargarSolicitudes();
+							self.cargarUsuariosActivos();
 
 						}else if (e.accion=='asignarUA') {
 							console.log(e);
@@ -185,6 +188,13 @@ class Usuario {
 							$('#mensaje-resp-ajax').html(e.mensaje);
 							$('#exampleModal').modal('hide');
 							$('#exampleModalCenter').modal("toggle");
+						}else if (e.accion=='eliminarUsuario' ||e.accion=='desactivarUsuario') {
+							console.log(e);
+							$('#mensaje-resp-ajax').html(e.mensaje);
+							$('#exampleModal').modal('hide');
+							$('#exampleModalCenter').modal("toggle");
+							self.cargarUsuariosActivos();
+							self.cargarSolicitudes();
 						}
 						
 						
@@ -297,12 +307,79 @@ class Usuario {
 
 	}
 
+	cargarUsuariosActivos(){
+		$('#usuarios_body').empty();
+		var self = this;
+		$.ajax({
+			url: 'index-prueba.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {accion: 'getUsuariosActivos'},
+		})
+		.done(function(e) {
+			if (e.error==0) {
+				console.log(e);
+
+				for(var solicitud in e){
+
+					if ( Number.isInteger(parseInt(solicitud)) ) {
+						$('#usuarios_body').append(`
+							<div class="media border p-3">`+
+								
+								(e[solicitud][4]==""?`<i class="fas fa-user" style="font-size: 30px; color: white"></i>`:`<img class="align-self-center mr-3" src="${e[solicitud][4]}" alt="No logramos encontrar la imagen de perfil" width="64">`)+
+
+								`<div class="media-body align-self-center mr-3">
+							    	<h5 class="mt-0">${e[solicitud][1]} ${e[solicitud][2]} ${e[solicitud][6]}</h5>
+							        <p class="lead mb-0">${tipo_usuario[e[solicitud][3]]}</p>
+							        <p class="lead mb-0">Fecha alta: ${e[solicitud][5]}</p>
+							  	</div>
+							  	<form class="align-self-center mr-3">
+							  		<div style="display: none;">
+							  			<input type="text" value="${e[solicitud][0]}" name="correo_solicitud">
+							  			<input type="text" value="desactivarUsuario" name="accion">
+							  		</div>
+							  		<button type="submit" class="align-self-center mr-3 btn btn-link"><i class="fas fa-user-times" title="Desactivar usuario" style="font-size: 40px; color: black;"></i></button>					  		
+							  	</form>
+
+							  	<form class="align-self-center mr-3">
+							  		<div style="display: none;">
+							  			<input type="text" value="${e[solicitud][0]}" name="correo_solicitud">
+							  			<input type="text" value="eliminarUsuario" name="accion">
+							  		</div>
+							  		<button type="submit" class="align-self-center mr-3 btn btn-link"><i class="fas fa-user-minus" title="Borrar usuario" style="font-size: 40px; color: black;"></i></button>					  		
+							  	</form>
+							   	
+							</div>
+							`);
+					}
+					
+				}
+
+				self.iniciarForm();
+			}else{
+				console.log(e);
+				$('#mensaje-resp-ajax').html(e.mensaje);
+				$('#exampleModal').modal('hide');
+				$('#exampleModalCenter').modal("toggle");
+
+			}
+		})
+		.fail(function(e) {
+			console.log(e);
+			$('#mensaje-resp-ajax').html(e.responseText);
+			$('#exampleModal').modal('hide');
+			$('#exampleModalCenter').modal("toggle");
+		});
+		
+	}
+
 
 }
 
 $(document).ready(function() {
 	usuario = new Usuario(getCookie('correo'),getCookie('nombre'),getCookie('paterno'),getCookie('rol'),getCookie('foto'));
 	usuario.cargarSolicitudes();
+	usuario.cargarUsuariosActivos();
 	usuario.cargarProfesores();
 	usuario.cargarUAs();
 

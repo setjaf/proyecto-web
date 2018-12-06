@@ -122,6 +122,10 @@ class Usuario {
 							$('#exampleModal1').modal('hide');
 							$('#exampleModalCenter').modal("toggle");
 
+
+							$('#calificacion_archivo').val("").change();	
+							$('#comentario_archivo').val("").change();
+
 						}else if (e.accion=='enviarTarea') {
 							$('#descripcion_tarea').val('');
 							$('#fechaentrega_tarea').val('');
@@ -135,6 +139,7 @@ class Usuario {
 							$('#mensaje-resp-ajax').html(e.mensaje);
 							$('#exampleModal').modal('hide');
 							$('#exampleModalCenter').modal("toggle");
+
 						}
 						else if (e.accion=='salirGrupo') {
 							self.cargarGrupos();
@@ -312,7 +317,7 @@ class Usuario {
 					console.log(e);
 					console.log(e.currentTarget.value);
 					//$('#lista_tareas_grupo_tarea').val(e.currentTarget.value).change();
-					$('#id_archivo').val(e.currentTarget.value);
+					$('#id_archivo').val(e.currentTarget.value).change();
 					$('#nombre_archivo').html(e.currentTarget.dataset.nombre);
 					$('#desc_archivo').html(e.currentTarget.dataset.descripcion);
 					$('#fecha_archivo').html(e.currentTarget.dataset.fecha)
@@ -329,6 +334,69 @@ class Usuario {
 
 		self.iniciarForm();
 		
+	}
+
+	cargarComentarios(id_archivo){
+		$('#comentarios_archivo').empty();
+
+		var self = this;
+		$.ajax({
+			url: 'index-prueba.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {accion: 'getComentarios',id_archivo:id_archivo},
+		})
+		.done(function(e) {
+			if (e.error==0) {
+				console.log(e);
+
+				for(var comentario in e){
+
+					if ( Number.isInteger(parseInt(comentario)) ) {
+						$('#comentarios_archivo').append(`
+							<div class="row pt-1 pb-1">
+								<div class="col-12">
+									<img src="${e[comentario][3]}" width="30">
+									<p style="font-size: 20px; display: inline-block;">${e[comentario][0]} ${e[comentario][1]} ${e[comentario][2]}</p>
+								</div>
+								<div class="col-9">
+									<span>${e[comentario][4]}</span>
+								</div>
+								<div class="col-3">
+									<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 30px;">${e[comentario][5]}</span>
+								</div>
+							</div>
+							`);
+					}
+					
+				}
+
+			}else{
+				$('#mensaje-resp-ajax').html(e.mensaje);
+				$('#exampleModal').modal('hide');
+				$('#exampleModalCenter').modal("toggle");
+
+			}
+		})
+		.fail(function(e) {
+			console.log(e);
+			$('#mensaje-resp-ajax').html(e.responseText);
+			$('#exampleModal').modal('hide');
+			$('#exampleModalCenter').modal("toggle");
+		});
+		/*<div class="row pt-1 pb-1">
+								<div class="col-12">
+									<img src="images/user_0.jpg" width="30">
+									<p style="font-size: 20px; display: inline-block;">Nombre del usuario</p>
+								</div>
+								<div class="col-9">
+									<span>Este es el comentario de un usuario, es una prueba del comentario</span>
+								</div>
+								<div class="col-3">
+									<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 30px;">Regular</span>
+								</div>
+							</div>*/
+
 	}
 }
 
@@ -360,6 +428,10 @@ $(document).ready(function() {
 		$("#buscar_archivos").submit();		
 	});
 
+	$('#id_archivo').change(function(event) {
+		console.log(event.currentTarget.value);
+		usuario.cargarComentarios(event.currentTarget.value);
+	});
 	
 
 });
