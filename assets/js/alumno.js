@@ -26,18 +26,19 @@ class Usuario {
 		this.paterno=paterno;
 		this.rol=rol;
 		this.foto=foto;
-		this.permisos=this.llenarPermisos(this.rol);
 		this.iniciarInfo();
 		this.fileIcon = {
 			'':'upload',
 			docx:'word',
 			pptx:'powerpoint',
-			xslx:'excel',
+			xlsx:'excel',
 			csv:'csv',
 			sql:'code',
 			js:'code',
 			py:'code',
 			h:'code',
+			html:'code',
+			css:'code',
 			pdf:'pdf',
 			jpg:'image',
 			png:'image',
@@ -46,43 +47,6 @@ class Usuario {
 			zip:'archive',
 			rar:'archive'
 		};
-	}
-
-	llenarPermisos(rol){
-		var permisos={};
-		$.ajax({
-			url: 'index-prueba.php',
-			type: 'POST',
-			dataType: 'json',
-			data: {'accion':'getPermisos','rol': rol},
-		})
-		.done(function(e) {
-
-			if (e.error==0) {
-				for(var permiso in e){
-
-					if ( Number.isInteger(parseInt(permiso)) ) {
-						permisos[e[permiso][1]]=true;
-					}
-					
-				}				
-			}else{
-
-				$('#mensaje-resp-ajax').html(e.mensaje);
-				$('#exampleModal').modal('hide');
-				$('#exampleModalCenter').modal("toggle");
-
-			}
-			
-		})
-		.fail(function(e) {
-			$('#mensaje-resp-ajax').html(e.responseText);
-			$('#exampleModal').modal('hide');
-			$('#exampleModalCenter').modal("toggle");
-		});
-
-		return permisos;
-		
 	}
 
 	iniciarInfo(){
@@ -113,6 +77,8 @@ class Usuario {
 
 	iniciarForm(){
 		var self = this;
+		$("form").unbind();
+
 		$( "form" ).submit(function( event ) {
 
 					event.preventDefault();
@@ -137,10 +103,10 @@ class Usuario {
 					}).done(function(e) {
 						console.log(e);
 						if (e.accion=='getGrupos') {
-							console.log('getGrupos');
-							console.log(e);
 							
 							if (e.error == 0) {
+
+								console.log("buscarGrupos")
 
 								self.mostrarGrupos_buscar(e);
 								
@@ -152,8 +118,6 @@ class Usuario {
 							}
 
 						}else if(e.accion=='inscribirGrupo'){
-							
-							console.log(e);
 							self.cargarGrupos();
 							$('#mensaje-resp-ajax').html(e.mensaje);
 							$('#exampleModal').modal('hide');
@@ -161,14 +125,24 @@ class Usuario {
 							$('#exampleModalCenter').modal("toggle");
 							$("#buscar_grupos").submit();
 
-						}else if (e.accion=='nuevo_archivo') {
-							console.log(e);
+						}else if (e.accion=='enviarTarea') {
+							$('#descripcion_tarea').val('');
+							$('#fechaentrega_tarea').val('');
+							$('#archivo_tarea').empty();
+							$('#inst_tarea').empty();
+							$('#exampleModal1').modal('hide');
+
+							$('#alumno_grupos').val("").change();	
+							$('#alumno_grupos_tarea').val("").change();
+
 							$('#mensaje-resp-ajax').html(e.mensaje);
 							$('#exampleModal').modal('hide');
 							$('#exampleModalCenter').modal("toggle");
 						}
-						else if (e.accion=='nueva_tarea') {
-							console.log(e);
+						else if (e.accion=='salirGrupo') {
+							self.cargarGrupos();
+							$("#buscar_grupos").submit();
+							$('#exampleModal12').modal('hide');
 							$('#mensaje-resp-ajax').html(e.mensaje);
 							$('#exampleModal').modal('hide');
 							$('#exampleModalCenter').modal("toggle");
@@ -357,13 +331,17 @@ class Usuario {
 		
 		$('#alumno_grupos').empty();
 		$('#alumno_grupos').append(`
-							<option value="">Selecciona el grupo</option>
+							<option value="">Selecciona un grupo</option>
 							`);
 		$('#alumno_grupos_tarea').empty();
 		$('#alumno_grupos_tarea').append(`
-							<option value="">Selecciona el grupo</option>
+							<option value="">Selecciona un grupo</option>
 							`);
-		
+		$('#grupos_salir').empty();
+		$('#grupos_salir').append(`
+							<option value="">Selecciona un grupo</option>
+							`);
+
 		var self = this;
 		$.ajax({
 			url: 'index-prueba.php',
@@ -372,6 +350,7 @@ class Usuario {
 			data: {accion: 'getGruposAlumno', correo_usuario:self.correo},
 		})
 		.done(function(e) {
+			console.log(e);
 			if (e.error==0) {
 
 				for(var grupo in e){
@@ -385,6 +364,9 @@ class Usuario {
 							<option value="${e[grupo][0]}">${e[grupo][1]}</option>
 							`);
 
+						$('#grupos_salir').append(`
+							<option value="${e[grupo][0]}">${e[grupo][1]}</option>
+							`);
 					}
 					
 				}
@@ -464,10 +446,8 @@ class Usuario {
 				$('[name="btn_tarea"]').on('click', function(e) {
 					console.log(e);
 					console.log(e.currentTarget.value);
-					$('#lista_tareas_grupo_tarea option[value="'+e.currentTarget.value+'"]').attr("selected", "selected").change();
-					$('#exampleModal1').modal('show');
-					//usuario.cargarTareas(e.currentTarget.value);
-					//$("#buscar_grupos").submit();		
+					$('#lista_tareas_grupo_tarea').val(e.currentTarget.value).change();
+					$('#exampleModal1').modal('show');	
 				});
 
 			}else{
@@ -501,11 +481,22 @@ class Usuario {
 
 				$('#descripcion_tarea').val(e[0][2]);
 				$('#fechaentrega_tarea').val(e[0][3]);
-				$('#archivo_tarea').append(`<a href="${e[0][4]}">
+				$('#archivo_tarea').empty();
+				$('#inst_tarea').empty();
+				if (e[0][4]=="") {
+
+					$('#archivo_tarea').append(`<div>
+									<i class="fas fa-file-${self.fileIcon[ e[0][4].substring(e[0][4].lastIndexOf('.')+1) ]}" style="font-size: 30px; color: black;"></i>
+									<h6>${e[0][1]}</h6>
+								</div>`);
+				}else{
+					$('#archivo_tarea').append(`<a href="${e[0][4]}" download>
 									<i class="fas fa-file-${self.fileIcon[ e[0][4].substring(e[0][4].lastIndexOf('.')+1) ]}" style="font-size: 30px; color: black;"></i>
 									<h6>${e[0][1]}</h6>
 								</a>`);
-				$('#inst_tarea').append(`<a href="${e[0][6]}">
+				}
+				
+				$('#inst_tarea').append(`<a href="${e[0][6]}" download>
 									<i class="fas fa-file-${self.fileIcon[ e[0][6].substring(e[0][6].lastIndexOf('.')+1) ]}" style="font-size: 30px; color: black;"></i>
 									<h6>${e[0][5]}</h6>
 								</a>`);
@@ -532,6 +523,7 @@ class Usuario {
 		});
 
 	}
+
 }
 
 $(document).ready(function() {
@@ -565,20 +557,18 @@ $(document).ready(function() {
 	$('#alumno_grupos').on('change', function(e) {
 		console.log(e);
 		usuario.cargarTareas(e.currentTarget.value,true);
-		$('#alumno_grupos_tarea option[value="'+e.currentTarget.value+'"]').attr("selected", "selected").change();
-		//$("#buscar_grupos").submit();		
+		$('#alumno_grupos_tarea').val(e.currentTarget.value).change();
+		$('#grupos_salir').val(e.currentTarget.value).change();	
 	});
 
 	$('#alumno_grupos_tarea').on('change', function(e) {
 		console.log(e);
-		usuario.cargarTareas(e.currentTarget.value,false);
-		//$("#buscar_grupos").submit();		
+		usuario.cargarTareas(e.currentTarget.value,false);	
 	});
 
 	$('#lista_tareas_grupo_tarea').on('change', function(e) {
 		console.log(e);		
 		usuario.cargarTarea(e.currentTarget.value);
-		//$("#buscar_grupos").submit();		
 	});
 	
 

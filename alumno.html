@@ -43,7 +43,7 @@
 			</div>
 			<ul>
 				<li><a href="index.html"><p><i class="fas fa-home" style="font-size: 30px; color: white"></i></p></a></li>
-				<li><a href="#"><p><i class="fas fa-comment" style="font-size: 30px; color: white"></i></p></a></li>
+				<li><a href="#"><p><i class="fas fa-comment" style="font-size: 30px; color: white"></i></p></a></li>				
 				<li id="info_usuario">
 					<!--<a href="#" class="usuario_info">
 						<img src="images/user_1.jpg" alt="Imagen usuario" width="40">
@@ -100,30 +100,38 @@
 													
 												</div>
 						  						<div class="form-group col-12">
-						  							<label for="exampleModalLabel1">Nombre de tarea</label>
+						  							<label for="exampleModalLabel1">Nombre de tarea:</label>
 						  							<select class="form-control" name="lista_tareas_grupo_tarea" id="lista_tareas_grupo_tarea" >
 						  								<option value="">Selecciona una tarea</option>
 						  							</select>	
 						  						</div>
 						  						<div class="form-group col-12">
-						    						<label>Descripcion de tarea</label>
+						    						<label>Descripcion de tarea:</label>
 						    						<input type="text" class="form-control" id="descripcion_tarea" disabled>			
 						  						</div>
 						  						<div class="form-group col-12">
-						    						<label>Fecha de entrega</label>
+						    						<label>Fecha de entrega:</label>
 						    						<input class="form-control" type="date" id="fechaentrega_tarea" disabled>			
 						  						</div>
-						  						<div class="form-group col-6" id="archivo_tarea">
-						    						<label>Descargar de archivo</label><br>		
+						  						<div class="form-group col-6" >
+						    						<label>Descargar de archivo:</label><br>
+						    						<div id="archivo_tarea">
+						    							
+						    						</div>		
 						  						</div>
-						  						<div class="form-group col-6" id="inst_tarea">
-						    						<label>Descargar instrucciones tarea</label><br>		
+						  						<div class="form-group col-6" >
+						    						<label>Descargar instrucciones tarea:</label><br>
+						    						<div id="inst_tarea">
+						    							
+						    						</div>		
 						  						</div>
 						  						<div class="form-group col-12">
-						    						<label>Enviar archivo</label>
-						    						<input class="form-control" type="file" id="enviar">			
+
+						    						<label>Enviar tarea resuelta:</label>
+						    						<input class="form-control" type="file" id="enviar" name="archivo_tarea_enviada" required>			
 						  						</div>
-						  						<button type="submit" class="btn btn-primary" style="background: #E31434;">Enviar</button>
+						  						<input type="text" name="accion" value="enviarTarea" hidden>
+						  						<button type="submit" class="btn btn_red" style="background: #E31434;">Enviar</button>
 											</form>
 			     						</div>
 			      						<div class="modal-footer">
@@ -138,6 +146,12 @@
 							<a href="#Misgrupos" class="btn btn_red btn-lg" id="Eliminar"> Mis grupos</a>												
 						</div>
 
+						<div class="col-sm-2">
+							<a href="#Buscargrupos" class="btn btn_red btn-lg" id="Eliminar"> Buscar grupos</a>												
+						</div>
+						<div class="col-sm-2">
+							<a href="archivos.html" class="btn btn_red btn-lg" id="Eliminar"> Ver archivos</a>												
+						</div>
 				</div>	
 		
 				<div class="position-absolute" style="bottom: 20px;">
@@ -198,7 +212,8 @@
 									<!------------------------------------------------------------------------------------------------------------>
 									
 									<div class="col-sm-2">
-												<br><a href="#" data-toggle="modal" data-target="#exampleModal12" class="btn btn_red btn-lg" id="Eliminar">Salir de grupo</a><br><br>
+												<br>
+												<a href="#" data-toggle="modal" data-target="#exampleModal12" class="btn btn_red btn-lg" id="Eliminar">Salir de grupo</a><br><br>
 												<div class="modal fade" id="exampleModal12" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							  						<div class="modal-dialog" role="document">
 							    						<div class="modal-content">
@@ -212,19 +227,11 @@
 								        						<form>
 								        							<div class="form-group">
 											  							<label for="exampleModalLabel1">Nombre de grupo</label>
-											  							<select class="form-control" placeholder="Grupos" style="background: #e9ecef; font-family: 'Montserrat', sans-serif; font-size: 14px;">
-																			<option name="lista" value="grupo1" placeholder="Grupos">Grupo 1</option>
-																			<option name="lista" value="grupo2">Grupo 2</option>
+											  							<select class="form-control" id="grupos_salir" name="grupoSalir">
 																		</select>	
+																		<input type="text" name="accion" value="salirGrupo" hidden>
 											  						</div>
-											  						<div class="form-group">
-											  							<label for="exampleModalLabel1">Unidad de aprendizaje</label>
-											  							<select class="form-control" placeholder="Grupos" style="background: #e9ecef; font-family: 'Montserrat', sans-serif; font-size: 14px;">
-																			<option name="lista" value="grupo1" placeholder="Grupos">UA 1</option>
-																			<option name="lista" value="grupo2">UA 2</option>
-																		</select>	
-											  						</div>
-											  						<button type="submit" class="btn btn-primary" style="background: #E31434;">Salir</button>
+											  						<button type="submit" class="btn btn_red">Salir</button>
 																</form>
 								     						</div>
 								      						
@@ -235,65 +242,62 @@
 
 								</div>
 
-								<div class="col-sm-6 border">
-									<h1 class="display-3" style="text-align: center;">
-										<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 40px;">TODOS LOS GRUPOS</span>
-									</h1>
+								<div class="col-sm-6 border row">
+									<!------------Inicia seccion b uscar grupo-------------->
 
-									<ul class="list-group">
-									  	<li class="list-group-item">Grupo 1<a href=""><i class="fas fa-plus-circle" style="align-content: right; font-size: 40px; color: #1169a3;"></i></a></li>
-									  	<li class="list-group-item">Grupo 2<a href=""><i class="fas fa-plus-circle" style="align-content: right; font-size: 40px; color: #1169a3;"></i></a></li>
-									  	<li class="list-group-item">Grupo 3<a href=""><i class="fas fa-plus-circle" style="align-content: right; font-size: 40px; color: #1169a3;"></i></a></li>
-									</ul>
+									<div class="container col-12 mb-3 mt-5" id="Buscargrupos">
+
+										<div class="titulo">
+											<h1 class="display-3">
+												<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 60px;">Buscar grupo</span>
+											</h1> 
+										</div>
+									<!------------------------------------------------------------------------------------------------------>
+										<form class="justify-content-center form-row col-12 align-content-center" id="buscar_grupos">
+											<div class="form-group col-sm-6">
+												<label for="ex1" >Ingresa nombre del grupo a inscribir:</label>
+												<input class="form-control" id="nombre_buscar" type="text" name="nombre_buscar">
+											</div>	
+
+											<div class=" form-group col-sm-6">
+												<label for="ex1">Unidad de aprendizaje</label>
+												<select class="form-control" id="uas_buscar" name="uas_buscar">
+													<option value="">Selecciona una unidad de aprendizaje</option>
+												</select>									
+											</div>
+										
+											<div class="form-group col-sm-6">
+													
+												<label for="ex1">Profesor</label>
+												<select class="form-control" id="profesores_buscar" name="profesores_buscar">
+													<option value="">Selecciona un profesor</option>
+												</select>	
+												
+											</div>
+											<div class="form-group col-sm-6">
+													
+												<input type="submit" class="btn btn_red btn-lg" value="Buscar grupo">
+												
+											</div>
+
+											<input type="text" name="accion" value="getGrupos" hidden>
+
+										</form>
+									</div>
+									<!---------------------------------------------------------------------------------------------------->
+									<div class="container"  style="max-height: 500px; overflow-y: auto; background-color: #FFF">
+								
+										<div class="row" id="grupos_buscar">
+											
+										</div>
+										
+									</div>
 
 								</div>								
 							</div>
 						</div>
 
-						<!------------Inicia seccion b uscar grupo-------------->
-
-						<div class="container col-12 mb-3 mt-5">
-
-							<div class="titulo">
-								<h1 class="display-3">
-									<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 60px;">Buscar grupo</span>
-								</h1> 
-							</div>
-						<!------------------------------------------------------------------------------------------------------>
-							<form class="justify-content-center row col-12" id="buscar_grupos">
-								<div class="form-group col-sm-4">
-									<label for="ex1" style="font-size: 18px;">Ingresa nombre del grupo a inscribir:</label>
-									<input class="form-control" id="nombre_buscar" type="text" name="nombre_buscar">
-								</div>	
-
-								<div class=" form-group col-sm-4">
-									<label for="ex1">Unidad de aprendizaje</label>
-									<select class="form-control" id="uas_buscar" name="uas_buscar">
-										<option value="">Selecciona una unidad de aprendizaje</option>
-									</select>									
-								</div>
-							
-								<div class="form-group col-sm-4">
-										
-									<label for="ex1">Profesor</label>
-									<select class="form-control" id="profesores_buscar" name="profesores_buscar">
-										<option value="">Selecciona un profesor</option>
-									</select>	
-									
-								</div>
-
-								
-								<input type="text" name="accion" value="getGrupos" hidden>
-							</form>
-						</div>
-						<!---------------------------------------------------------------------------------------------------->
-						<div class="container"  style="max-height: 500px; overflow-y: auto; background-color: #FFF">
-					
-							<div class="row" id="grupos_buscar">
-								
-							</div>
-							
-						</div>
+						
 					</div>
 				</div>				
 			</div>

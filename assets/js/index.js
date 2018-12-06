@@ -26,6 +26,7 @@ class Usuario {
 		this.foto=foto;
 		this.iniciarInfo();
 		this.fileIcon = {
+			'':'upload',
 			docx:'word',
 			pptx:'powerpoint',
 			xslx:'excel',

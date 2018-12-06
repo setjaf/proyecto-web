@@ -48,10 +48,8 @@ class Usuario {
 			rar:'archive'
 		};
 	}
-	
 
 	iniciarInfo(){
-		console.log(this)
 		$("#info_usuario").append(`
 			<a href="#" class="usuario_info">
 				<img src="${this.foto}" alt="Imagen usuario" width="40">
@@ -60,7 +58,7 @@ class Usuario {
 			</a>`);
 
 	}
-	
+
 	cerrarSesion(){
 
 		document.cookie.split(";").forEach(function(c) {
@@ -76,65 +74,11 @@ class Usuario {
 		window.location.replace('index.html');
 	}
 
-	cargarSolicitudes(){
-		var self = this;
-		$.ajax({
-			url: 'index-prueba.php',
-			type: 'POST',
-			dataType: 'json',
-			data: {accion: 'getSolicitudes'},
-		})
-		.done(function(e) {
-			if (e.error==0) {
-				console.log(e);
-
-				for(var solicitud in e){
-
-					if ( Number.isInteger(parseInt(solicitud)) ) {
-						$('#solicitudes_body').append(`
-							<div class="media border p-3">`+
-								
-								(e[solicitud][4]==""?`<i class="fas fa-user" style="font-size: 30px; color: white"></i>`:`<img class="align-self-center mr-3" src="${e[solicitud][4]}" alt="No logramos encontrar la imagen de perfil" width="64">`)+
-
-								`<div class="media-body align-self-center mr-3">
-							    	<h5 class="mt-0">${e[solicitud][1]} ${e[solicitud][2]} ${e[solicitud][6]}</h5>
-							        <p class="lead mb-0">${tipo_usuario[e[solicitud][3]]}</p>
-							        <p class="lead mb-0">Fecha alta: ${e[solicitud][5]}</p>
-							  	</div>
-							  	<form class="align-self-center mr-3">
-							  		<div style="display: none;">
-							  			<input type="text" value="${e[solicitud][0]}" name="correo_solicitud">
-							  			<input type="text" value="aceptarUsuario" name="accion">
-							  		</div>
-							  		<button type="submit" class="align-self-center mr-3 btn btn-link"><i class="fas fa-plus-circle" style="font-size: 40px; color: black;"></i></button>					  		
-							  	</form>
-							   	
-							</div>
-							`);
-					}
-					
-				}
-
-				self.iniciarForm();
-			}else{
-				console.log(e);
-				$('#mensaje-resp-ajax').html(e.mensaje);
-				$('#exampleModal').modal('hide');
-				$('#exampleModalCenter').modal("toggle");
-
-			}
-		})
-		.fail(function(e) {
-			console.log(e);
-			$('#mensaje-resp-ajax').html(e.responseText);
-			$('#exampleModal').modal('hide');
-			$('#exampleModalCenter').modal("toggle");
-		});
-		
-	}
 
 	iniciarForm(){
 		var self = this;
+		$("form").unbind();
+
 		$( "form" ).submit(function( event ) {
 
 					event.preventDefault();
@@ -158,30 +102,46 @@ class Usuario {
 						data: datos,
 					}).done(function(e) {
 						console.log(e);
-						if (e.accion=='crearUA') {
-							console.log('crearUA');
-							console.log(e);
-							$('#mensaje-resp-ajax').html(e.mensaje);
-							$('#exampleModal').modal('hide');
-							$('#exampleModalCenter').modal("toggle");
-							self.cargarUAs();
-
-						}else if(e.accion=='aceptarUsuario'){
+						if (e.accion=='buscarArchivos') {
 							
-							console.log(e);
-							$('#mensaje-resp-ajax').html(e.mensaje);
-							$('#exampleModal').modal('hide');
-							$('#exampleModalCenter').modal("toggle");
-							$('#solicitudes_body').empty();
-							self.cargarSolicitudes();
+							if (e.error == 0) {
 
-						}else if (e.accion=='asignarUA') {
-							console.log(e);
+								console.log("buscarGrupos");
+								self.mostrarArchivos_buscar(e);
+								
+							}else {
+								$('#mensaje-resp-ajax').html(e.mensaje);
+								$('#exampleModal').modal('hide');
+								$('#exampleModal1').modal('hide');
+								$('#exampleModalCenter').modal("toggle");
+							}
+
+						}else if(e.accion=='inscribirGrupo'){
+							self.cargarGrupos();
+							$('#mensaje-resp-ajax').html(e.mensaje);
+							$('#exampleModal').modal('hide');
+							$('#exampleModal1').modal('hide');
+							$('#exampleModalCenter').modal("toggle");
+							$("#buscar_grupos").submit();
+
+						}else if (e.accion=='enviarTarea') {
+							$('#descripcion_tarea').val('');
+							$('#fechaentrega_tarea').val('');
+							$('#archivo_tarea').empty();
+							$('#inst_tarea').empty();
+							$('#exampleModal1').modal('hide');
+
+							$('#alumno_grupos').val("").change();	
+							$('#alumno_grupos_tarea').val("").change();
+
 							$('#mensaje-resp-ajax').html(e.mensaje);
 							$('#exampleModal').modal('hide');
 							$('#exampleModalCenter').modal("toggle");
-						}else if (e.accion=='nuevo_archivo') {
-							console.log(e);
+						}
+						else if (e.accion=='salirGrupo') {
+							self.cargarGrupos();
+							$("#buscar_grupos").submit();
+							$('#exampleModal12').modal('hide');
 							$('#mensaje-resp-ajax').html(e.mensaje);
 							$('#exampleModal').modal('hide');
 							$('#exampleModalCenter').modal("toggle");
@@ -200,54 +160,9 @@ class Usuario {
 
 	}
 
-	cargarProfesores(){
-
-		$('#profesor_prof_ua').empty();
-
-		var self = this;
-		$.ajax({
-			url: 'index-prueba.php',
-			type: 'POST',
-			dataType: 'json',
-			data: {accion: 'getProfesores'},
-		})
-		.done(function(e) {
-			if (e.error==0) {
-				console.log(e);
-
-				$('#profesor_prof_ua').append(`
-							<option value="">Selecciona un profesor</option>
-							`);
-
-				for(var profesor in e){
-
-					if ( Number.isInteger(parseInt(profesor)) ) {
-						$('#profesor_prof_ua').append(`
-							<option value="${e[profesor][0]}">${e[profesor][1]} ${e[profesor][2]} ${e[profesor][3]}</option>
-							`);
-					}
-					
-				}
-
-			}else{
-				$('#mensaje-resp-ajax').html(e.mensaje);
-				$('#exampleModal').modal('hide');
-				$('#exampleModalCenter').modal("toggle");
-
-			}
-		})
-		.fail(function(e) {
-			console.log(e);
-			$('#mensaje-resp-ajax').html(e.responseText);
-			$('#exampleModal').modal('hide');
-			$('#exampleModalCenter').modal("toggle");
-		});
-
-	}
-
 	cargarUAs(){
 		
-		$('#ua_prof_ua').empty();
+		$('#uas_buscar').empty();
 		$('#ua_archivo').empty();
 		var self = this;
 		$.ajax({
@@ -260,7 +175,7 @@ class Usuario {
 			if (e.error==0) {
 				console.log(e);
 
-				$('#ua_prof_ua').append(`
+				$('#uas_buscar').append(`
 							<option value="">Selecciona una unidad de aprendizaje</option>
 							`);
 				$('#ua_archivo').append(`
@@ -270,7 +185,7 @@ class Usuario {
 				for(var ua in e){
 					
 					if ( Number.isInteger(parseInt(ua)) ) {
-						$('#ua_prof_ua').append(`
+						$('#uas_buscar').append(`
 							<option value="${e[ua][0]}">${e[ua][1]}</option>
 							`);
 						$('#ua_archivo').append(`
@@ -297,14 +212,123 @@ class Usuario {
 
 	}
 
+	cargarProfesores(ua=null){
 
+		$('#profesores_buscar').empty();
+
+		var self = this;
+		$.ajax({
+			url: 'index-prueba.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {accion: 'getProfesores',ua_buscar:ua},
+		})
+		.done(function(e) {
+			if (e.error==0) {
+				console.log(e);
+
+				$('#profesores_buscar').append(`
+							<option value="">Selecciona un profesor</option>
+							`);
+
+				for(var profesor in e){
+
+					if ( Number.isInteger(parseInt(profesor)) ) {
+						$('#profesores_buscar').append(`
+							<option value="${e[profesor][0]}">${e[profesor][1]} ${e[profesor][2]} ${e[profesor][3]}</option>
+							`);
+					}
+					
+				}
+
+			}else{
+				$('#mensaje-resp-ajax').html(e.mensaje);
+				$('#exampleModal').modal('hide');
+				$('#exampleModalCenter').modal("toggle");
+
+			}
+		})
+		.fail(function(e) {
+			console.log(e);
+			$('#mensaje-resp-ajax').html(e.responseText);
+			$('#exampleModal').modal('hide');
+			$('#exampleModalCenter').modal("toggle");
+		});
+
+	}
+
+	mostrarArchivos_buscar(e){
+
+		console.log(e);
+
+		var self=this;
+
+		$('#archivos').empty();
+	
+		for(var ua in e){
+			
+			if ( Number.isInteger(parseInt(ua)) ) {
+
+				
+				$('#archivos').append(`
+					<div class="container">
+						<div class="titulo">
+							<h1 class="display-3">
+								<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 1.5rem;">${e[ua][0][11]}</span>
+							</h1>
+							<br>
+							<br>
+						</div>
+					</div>
+
+					<div class="container lista-tareas media border p-1" >
+						<div class="row text-center" id="lista_archivos_ua_${ua}">
+							
+							
+						</div>
+					</div>
+					`);
+
+				for (var archivo in e[ua]) {
+					console.log(e[ua][archivo][4].substring(e[ua][archivo][4].lastIndexOf('.')+1));
+
+					$('#lista_archivos_ua_'+ua).append(`
+					
+						<div class="text-center ml-1 mr-1 col-3">
+							<button class="btn btn-link" name="btn_archivo" value="${e[ua][archivo][0]}" data-grupo="${e[ua][archivo][6]}" data->
+								<i class="fas fa-file-${self.fileIcon[e[ua][archivo][4].substring(e[ua][archivo][4].lastIndexOf('.')+1) ]}" style="font-size: 40px; color: black;"></i>
+								<h5>${e[ua][archivo][1]}</h5>
+								<p style="font-size:15px;">${e[ua][archivo][3]}</p>
+							</button>
+						</div>	
+
+					`);
+				
+				}
+			}
+			
+		}
+
+		$('[name="btn_archivo"]').unbind();
+		$('[name="btn_archivo"]').on('click', function(e) {
+					console.log(e);
+					console.log(e.currentTarget.value);
+					$('#lista_tareas_grupo_tarea').val(e.currentTarget.value).change();
+					$('#exampleModal1').modal('show');	
+				});
+
+		self.iniciarForm();
+		
+	}
 }
+
 
 $(document).ready(function() {
 	usuario = new Usuario(getCookie('correo'),getCookie('nombre'),getCookie('paterno'),getCookie('rol'),getCookie('foto'));
-	usuario.cargarSolicitudes();
-	usuario.cargarProfesores();
 	usuario.cargarUAs();
+	usuario.cargarProfesores();
+	usuario.iniciarForm();
+	$("#buscar_archivos").submit();
 
 	$('#cerrar_sesion').on('click', function() {
 		
@@ -312,13 +336,20 @@ $(document).ready(function() {
 		
 	});
 
+	$('#uas_buscar').on('change', function(e) {
+		$("#buscar_archivos").submit();
+		usuario.cargarProfesores(e.target.value);
+		
+	});
+
+	$('#profesores_buscar').on('change', function(e) {
+		$("#buscar_archivos").submit();		
+	});
+
+	$('#nombre_buscar').on('keyup', function(e) {
+		$("#buscar_archivos").submit();		
+	});
+
+	
+
 });
-
-
-
-/*`<div class="media border p-3">
-					    <div class="media-body">
-					        <p class="lead">Ing. Juan Sanchez Hernandez</p>
-					  	</div>
-					   <a href=""><i class="fas fa-plus-circle" style="font-size: 40px; color: black;"></i></a>
-					</div>`*/

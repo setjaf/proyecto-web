@@ -26,18 +26,19 @@ class Usuario {
 		this.paterno=paterno;
 		this.rol=rol;
 		this.foto=foto;
-		this.permisos=this.llenarPermisos(this.rol);
 		this.iniciarInfo();
 		this.fileIcon = {
 			'':'upload',
 			docx:'word',
 			pptx:'powerpoint',
-			xslx:'excel',
+			xlsx:'excel',
 			csv:'csv',
 			sql:'code',
 			js:'code',
 			py:'code',
 			h:'code',
+			html:'code',
+			css:'code',
 			pdf:'pdf',
 			jpg:'image',
 			png:'image',
@@ -46,43 +47,6 @@ class Usuario {
 			zip:'archive',
 			rar:'archive'
 		};
-	}
-
-	llenarPermisos(rol){
-		var permisos={};
-		$.ajax({
-			url: 'index-prueba.php',
-			type: 'POST',
-			dataType: 'json',
-			data: {'accion':'getPermisos','rol': rol},
-		})
-		.done(function(e) {
-
-			if (e.error==0) {
-				for(var permiso in e){
-
-					if ( Number.isInteger(parseInt(permiso)) ) {
-						permisos[e[permiso][1]]=true;
-					}
-					
-				}				
-			}else{
-
-				$('#mensaje-resp-ajax').html(e.mensaje);
-				$('#exampleModal').modal('hide');
-				$('#exampleModalCenter').modal("toggle");
-
-			}
-			
-		})
-		.fail(function(e) {
-			$('#mensaje-resp-ajax').html(e.responseText);
-			$('#exampleModal').modal('hide');
-			$('#exampleModalCenter').modal("toggle");
-		});
-
-		return permisos;
-		
 	}
 
 	iniciarInfo(){
@@ -310,6 +274,7 @@ class Usuario {
 		})
 		.done(function(e) {
 			if (e.error==0) {
+				console.log('tarea');
 				console.log(e);
 
 				for(var tareas in e){

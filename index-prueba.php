@@ -37,8 +37,13 @@
 					if( move_uploaded_file( $_FILES['foto']['tmp_name'], $target) && $procedimientos->insertar_foto_usuario($target,$_POST['correo_usuario']) ){
 						$return['mensaje'] .=  ', se agregó foto correctamente. Debes esperar la autorización del administradorpara poder hacer uso de tu cuenta';
 					}else{
+						insertar_foto_usuario('images/user_0.jpg',$_POST['correo_usuario']);
 						$return['mensaje'] .=  'No se logró agregar la foto';
 					}
+				}else{
+
+					insertar_foto_usuario('images/user_0.jpg',$_POST['correo_usuario']);
+
 				}			
 
 			}else{
@@ -304,6 +309,8 @@
 					}else{
 						$return['mensaje'] .=  'No se logró agregar el archivo';
 					}
+				}else{
+					$return['mensaje'] .=  'No se logró agregar el archivo';
 				}			
 
 			}else{
@@ -505,6 +512,74 @@
 
 			}
 
+			break;
+
+		case "enviarTarea":
+
+			$result=$procedimientos->enviartarea($_POST['lista_tareas_grupo_tarea'],$_POST['correo_usuario']);
+			
+			try {
+				$id_tarea=$result;
+			} catch (Exception $e) {
+				$return['mensaje'] .=  'No se envió tarea correctamente </br>'.$id_tarea;
+			}
+
+			if(is_numeric($id_tarea)){
+
+				$return['error'] = 0;
+				$return['mensaje'] .=  "Se envió tarea correctamente";
+
+				if ( isset($_FILES['archivo_tarea_enviada']) && $_FILES['archivo_tarea_enviada']['error']=='0' ) {
+
+					$info = pathinfo($_FILES['archivo_tarea_enviada']['name']);
+
+					$ext = $info['extension']; // get the extension of the file
+					$newname = "tarea_eviada_".$_POST['lista_tareas_grupo_tarea'].'_'.$procedimientos->id_usuario($_POST['correo_usuario']).'.'.$ext; 
+
+					$target = 'files/tarea/'.$newname;
+					if( move_uploaded_file( $_FILES['archivo_tarea_enviada']['tmp_name'], $target) && $procedimientos->insertar_url_tarea_enviada($_POST['lista_tareas_grupo_tarea'],$target,$_POST['correo_usuario']) )
+					{
+						$return['error'] = 0;
+						$return['mensaje'] .=  "Se agregó archivo de tu tarea correctamente";
+					}else{
+						$return['mensaje'] .=  'No se logró agregar el archivo de tu tarea correctament';
+					}
+				}		
+
+			}else{
+				$return['mensaje'] .= "No se agregó archivo correctamente <br>".$result;
+			}
+
+			break;
+
+		case 'salirGrupo':
+			$usuarioAceptado = $procedimientos->salirGrupo($_POST['grupoSalir'],$_POST['correo_usuario']);
+
+			if ($usuarioAceptado==True) {
+				$return['error']=0;
+				$return['mensaje'].='Has salido del grupo satisfactoriamente';
+			}else {
+				$return['error']=1;
+				$return['mensaje'].='No se logró salir del grupo, intentalo denuevo más tarde </br>'.$usuarioAceptado;
+			}
+
+			break;
+
+		case 'buscarArchivos':
+
+			$archivos = $procedimientos->buscarArchivos(isset($_POST["nombre_buscar"])?$_POST["nombre_buscar"]:null,isset($_POST["profesores_buscar"])?$_POST["profesores_buscar"]:null,isset($_POST["uas_buscar"])?$_POST["uas_buscar"]:null,isset($_POST["nivel_buscar"])?$_POST["nivel_buscar"]:null);
+
+			if (is_array($archivos)) {
+				$return = array_merge($return,$archivos);
+				$return['error'] = 0;
+
+			}else{
+
+				$return['error'] = 1;
+				$return['mensaje'] .= 'No se lograron cargar las archivos. </br>'.$archivos;
+
+			}
+			
 			break;
 
 		default:

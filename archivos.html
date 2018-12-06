@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Archivos Guardados</title>
+		<script>
+			function getCookie(cname) {
+			    var name = cname + "=";
+			    var decodedCookie = decodeURIComponent(document.cookie);
+			    var ca = decodedCookie.split(';');
+			    for(var i = 0; i <ca.length; i++) {
+			        var c = ca[i];
+			        while (c.charAt(0) == ' ') {
+			            c = c.substring(1);
+			        }
+			        if (c.indexOf(name) == 0) {
+			            return c.substring(name.length, c.length);
+			        }
+			    }
+			    return "";
+			}
+			if (getCookie('rol')!=1 && getCookie('rol')!=3 && getCookie('rol')!=2 ) {
+				window.location.replace("index.html");
+			}
+
+		</script>
+		<link rel="stylesheet" href="assets/css/index.css">
+		<link href="https://fonts.googleapis.com/css?family=Rajdhani" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+		<!--<link rel="stylesheet" href="http://localhost:81/bootstrap-4.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://localhost:81/iconfont/css/all.css">-->
+
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+	</head>
+	<body>
+<!---------------------------------------------------------------------------------------------->
+		<header>
+			<nav>
+				<div class="logos">
+					<p style="margin: 0; color:#F9F9F9;"><span style="font-family: 'Rajdhani', sans-serif; font-size: 1.5em;"> ESCOM</span>partiendo</p>
+				</div>
+				<ul>
+					<li><a href="index.html"><p><i class="fas fa-home" style="font-size: 30px; color: white"></i></p></a></li>
+					<li><a href="#"><p><i class="fas fa-comment" style="font-size: 30px; color: white"></i></p></a></li>
+					<li id="info_usuario">
+						<!--<a href="#" class="usuario_info">
+							<img src="images/user_1.jpg" alt="Imagen usuario" width="40">
+							<p id="nombre_usuario">Nombre Usuario</p>
+							<p><i class="fas fa-edit" style="font-size: 30px; color: white"></i></p>
+						</a>-->
+					</li>
+					<li>
+						<a id="cerrar_sesion"><p><i class="fas fa-sign-out-alt" style="font-size: 30px; color: white"></i></p></a>
+					</li>
+					
+				</ul>
+				
+			</nav>
+		</header>
+<!---------------------------------------------------------------------------------------------->
+		<br>
+		<br>
+		<br>
+
+
+		<div class="container">
+				<div class="titulo">
+					<h1 class="display-3">
+						<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 1.5em;">Archivos guardados</span>
+					</h1>
+					<br>
+					<br>
+				</div>
+				<div class="botones_inicio row justify-content-around">
+					<form class="justify-content-center form-row col-12 align-content-center" id="buscar_archivos">
+						<div class="form-group col-sm-3">
+							<label for="ex1" >Ingresa nombre del archivo:</label>
+							<input class="form-control" id="nombre_buscar" type="text" name="nombre_buscar">
+						</div>	
+
+						<div class=" form-group col-sm-3">
+							<label for="ex1">Unidad de aprendizaje:</label>
+							<select class="form-control" id="uas_buscar" name="uas_buscar">
+								<option value="">Selecciona una unidad de aprendizaje</option>
+							</select>									
+						</div>
+					
+						<div class="form-group col-sm-3">
+								
+							<label for="ex1">Profesor:</label>
+							<select class="form-control" id="profesores_buscar" name="profesores_buscar">
+								<option value="">Selecciona un profesor</option>
+							</select>	
+							
+						</div>
+						
+						<div class=" form-group col-sm-3">
+							<label for="ex1">Nivel del archivo:</label>
+							<select class="form-control" id="nivel_buscar" name="nivel_buscar">
+								<option value="">Selecciona un nivel</option>
+								<option value="1">Básico</option>
+								<option value="2">Medio</option>
+								<option value="3">Avanzado</option>
+							</select>									
+						</div>
+
+						<div class="form-group col-sm-6">
+								
+							<input type="submit" class="btn btn_red btn-lg" value="Buscar archivo">
+							
+						</div>
+
+						<input type="text" name="accion" value="buscarArchivos" hidden>
+
+					</form>
+				</div>
+			</div>
+					<!---------------------------------------------------------------------------------------------->
+			<div id="archivos">
+				
+									
+			</div>				
+					
+					<!---------------------------------------------------------------------------------------------->
+					
+					
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  	<div class="modal-dialog modal-dialog-centered" role="document">
+	    	<div class="modal-content">
+	     		<div class="modal-header">
+	        		<h5 class="modal-title" id="exampleModalLongTitle">Mensaje</h5>
+	        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          			<span aria-hidden="true">&times;</span>
+	        		</button>
+	      		</div>
+		      	<div class="modal-body" id="mensaje-resp-ajax">
+		      	</div>
+	      		<div class="modal-footer">
+      			</div>
+	    	</div>
+	  	</div>
+	</div>
+
+	<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Subir tarea</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				</div>
+				<div class="modal-body">
+				<form class="form-row">
+					<div class="form-group col-12">
+
+						<label>Nombre del archivo:</label>
+						<p id="nombre_archivo"></p>
+						
+					</div>
+						<div class="form-group col-12">
+							<label for="exampleModalLabel1">Nombre de tarea:</label>
+							<select class="form-control" name="lista_tareas_grupo_tarea" id="lista_tareas_grupo_tarea" >
+								<option value="">Selecciona una tarea</option>
+							</select>	
+						</div>
+						<div class="form-group col-12">
+						<label>Descripcion de tarea:</label>
+						<input type="text" class="form-control" id="descripcion_tarea" disabled>			
+						</div>
+						<div class="form-group col-12">
+						<label>Fecha de entrega:</label>
+						<input class="form-control" type="date" id="fechaentrega_tarea" disabled>			
+						</div>
+						<div class="form-group col-6" >
+						<label>Descargar de archivo:</label><br>
+						<div id="archivo_tarea">
+							
+						</div>		
+						</div>
+						<div class="form-group col-6" >
+						<label>Descargar instrucciones tarea:</label><br>
+						<div id="inst_tarea">
+							
+						</div>		
+						</div>
+						<div class="form-group col-12">
+
+						<label>Enviar tarea resuelta:</label>
+						<input class="form-control" type="file" id="enviar" name="archivo_tarea_enviada" required>			
+						</div>
+						<input type="text" name="accion" value="enviarTarea" hidden>
+						<button type="submit" class="btn btn_red" style="background: #E31434;">Enviar</button>
+				</form>
+				</div>
+				<div class="modal-footer">
+				<span>Me equivoque <a href="#registro" id="btnregistro">Deshacer</a></span>
+				</div>
+		</div>
+		</div>
+	</div>
+
+
+<!--pie de pagina-->
+		<section class="pie">
+			<footer>
+				<div >
+					<a href="https://twitter.com/?lang=es"><img src="twitter.svg" width="40"></a>
+					<a href="https://www.facebook.com/FacebookMexico/?ref=br_rs"><img src="facebook.svg" width="40"></a><p>ESCOMpartir ©2018 | </p>						
+				</div>			
+			</footer>
+		</section>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+		<!--<script src="http://localhost:81/bootstrap-4.1.1/js/bootstrap.min.js"></script>-->
+		<script src="assets/js/archivos.js"></script>	
+
+	</body>
+</html>
