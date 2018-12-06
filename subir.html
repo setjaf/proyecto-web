@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Subir archivos</title>
+	<!---verifica mediante cookies que el usuario este looegado-->
 	<script>
 		function getCookie(cname) {
 		    var name = cname + "=";
@@ -24,15 +25,18 @@
 		}
 	</script>
 	<link rel="stylesheet" href="assets/css/index.css">
+	<!---libreria bootstrap-->
 	<link href="https://fonts.googleapis.com/css?family=Rajdhani" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	<!--<link rel="stylesheet" href="http://localhost:81/bootstrap-4.1.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="http://localhost:81/iconfont/css/all.css">-->
+	<!---peticion iquery---->
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </head>
 <body>
+	<!---header/logos---->
 	<header>
 		<nav>
 			<div class="logos">
@@ -58,7 +62,7 @@
 			
 		</nav>
 	</header>
-	
+	<!-----contenedor de la pagina-->
 	<section class="contenedor">
 		<div class="container">
 
@@ -75,13 +79,13 @@
 							<br>
 						</div>
 					</div>
-					
+					<!----formulario para subir archivo--->
 					<div class="container">
 
 						<div class="row justify-content-center">
 
 							<div class="col-8">
-
+									<!----datos del formulario para subir un archivo--->
 								<form class="form-row justify-content-end" method="POST" >
 
 									<div class="form-group col-12">
@@ -146,6 +150,21 @@
 		
 	</section>
 
+
+<!----pie de pagina--->
+	<section class="pie">
+		<footer>
+			<div>
+				<p>
+				<a href="https://twitter.com/escomunidad?ref_src=twsrc%5Etfw%7Ctwcamp%5Eembeddedtimeline%7Ctwterm%5Eprofile%3Aescomunidad&ref_url=http%3A%2F%2Fwww.isc.escom.ipn.mx%2F"><i class="fab fa-twitter-square" style="color: white; font-size: 40px; padding: 5px;"></i></a>	
+				<a href="https://www.facebook.com/escomipnmx/"><i class="fab fa-facebook-square" style="color: white; font-size: 40px; padding: 5px;"></i></a>
+				
+				
+				ESCOMpartir ©2018 |</p>	
+			</div>					
+		</footer>			
+	</section>	
+
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	  	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -163,10 +182,12 @@
 	    	</div>
 	  	</div>
 	</div>
-		
+		<!--libreria javascrip----->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	<!--<script src="http://localhost:81/bootstrap-4.1.1/js/bootstrap.min.js"></script>-->
+
+	<!----conexion mediante cookies--->
 	<script>	
 			if (getCookie('rol')==1) {
 				$("body").append(`<script src="assets/js/administrador.js"><\/script>`);

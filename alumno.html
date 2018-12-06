@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Alumno</title>
+	<!---verifica mediante cookies que el usuario este looegado-->
 	<script>
 		function getCookie(cname) {
 		    var name = cname + "=";
@@ -32,10 +33,11 @@
 	<!--<link rel="stylesheet" href="http://localhost:81/bootstrap-4.1.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="http://localhost:81/iconfont/css/all.css">-->
 
-
+<!--peticion de jquery--->
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </head>
 <body>
+	<!---cabeza de la pagina-->
 	<header>
 		<nav>
 			<div class="logos">
@@ -59,7 +61,7 @@
 			
 		</nav>
 	</header>
-
+	<!--contenedor de la pagina--->
 	<section class="contenedor">
 		<div class="container">		
 			
@@ -141,7 +143,7 @@
 		  						</div>
 							</div>
 						</div>-->
-
+						<!---botones buscadores y de acciones-->
 						<div class="col-sm-2">
 							<a href="#Misgrupos" class="btn btn_red btn-lg" id="Eliminar"> Mis grupos</a>												
 						</div>
@@ -153,7 +155,7 @@
 							<a href="archivos.html" class="btn btn_red btn-lg" id="Eliminar"> Ver archivos</a>												
 						</div>
 				</div>	
-		
+				<!---btn de bajar a grupos-->
 				<div class="position-absolute" style="bottom: 20px;">
 					<div class="col-12 mt-5 ">
 						<a href="#Grupos" class="no_link" >Bajar</a><br>
@@ -164,7 +166,7 @@
 				</div>
 
 			</div>
-
+				<!---sección de grupos-->
 			<div class="row" id="Grupos">
 				<div class="col-sm-12">
 					
@@ -177,8 +179,10 @@
 							<h1 class="display-3" style="text-align: center;">
 								<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 60px;">Mis grupos</span>
 							</h1>
+							
 							<div class="row">
 								<div class="col-sm-6 border">
+									<!---muestra los grupos que estan inscritos y tareas de cada grupo-->
 									<h1 class="display-3" style="text-align: center;">
 										<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 40px;">Grupos inscritos</span>
 									</h1>
@@ -201,7 +205,7 @@
 
 									</div>	
 
-									<!------------------------------------------------------------------------------------------------------------>
+									<!-----------------------muestra en lista las teras-------------------------------->
 									<div class="container lista-tareas">
 										<div class="row text-center" id="lista_tareas_grupo">
 											
@@ -209,7 +213,7 @@
 									</div>					
 									
 
-									<!------------------------------------------------------------------------------------------------------------>
+									<!---------modal da salir de grupo----------------------------------------------------------------------->
 									
 									<div class="col-sm-2">
 												<br>
@@ -243,7 +247,7 @@
 								</div>
 
 								<div class="col-sm-6 border row">
-									<!------------Inicia seccion b uscar grupo-------------->
+									<!------------Inicia seccion b buscar grupo-------------->
 
 									<div class="container col-12 mb-3 mt-5" id="Buscargrupos">
 
@@ -252,7 +256,7 @@
 												<span style="color:#1169a3; font-family: 'Rajdhani', sans-serif; font-size: 60px;">Buscar grupo</span>
 											</h1> 
 										</div>
-									<!------------------------------------------------------------------------------------------------------>
+									<!------------datos para buscar grupo----------------------------------------------------------->
 										<form class="justify-content-center form-row col-12 align-content-center" id="buscar_grupos">
 											<div class="form-group col-sm-6">
 												<label for="ex1" >Ingresa nombre del grupo a inscribir:</label>
@@ -306,7 +310,7 @@
 		<br>
 	</section>
 	<br>
-	
+	<!--pie de pagina--->
 	<section class="pie">
 		<footer>
 			<div>
@@ -338,7 +342,7 @@
 	    	</div>
 	  	</div>
 	</div>
-
+	<!---libreria de javascrip/bootstrap-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	<!--<script src="http://localhost:81/bootstrap-4.1.1/js/bootstrap.min.js"></script>-->
